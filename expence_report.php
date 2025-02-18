@@ -26,7 +26,7 @@
                 <b class="text-center card-text">Expence Report</b>
            
              
-                 <a href="developer.php" class="btn btn-admin float-right btn-sm">Add New</a>
+                 <!-- <a href="developer.php" class="btn btn-admin float-right btn-sm">Add New</a> -->
               </div>
             </div>
   

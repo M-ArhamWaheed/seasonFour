@@ -40,9 +40,9 @@
                     
                   
                      @$vouchers=fetchRecord($dbc,"vouchers", "voucher_id", $r['voucher_id']);
-                       @$customer_id1=fetchRecord($dbc,"customers", "customer_id", $vouchers['customer_id1'])['customer_name'];
-                          @$customer_id2=fetchRecord($dbc,"customers", "customer_id", $vouchers['customer_id2'])['customer_name'];
-                       $username=fetchRecord($dbc,"users", "user_id", $vouchers['addby_user_id'])['username'];
+                       @$customer_id1=fetchRecord($dbc,"customers", "customer_id", @$vouchers['customer_id1'])['customer_name'];
+                          @$customer_id2=fetchRecord($dbc,"customers", "customer_id", @$vouchers['customer_id2'])['customer_name'];
+                       @$username=fetchRecord($dbc,"users", "user_id", @$vouchers['addby_user_id'])['username'];
                      
 
 
@@ -52,7 +52,7 @@
                           <td><?=$customer_id1?></td>
                           <td><?=$r['check_bank_name']?></td>
                           <td><?=$r['check_no']?></td>
-                          <td><?=$vouchers['voucher_amount']?></td>
+                          <td><?=@$vouchers['voucher_amount']?></td>
                           <td><?=$r['check_type']?></td>
                           <td><?=$r['check_expiry_date']?></td>
                           <td>
