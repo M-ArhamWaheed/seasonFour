@@ -27,9 +27,10 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 
         </div>
         <div class="card-body">
-          <form action="php_action/custom_action.php" method="POST" id="lpo_id">
+          <form action="php_action/custom_action.php" method="POST" id="sale_order_fm">
             <input type="hidden" name="product_purchase_id" value="<?= @empty($_REQUEST['edit_purchase_id']) ? "" : base64_decode($_REQUEST['edit_purchase_id']) ?>">
             <input type="hidden" name="payment_type" id="payment_type" value="credit_purchase">
+            <input type="hidden" name="lpo_form" id="lpo_form" value="lpo">
             <div class="row form-group">
               <div class="col-md-1">
                 <label>Purchase ID#</label>
@@ -238,7 +239,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
             <div class="row">
               <div class="col-sm-6 offset-6">
 
-                <button class="btn btn-admin float-right " name="sale_order_btn" value="print" type="submit" id="purches_lpo_btn">Save and Print</button>
+                <button class="btn btn-admin float-right " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
 
               </div>
             </div>
