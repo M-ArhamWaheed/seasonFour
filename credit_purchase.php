@@ -32,7 +32,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
             <input type="hidden" name="payment_type" id="payment_type" value="credit_purchase">
             <input type="hidden" name="lpo_form" id="lpo_form" value="">
             <div class="row form-group">
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <label>Purchase ID#</label>
                 <?php $result = mysqli_query($dbc, "
     SHOW TABLE STATUS LIKE 'purchase'
@@ -46,7 +46,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 
                 <input type="text" name="purchase_date" id="purchase_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchPurchase['purchase_date'] ?>" readonly class="form-control">
               </div>
-              <div class="col-md-2">
+              <div class="col-md-1">
                 <label>Bill No</label>
                 <input type="text" name="bill_no" autocomplete="off" id="get_bill_no" value="<?= @$fetchOrder['bill_no'] ?>" class="form-control">
               </div>
@@ -81,7 +81,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               </div>
             </div> <!-- end of form-group -->
             <div class="form-group row">
-              <div class="col-4 col-md-1">
+              <div class="col-4 col-md-2">
                 <label>Product Code</label>
                 <input type="text" autocomplete="off" name="product_code" id="get_product_code" class="form-control">
               </div>
@@ -120,7 +120,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                 <label>Sale Rate</label>
                 <input type="number" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_sale_price">
               </div>
-              <div class="col-6 col-sm-2 col-md-2">
+              <div class="col-6 col-sm-2 col-md-1">
                 <label>Quantity</label>
                 <input type="number" class="form-control" id="get_product_quantity" value="1" min="1" name="quantity">
               </div>
