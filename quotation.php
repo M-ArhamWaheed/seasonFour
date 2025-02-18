@@ -30,8 +30,10 @@
          <div class="card-body">
            <form action="php_action/custom_action.php" method="POST" id="sale_order_fm">
              <input type="hidden" name="product_order_id" value="<?= !isset($_REQUEST['edit_order_id']) ? "" : base64_decode($_REQUEST['edit_order_id']) ?>">
+             <input type="hidden" name="quotation_form" id="quotation_form" value="quotation">
              <div class="row form-group">
                <input type="hidden" name="payment_type" id="payment_type" value="credit_sale">
+               <input type="hidden" name="quotation_form" id="quotation_form" value="quotation_form">
                <div class="col-md-1">
                  <label>Order ID#</label>
                  <?php $result = mysqli_query($dbc, "
