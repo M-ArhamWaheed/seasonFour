@@ -21,7 +21,7 @@
                <b class="text-center card-text">Cash Sale</b>
 
 
-               <a href="cash_sale.php" class="btn btn-admin float-right btn-sm">Add New</a>
+               <!-- <a href="cash_sale.php" class="btn btn-admin float-right btn-sm">Add New</a> -->
              </div>
            </div>
 

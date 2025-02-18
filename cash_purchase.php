@@ -21,7 +21,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               <b class="text-center card-text">Cash Purchase</b>
 
 
-              <a href="cash_purchase.php" class="btn btn-admin float-right btn-sm">Add New</a>
+              <!-- <a href="cash_purchase.php" class="btn btn-admin float-right btn-sm">Add New</a> -->
             </div>
           </div>
 

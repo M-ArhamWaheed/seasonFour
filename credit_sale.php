@@ -22,7 +22,7 @@
                <b class="text-center card-text pb-3"><?= @$credit_sale_type_text ?> Credit Sale</b>
 
 
-               <a href="#" onclick="reload_page()" class="btn btn-admin float-right btn-sm">Add New</a>
+               <!-- <a href="#" onclick="reload_page()" class="btn btn-admin float-right btn-sm">Add New</a> -->
              </div>
            </div>
 

@@ -17,7 +17,7 @@ if (isset($_REQUEST['id'])) {
                 <b class="text-center card-text text-center"><?=ucwords(str_replace('_', ' ', $_REQUEST['act']))?></b>
            
                 <?php if (@$userPrivileges['nav_add']==1 || $fetchedUserRole=="admin"): ?>
-                 <a  href="<?=$getpage?>" class="btn btn-admin float-right btn-sm hide"> Add New</a>
+                 <!-- <a  href="<?=$getpage?>" class="btn btn-admin float-right btn-sm hide"> Add New</a> -->
                   <?php endif ?>  
               </div>
             </div>

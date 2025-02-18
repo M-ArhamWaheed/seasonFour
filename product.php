@@ -29,7 +29,7 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                 <a href="stock.php?type=simple" class="btn btn-admin float-right btn-sm mx-1">Print Stock</a>
                 <a href="stock.php?type=amount" class="btn btn-admin float-right btn-sm mx-1">Print Stock With Amount</a>
 
-                <a href="product.php?act=add" class="btn btn-admin float-right btn-sm mx-1">Add New</a>
+                <!-- <a href="product.php?act=add" class="btn btn-admin float-right btn-sm mx-1">Add New</a> -->
               </div>
             </div>
 

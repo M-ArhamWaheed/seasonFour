@@ -20,7 +20,7 @@ if (isset($_REQUEST['edit_expense_id'])) {
                 <b class="text-center card-text">Expenses Type</b>
            
              
-                 <a href="expense_type.php" class="btn btn-admin float-right btn-sm">Add New</a>
+                 <!-- <a href="expense_type.php" class="btn btn-admin float-right btn-sm">Add New</a> -->
               </div>
             </div>
   

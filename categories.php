@@ -20,7 +20,7 @@ if (isset($_REQUEST['edit_categories_id'])) {
                 <b class="text-center card-text">Categories</b>
            
              
-                 <a href="categories.php" class="btn btn-admin float-right btn-sm">Add New</a>
+                 <!-- <a href="categories.php" class="btn btn-admin float-right btn-sm">Add New</a> -->
               </div>
             </div>
   

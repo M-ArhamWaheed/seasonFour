@@ -20,7 +20,7 @@ if (isset($_REQUEST['edit_brand_id'])) {
                 <b class="text-center card-text">Brands</b>
            
              
-                 <a href="brands.php" class="btn btn-admin float-right btn-sm">Add New</a>
+                 <!-- <a href="brands.php" class="btn btn-admin float-right btn-sm">Add New</a> -->
               </div>
             </div>
   
