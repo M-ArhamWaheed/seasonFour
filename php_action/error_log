@@ -1,0 +1,4 @@
+[19-Dec-2024 12:21:36 Asia/Karachi] PHP Warning:  Trying to access array offset on value of type null in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 1234
+[15-Feb-2025 15:00:38 Asia/Karachi] PHP Warning:  Trying to access array offset on value of type null in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 1234
+[17-Feb-2025 11:49:39 Asia/Karachi] PHP Warning:  Undefined array key "product_image" in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 409
+[17-Feb-2025 11:49:39 Asia/Karachi] PHP Warning:  Trying to access array offset on value of type null in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 409
