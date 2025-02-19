@@ -367,6 +367,7 @@ if (!empty($_REQUEST['action']) and $_REQUEST['action'] == "product_module") {
 		'product_inch' => @$_REQUEST['product_inch'],
 		'product_meter' => @$_REQUEST['product_meter'],
 		'current_rate' => @$_REQUEST['current_rate'],
+		'final_rate' => @$_REQUEST['final_rate'],
 		'product_description' => @$_REQUEST['product_description'],
 		't_days' => @$_REQUEST['t_days'],
 		'f_days' => @$_REQUEST['f_days'],
@@ -406,7 +407,7 @@ if (!empty($_REQUEST['action']) and $_REQUEST['action'] == "product_module") {
 		if (update_data($dbc, "product", $data_array, "product_id", base64_decode($_REQUEST['product_id']))) {
 			$last_id = $_REQUEST['product_id'];
 
-			if ($_FILES['product_image']['tmp_name']) {
+			if (@$_FILES['product_image']['tmp_name']) {
 				upload_pic($_FILES['product_image'], '../img/uploads/');
 				$product_image = $_SESSION['pic_name'];
 				$data_image = [
