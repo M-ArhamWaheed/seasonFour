@@ -1450,7 +1450,7 @@ if (isset($_REQUEST['getCustomerLimit'])) {
 
 // Add LPO
 
-if (isset($_REQUEST['lpo_form'])) {
+if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 	if (!empty($_REQUEST['product_ids'])) {
 		# code...
 		$total_ammount = $total_grand = 0;
@@ -1466,7 +1466,7 @@ if (isset($_REQUEST['lpo_form'])) {
 			'customer_account' => @$_REQUEST['customer_account'],
 			'paid' => $_REQUEST['paid_ammount'],
 			'payment_status' => 1,
-			'payment_type' => $_REQUEST['payment_type'],
+			'payment_type' => "lpo",
 		];
 
 		if ($_REQUEST['product_purchase_id'] == "") {
@@ -1673,7 +1673,7 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 			'quotation_narration' => @$_REQUEST['order_narration'],
 			'payment_account' => @$_REQUEST['payment_account'],
 			'customer_account' => @$_REQUEST['customer_account'],
-			'payment_type' => 'credit_sale',
+			'payment_type' => 'Quotation',
 			'credit_sale_type' => @$_REQUEST['credit_sale_type'],
 			'vehicle_no' => @$_REQUEST['vehicle_no'],
 			'freight' => @$_REQUEST['freight'],
@@ -1722,10 +1722,10 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 					'due' => @$due_amount,
 					'quotation_status' => 1,
 				];
-				if (update_data($dbc, 'Quotation', $newOrder, 'quotation_id', $last_id)) {
+				if (update_data($dbc, 'quotations', $newOrder, 'quotation_id', $last_id)) {
 					# code...
 					//echo "<script>alert('company Updated....!')</script>";
-					$msg = "quotations Has been Added";
+					$msg = "Quotation Has been Added";
 					$sts = 'success';
 				} else {
 					$msg = mysqli_error($dbc);

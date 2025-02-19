@@ -78,7 +78,7 @@
                 $order_type="cash purchase";
             }
     $order_item=mysqli_query($dbc,"SELECT purchase_item.*,product.* FROM purchase_item INNER JOIN product ON purchase_item.product_id=product.product_id WHERE purchase_item.purchase_id='".$_REQUEST['id']."'");
- }else{
+ }elseif($_REQUEST['type']=="order"){
      $nameSHow = 'Customer';
   $order=fetchRecord($dbc,"orders","order_id",$_REQUEST['id']);
    $getDate=$order['order_date'];
@@ -93,6 +93,42 @@
         }
     }else{
         $order_type="cash sale";
+        $table_row="350px";
+    }
+
+ }elseif($_REQUEST['type']=="quotation"){
+     $nameSHow = 'Customer';
+  $order=fetchRecord($dbc,"quotations","quotation_id",$_REQUEST['id']);
+   $getDate=$order['quotation_date'];
+    $comment = $order['quotation_narration'];
+    $order_item=mysqli_query($dbc,"SELECT quotation_item.*,product.* FROM quotation_item INNER JOIN product ON quotation_item.product_id=product.product_id WHERE quotation_item.quotation_id='".$_REQUEST['id']."'");
+    if ($order['payment_type']=="quotation") {
+         $table_row="300px";
+        if ($order['payment_type']=="none") {
+            $order_type="Quotation";
+        }else{
+             $order_type=" (Quotation)";   
+        }
+    }else{
+        $order_type="Quotation";
+        $table_row="350px";
+    }
+
+}elseif($_REQUEST['type']=="lpo"){
+     $nameSHow = 'Customer';
+  $order=fetchRecord($dbc,"lpo","lpo_id",$_REQUEST['id']);
+   $getDate=$order['lpo_date'];
+    $comment = $order['lpo_narration'];
+    $order_item=mysqli_query($dbc,"SELECT lpo_item.*,product.* FROM lpo_item INNER JOIN product ON lpo_item.product_id=product.product_id WHERE lpo_item.lpo_id='".$_REQUEST['id']."'");
+    if ($order['payment_type']=="lpo") {
+         $table_row="300px";
+        if ($order['payment_type']=="none") {
+            $order_type="LPO";
+        }else{
+             $order_type=" (LPO)";   
+        }
+    }else{
+        $order_type="LPO";
         $table_row="350px";
     }
 

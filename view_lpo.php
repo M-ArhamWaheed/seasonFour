@@ -28,7 +28,6 @@
                       <th> Date</th>
                       <th>Amount</th>
                       <th>Purchase Type</th>
-                      
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -40,7 +39,7 @@
 
 
                        ?>
-                       <tr>
+                       <tr class="text-capitalize">
                           <td><?=$r['lpo_id']?></td>
                           <td><?=ucfirst($r['client_name'])?></td>
                           <td><?=$r['client_contact']?></td>
@@ -58,7 +57,7 @@
                             
 
                           <?php   endif; ?>
-                          <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin" AND $r['payment_type']=="credit_purchase"): ?>
+                          <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin" AND $r['payment_type']=="lpo"): ?>
                             <form action="credit_purchase.php" method="POST">
                               <input type="hidden" name="edit_purchase_id" value="<?=base64_encode($r['lpo_id'])?>">
                               <button type="submit" class="btn btn-admin btn-sm m-1" >Edit</button>
@@ -67,13 +66,13 @@
 
                           <?php   endif; ?>
                            <?php if (@$userPrivileges['nav_delete']==1 || $fetchedUserRole=="admin"): ?>
-                             <a href="#" onclick="deleteAlert('<?=$r['lpo_id']?>','purchase','lpo_id','view_purchase_tb')" class="btn btn-danger btn-sm m-1">Delete</a>
+                             <a href="#" onclick="deleteAlert('<?=$r['lpo_id']?>','lpo','lpo_id','view_purchase_tb')" class="btn btn-danger btn-sm m-1">Delete</a>
                             
 
                           <?php   endif; ?>
                           
 
-                            <a target="_blank" href="print_order.php?id=<?=$r['lpo_id']?>&type=purchase" class="btn btn-admin2 btn-sm m-1">Print</a> 
+                            <a target="_blank" href="print_sale.php?id=<?=$r['lpo_id']?>&type=lpo" class="btn btn-admin2 btn-sm m-1">Print</a> 
                             </td>
                        </tr>
                      <?php  } ?>
