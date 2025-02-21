@@ -68,7 +68,7 @@
 
                       <?php endif; ?>
                       <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "quotation"): ?>
-                        <form action="<?= $credit_sale_url ?>" method="POST">
+                        <form action="quotation.php" method="POST">
 
                           <input type="hidden" name="edit_order_id" value="<?= base64_encode($r['quotation_id']) ?>">
                           <input type="hidden" name="credit_type" value="<?= $r['credit_sale_type'] ?>">

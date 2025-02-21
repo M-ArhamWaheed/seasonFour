@@ -58,7 +58,7 @@
 
                           <?php   endif; ?>
                           <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin" AND $r['payment_type']=="lpo"): ?>
-                            <form action="credit_purchase.php" method="POST">
+                            <form action="lpo.php" method="POST">
                               <input type="hidden" name="edit_purchase_id" value="<?=base64_encode($r['lpo_id'])?>">
                               <button type="submit" class="btn btn-admin btn-sm m-1" >Edit</button>
                             </form>

@@ -1539,12 +1539,12 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 				$sts = "danger";
 			}
 		} else {
-			if (update_data($dbc, 'purchase', $data, 'purchase_id', $_REQUEST['product_purchase_id'])) {
+			if (update_data($dbc, 'lpo', $data, 'lpo_id', $_REQUEST['product_purchase_id'])) {
 				$last_id = $_REQUEST['product_purchase_id'];
 
 
 				if ($get_company['stock_manage'] == 1) {
-					$proQ = get($dbc, "purchase_item WHERE purchase_id='" . $last_id . "' ");
+					$proQ = get($dbc, "lpo_item WHERE lpo_id='" . $last_id . "' ");
 
 					while ($proR = mysqli_fetch_assoc($proQ)) {
 						$newqty = 0;
@@ -1553,7 +1553,7 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 						$quantity_update = mysqli_query($dbc, "UPDATE product SET  quantity_instock='$newqty' WHERE product_id='" . $proR['product_id'] . "' ");
 					}
 				}
-				deleteFromTable($dbc, "purchase_item", 'purchase_id', $_REQUEST['product_purchase_id']);
+				deleteFromTable($dbc, "lpo_item", 'lpo_id', $_REQUEST['product_purchase_id']);
 				$x = 0;
 				foreach ($_REQUEST['product_ids'] as $key => $value) {
 
@@ -1569,14 +1569,14 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 						'rate' => $product_rates,
 						'sale_rate' => $product_salerates,
 						'total' => $total,
-						'purchase_id' => $_REQUEST['product_purchase_id'],
+						'lpo_id' => $_REQUEST['product_purchase_id'],
 						'product_detail' => @$_REQUEST['product_detail'][$x],
 						'quantity' => $product_quantites,
-						'purchase_item_status' => 1,
+						'lpo_item_status' => 1,
 					];
 
 					//update_data($dbc,'order_item', $order_items , 'purchase_id',$_REQUEST['product_purchase_id']);
-					insert_data($dbc, 'purchase_item', $purchase_item);
+					insert_data($dbc, 'lpo_item', $purchase_item);
 
 					if ($get_company['stock_manage'] == 1) {
 						$product_id = $_REQUEST['product_ids'][$x];
@@ -1590,56 +1590,17 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 				$total_grand = $total_ammount - $total_ammount * ((float)$_REQUEST['ordered_discount'] / 100);
 				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
 
-
-				$transactions = fetchRecord($dbc, "purchase", "purchase_id", $_REQUEST['product_purchase_id']);
-				@deleteFromTable($dbc, "transactions", 'transaction_id', $transactions['transaction_id']);
-				@deleteFromTable($dbc, "transactions", 'transaction_id', $transactions['transaction_paid_id']);
-
-
-				if ($_REQUEST['payment_type'] == "credit_purchase") :
-					if ($due_amount > 0) {
-						$debit = [
-							'debit' => $due_amount,
-							'credit' => 0,
-							'customer_id' => @$_REQUEST['customer_account'],
-							'transaction_from' => 'purchase',
-							'transaction_type' => $_REQUEST['payment_type'],
-							'transaction_remarks' => "purchased on  purchased id#" . $last_id,
-							'transaction_date' => $_REQUEST['purchase_date'],
-						];
-						insert_data($dbc, 'transactions', $debit);
-						$transaction_id = mysqli_insert_id($dbc);
-					}
-				endif;
-				$paidAmount = @(float)$_REQUEST['paid_ammount'];
-				if ($paidAmount > 0) {
-					$credit = [
-						'debit' => @$_REQUEST['paid_ammount'],
-						'credit' => 0,
-						'customer_id' => @$_REQUEST['payment_account'],
-						'transaction_from' => 'purchase',
-						'transaction_type' => $_REQUEST['payment_type'],
-						'transaction_remarks' => "purchased by purchased id#" . $last_id,
-						'transaction_date' => $_REQUEST['purchase_date'],
-					];
-					insert_data($dbc, 'transactions', $credit);
-					$transaction_paid_id = mysqli_insert_id($dbc);
-				}
-
 				$newOrder = [
-
 					'total_amount' => $total_ammount,
 					'discount' => $_REQUEST['ordered_discount'],
 					'grand_total' => $total_grand,
 					'due' => $due_amount,
-					'transaction_paid_id' => @$transaction_paid_id,
-					'transaction_id' => @$transaction_id,
 				];
 
-				if (update_data($dbc, 'purchase', $newOrder, 'purchase_id', $_REQUEST['product_purchase_id'])) {
+				if (update_data($dbc, 'lpo', $newOrder, 'lpo_id', $_REQUEST['product_purchase_id'])) {
 					# code...
 					//echo "<script>alert('company Updated....!')</script>";
-					$msg = "Purchase Has been Updated";
+					$msg = "LPO Has been Updated";
 					$sts = 'success';
 				} else {
 					$msg = mysqli_error($dbc);
@@ -1654,7 +1615,7 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 		$msg = "Please Add Any Product";
 		$sts = 'error';
 	}
-	echo json_encode(['msg' => $msg, 'sts' => $sts, 'order_id' => @$last_id, 'type' => "purchase", 'subtype' => $_REQUEST['payment_type']]);
+	echo json_encode(['msg' => $msg, 'sts' => $sts, 'order_id' => @$last_id, 'type' => "lpo", 'subtype' => $_REQUEST['payment_type']]);
 }
 
 // cuotation
@@ -1714,6 +1675,8 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 
 			
 
+				$total_grand = @(float)$_REQUEST['freight'] + $total_ammount - $total_ammount * ((float)$_REQUEST['ordered_discount'] / 100);
+				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
 
 				$newOrder = [
 					'payment_status' =>@$payment_status,
@@ -1737,10 +1700,10 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 				$sts = "danger";
 			}
 		} else {
-			if (update_data($dbc, 'orders', $data, 'order_id', $_REQUEST['product_order_id'])) {
+			if (update_data($dbc, 'quotations', $data, 'quotation_id', $_REQUEST['product_order_id'])) {
 				$last_id = $_REQUEST['product_order_id'];
 				if ($get_company['stock_manage'] == 1) {
-					$proQ = get($dbc, "order_item WHERE order_id='" . $last_id . "' ");
+					$proQ = get($dbc, "quotation_item WHERE quotation_id='" . $last_id . "' ");
 
 					while ($proR = mysqli_fetch_assoc($proQ)) {
 						$newqty = 0;
@@ -1749,7 +1712,7 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 						$quantity_update = mysqli_query($dbc, "UPDATE product SET  quantity_instock='$newqty' WHERE product_id='" . $proR['product_id'] . "' ");
 					}
 				}
-				deleteFromTable($dbc, "order_item", 'order_id', $_REQUEST['product_order_id']);
+				deleteFromTable($dbc, "quotation_item", 'quotation_id', $_REQUEST['product_order_id']);
 
 				$x = 0;
 				foreach ($_REQUEST['product_ids'] as $key => $value) {
@@ -1762,10 +1725,10 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 						'product_id' => $_REQUEST['product_ids'][$x],
 						'rate' => $product_rates,
 						'total' => $total,
-						'order_id' => $_REQUEST['product_order_id'],
+						'quotation_id' => $_REQUEST['product_order_id'],
 						'quantity' => $product_quantites,
 						'product_detail' => $_REQUEST['product_detail'][$x],
-						'order_item_status' => 1,
+						'quotation_item_status' => 1,
 					];
 					if ($get_company['stock_manage'] == 1) {
 						$product_id = $_REQUEST['product_ids'][$x];
@@ -1773,64 +1736,28 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 						$qty = (float)$quantity_instock['quantity_instock'] - $product_quantites;
 						$quantity_update = mysqli_query($dbc, "UPDATE product SET  quantity_instock='$qty' WHERE product_id='" . $product_id . "' ");
 					}
-					insert_data($dbc, 'order_item', $order_items);
+					insert_data($dbc, 'quotation_item', $order_items);
 
 					$x++;
 				} //end of foreach
 				$total_grand = @(float)$_REQUEST['freight'] + $total_ammount - $total_ammount * ((float)$_REQUEST['ordered_discount'] / 100);
 				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
 
-				$transactions = fetchRecord($dbc, "orders", "order_id", $_REQUEST['product_order_id']);
-				@deleteFromTable($dbc, "transactions", 'transaction_id', $transactions['transaction_id']);
-				@deleteFromTable($dbc, "transactions", 'transaction_id', $transactions['transaction_paid_id']);
-
-				$credit = [
-					'credit' => $due_amount,
-					'debit' => 0,
-					'customer_id' => @$_REQUEST['customer_account'],
-					'transaction_from' => 'invoice',
-					'transaction_type' => "credit_sale",
-					'transaction_remarks' => "credit_sale by order id#" . $last_id,
-					'transaction_date' => $_REQUEST['order_date'],
-				];
-				if ($due_amount > 0) {
-					$payment_status = 0; //pending
-					insert_data($dbc, 'transactions', $credit);
-					$transaction_id = mysqli_insert_id($dbc);
-				} else {
-					$payment_status = 1; //completed
-					$transaction_id = 0;
-				}
-				$paidAmount = @(float)$_REQUEST['paid_ammount'];
-				if ($paidAmount > 0) {
-					$credit1 = [
-						'credit' => @$_REQUEST['paid_ammount'],
-						'debit' => 0,
-						'customer_id' => @$_REQUEST['payment_account'],
-						'transaction_from' => 'invoice',
-						'transaction_type' => "credit_sale",
-						'transaction_remarks' => "credit_sale by order id#" . $last_id,
-						'transaction_date' => $_REQUEST['order_date'],
-					];
-					insert_data($dbc, 'transactions', $credit1);
-					$transaction_paid_id = mysqli_insert_id($dbc);
-				}
+				
 
 				$newOrder = [
-					'payment_status' => $payment_status,
+					'payment_status' => @$payment_status,
 					'total_amount' => $total_ammount,
 					'discount' => $_REQUEST['ordered_discount'],
 					'grand_total' => $total_grand,
 					'due' => $due_amount,
-					'transaction_id' => @$transaction_id,
-					'transaction_paid_id' => @$transaction_paid_id,
 				];
 
 
-				if (update_data($dbc, 'orders', $newOrder, 'order_id', $_REQUEST['product_order_id'])) {
+				if (update_data($dbc, 'quotations', $newOrder, 'quotation_id', $_REQUEST['product_order_id'])) {
 					# code...
 					//echo "<script>alert('company Updated....!')</script>";
-					$msg = "Data Has been Updated";
+					$msg = "Quotation Has been Updated";
 					$sts = 'success';
 				} else {
 					$msg = mysqli_error($dbc);
@@ -1845,5 +1772,5 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 		$msg = "Please Add Any Product";
 		$sts = 'error';
 	}
-	echo json_encode(['msg' => $msg, 'sts' => $sts, 'order_id' => @$last_id, 'type' => "order", 'subtype' => $_REQUEST['payment_type']]);
+	echo json_encode(['msg' => $msg, 'sts' => $sts, 'order_id' => @$last_id, 'type' => "quotation", 'subtype' => $_REQUEST['payment_type']]);
 }

@@ -4,7 +4,7 @@
 
 if (!empty($_REQUEST['edit_purchase_id'])) {
   # code...
-  $fetchPurchase = fetchRecord($dbc, "purchase", "purchase_id", base64_decode($_REQUEST['edit_purchase_id']));
+  $fetchPurchase = fetchRecord($dbc, "lpo", "lpo_id", base64_decode($_REQUEST['edit_purchase_id']));
 }
 ?>
 
@@ -39,7 +39,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 ");
                 $data = mysqli_fetch_assoc($result);
                 $next_increment = $data['Auto_increment']; ?>
-                <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['purchase_id'] ?>" readonly class="form-control">
+                <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
               </div>
               <div class="col-md-2">
                 <label>Purchase Date</label>
@@ -48,7 +48,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               </div>
               <div class="col-md-1">
                 <label>Bill No</label>
-                <input type="text" name="bill_no" autocomplete="off" id="get_bill_no" value="<?= @$fetchOrder['bill_no'] ?>" class="form-control">
+                <input type="text" name="bill_no" autocomplete="off" id="get_bill_no" value="<?= @$fetchPurchase['bill_no'] ?>" class="form-control">
               </div>
               <div class="col-sm-4">
                 <label>Select Supplier</label>
@@ -76,7 +76,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               </div>
               <div class="col-sm-2">
                 <label>Comment</label>
-                <input type="text" autocomplete="off" value="<?= @$fetchPurchase['purchase_narration'] ?>" class="form-control" name="purchase_narration">
+                <input type="text" autocomplete="off" value="<?= @$fetchPurchase['lpo_narration'] ?>" class="form-control" name="purchase_narration">
 
               </div>
             </div> <!-- end of form-group -->
@@ -148,7 +148,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                   </thead>
                   <tbody class="table table-bordered" id="purchase_product_tb">
                     <?php if (isset($_REQUEST['edit_purchase_id'])):
-                      $q = mysqli_query($dbc, "SELECT  product.*,brands.*,purchase_item.* FROM purchase_item INNER JOIN product ON product.product_id=purchase_item.product_id INNER JOIN brands ON product.brand_id=brands.brand_id   WHERE purchase_item.purchase_id='" . base64_decode($_REQUEST['edit_purchase_id']) . "'");
+                      $q = mysqli_query($dbc, "SELECT  product.*,brands.*,lpo_item.* FROM lpo_item INNER JOIN product ON product.product_id=lpo_item.product_id INNER JOIN brands ON product.brand_id=brands.brand_id   WHERE lpo_item.lpo_id='" . base64_decode($_REQUEST['edit_purchase_id']) . "'");
 
                       while ($r = mysqli_fetch_assoc($q)) {
 

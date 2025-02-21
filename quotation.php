@@ -4,7 +4,8 @@
 
   if (!empty($_REQUEST['edit_order_id'])) {
     # code...
-    $fetchOrder = fetchRecord($dbc, "orders", "order_id", base64_decode($_REQUEST['edit_order_id']));
+    $fetchOrder = fetchRecord($dbc, "quotations", "quotation_id", base64_decode($_REQUEST['edit_order_id']));
+    print_r($fetchOrder);
   }
 
   ?>
@@ -41,11 +42,11 @@
 ");
                   $data = mysqli_fetch_assoc($result);
                   $next_increment = $data['Auto_increment']; ?>
-                 <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['order_id'] ?>" readonly class="form-control">
+                 <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['quotation_id'] ?>" readonly class="form-control">
                </div>
                <div class="col-md-2">
                  <label>Order Date</label>
-                 <input type="text" name="order_date" id="order_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchOrder['order_date'] ?>" readonly class="form-control">
+                 <input type="text" name="order_date" id="order_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchOrder['quotation_date'] ?>" readonly class="form-control">
                </div>
                <input type="hidden" name="credit_sale_type" value="<?= @$credit_sale_type ?>" id="credit_sale_type">
                <div class="col-md-2">
@@ -81,7 +82,7 @@
                </div>
                <div class="col-sm-2">
                  <label>Comment</label>
-                 <input type="text" autocomplete="off" name="order_narration" id="order_narration" value="<?= @$fetchOrder['order_narration'] ?>" class="form-control">
+                 <input type="text" autocomplete="off" name="order_narration" id="order_narration" value="<?= @$fetchOrder['quotation_narration'] ?>" class="form-control">
 
                </div>
                <div class="col-sm-2">
@@ -156,7 +157,7 @@
                    </thead>
                    <tbody class="table table-bordered" id="purchase_product_tb">
                      <?php if (isset($_REQUEST['edit_order_id'])):
-                        $q = mysqli_query($dbc, "SELECT  product.*,brands.*,order_item.* FROM order_item INNER JOIN product ON product.product_id=order_item.product_id INNER JOIN brands ON product.brand_id=brands.brand_id   WHERE order_item.order_id='" . base64_decode($_REQUEST['edit_order_id']) . "'");
+                        $q = mysqli_query($dbc, "SELECT  product.*,brands.*,quotation_item.* FROM quotation_item INNER JOIN product ON product.product_id=quotation_item.product_id INNER JOIN brands ON product.brand_id=brands.brand_id   WHERE quotation_item.quotation_id='" . base64_decode($_REQUEST['edit_order_id']) . "'");
 
                         while ($r = mysqli_fetch_assoc($q)) {
 
@@ -290,9 +291,17 @@
      //alert(custid);
      getBalance(custid, 'customer_account_exp');
    </script>
+   
  <?php
   }
-
-
-
   ?>
+
+<script>
+    setTimeout(function() {
+        $('#product_grand_total_amount').text("<?= @$fetchOrder['grand_total'] ?>");  
+        $('#product_total_amount').text("<?= @$fetchOrder['total_amount'] ?>");  
+        $('#remaining_ammount').val("<?= @$fetchOrder['due'] ?>");  
+        $('#ordered_discount').val("<?= @$fetchOrder['discount'] ?>"); 
+        $('#paid_ammount').val("<?= @$fetchOrder['paid'] ?>");  
+    }, 500); 
+</script>
