@@ -516,6 +516,7 @@ if (!empty($_REQUEST['getPrice'])) {
 	$response = [
 		"price" => isset($price) ? $price : 0,
 		"qty" => @(float)$record['quantity_instock'],
+		"description" => $record['product_description'],
 		"sts" => "success",
 		"type" => @$_REQUEST['credit_sale_type'],
 	];

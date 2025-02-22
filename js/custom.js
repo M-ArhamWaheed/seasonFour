@@ -481,8 +481,10 @@ $("#get_product_name").on("change", function () {
     },
     dataType: "json",
     success: function (response) {
+      // alert(response.price);
       $("#get_product_price").val(response.price);
       $("#get_product_sale_price").val(response.price);
+      $("#get_product_detail").val(response.description);
       $("#instockQty").html("instock :" + response.qty);
       console.log(response.qty);
       if (payment_type == "cash_in_hand" || payment_type == "credit_sale") {

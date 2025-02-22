@@ -20,14 +20,14 @@
           </div>
            <div class="card-body">
                             <table class="table  dataTable" id="view_purchase_tb">
-                  <thead>
-                    <tr>
+                  <thead >
+                    <tr  >
                       <th>#</th>
-                      <th>Customer Name</th>
-                      <th>Customer Contact</th>
-                      <th> Date</th>
+                      <th > Date</th>
+                      <th>Supplier Name</th>
+                      <th>Phone</th>
+                      <th>Comment</th>
                       <th>Amount</th>
-                      <th>Purchase Type</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -41,14 +41,15 @@
                        ?>
                        <tr class="text-capitalize">
                           <td><?=$r['lpo_id']?></td>
+                          <td><?=$r['lpo_date']?></td>
                           <td><?=ucfirst($r['client_name'])?></td>
                           <td><?=$r['client_contact']?></td>
-                          <td><?=$r['lpo_date']?></td>
+                          
+                          <td><?=$r['lpo_narration']?></td>
                           <td><?=$r['grand_total']?></td>
-                           <td><?=$r['payment_type']?></td>
                 
                          
-                          <td>
+                          <td class="d-flex">
                           <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin" AND $r['payment_type']=="cash_purchase"): ?>
                             <form action="cash_purchase.php" method="POST">
                               <input type="hidden" name="edit_purchase_id" value="<?=base64_encode($r['lpo_id'])?>">

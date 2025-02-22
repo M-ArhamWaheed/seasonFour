@@ -33,7 +33,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
             <input type="hidden" name="lpo_form" id="lpo_form" value="lpo">
             <div class="row form-group">
               <div class="col-md-2">
-                <label>Purchase ID#</label>
+                <label>LPO ID#</label>
                 <?php $result = mysqli_query($dbc, "
     SHOW TABLE STATUS LIKE 'purchase'
 ");
@@ -42,14 +42,14 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                 <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
               </div>
               <div class="col-md-2">
-                <label>Purchase Date</label>
+                <label>LPO Date</label>
 
                 <input type="text" name="purchase_date" id="purchase_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchPurchase['purchase_date'] ?>" readonly class="form-control">
               </div>
-              <div class="col-md-1">
+              <!-- <div class="col-md-1">
                 <label>Bill No</label>
                 <input type="text" name="bill_no" autocomplete="off" id="get_bill_no" value="<?= @$fetchPurchase['bill_no'] ?>" class="form-control">
-              </div>
+              </div> -->
               <div class="col-sm-4">
                 <label>Select Supplier</label>
                 <div class="input-group">
@@ -111,19 +111,21 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               <div class="col-6 col-sm-2 col-md-2">
                 <label>Product Details</label>
                 <input type="text" class="form-control" id="get_product_detail">
+              
               </div>
               <div class="col-6 col-sm-1 col-md-2">
-                <label>Price/piece</label>
+                <label>Unit Price</label>
                 <input type="number" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_price">
-              </div>
-              <div class="col-6 col-sm-1 col-md-1">
-                <label>Sale Rate</label>
-                <input type="number" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_sale_price">
               </div>
               <div class="col-6 col-sm-2 col-md-1">
                 <label>Quantity</label>
                 <input type="number" class="form-control" id="get_product_quantity" value="1" min="1" name="quantity">
               </div>
+              <div class="col-6 col-sm-1 col-md-1">
+                <label>Amount</label>
+                <input type="number" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_sale_price">
+              </div>
+              
               <div class="col-sm-1">
                 <br>
                 <button type="button" class="btn btn-success btn-sm mt-2 float-right" id="addProductPurchase"><i class="fa fa-plus"></i> <b>Add</b></button>
@@ -191,10 +193,10 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                     </tr>
                     <tr>
                       <td colspan="4" class="border-none"></td>
-                      <td class="table-bordered"> <strong>Grand Total :</strong> </td>
-                      <td class="table-bordered" id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
-                      <td class="table-bordered">Paid :</td>
-                      <td class="table-bordered">
+                      <td class="table-bordered"> <strong>Net Total :</strong> </td>
+                      <td colspan="3" class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
+                      <!-- <td class="table-bordered">Paid :</td> -->
+                      <!-- <td class="table-bordered">
                         <div class="form-group row">
                           <div class="col-sm-6">
                             <input type="number" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
@@ -208,15 +210,15 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                             </div>
                           </div>
                         </div>
-                      </td>
+                      </td> -->
                     </tr>
                     <tr>
                       <td colspan="4" class="border-none"></td>
-                      <td class="table-bordered">Remaing Amount :</td>
+                      <!-- <td class="table-bordered">Remaing Amount :</td>
                       <td class="table-bordered"><input type="number" class="form-control form-control-sm" id="remaining_ammount" required readonly name="remaining_ammount" value="<?= @$fetchPurchase['due'] ?>">
-                      </td>
-                      <td class="table-bordered">Account :</td>
-                      <td class="table-bordered">
+                      </td> -->
+                      <!-- <td class="table-bordered">Account :</td> -->
+                      <!-- <td class="table-bordered">
 
                         <div class="input-group">
                           <select class="form-control" onchange="getBalance(this.value,'payment_account_bl')" name="payment_account" id="payment_account" aria-label="Username" aria-describedby="basic-addon1">
@@ -230,7 +232,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                             <span class="input-group-text" id="basic-addon1">Balance : <span id="payment_account_bl">0</span> </span>
                           </div>
                         </div>
-                      </td>
+                      </td> -->
                     </tr>
                   </tfoot>
                 </table>
