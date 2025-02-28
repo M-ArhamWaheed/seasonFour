@@ -22,15 +22,15 @@
                             <table class="table  dataTable" id="check_tb">
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>From Account</th>
-                      <th>Bank</th>
-                      <th>Check No.</th>
-                      <th>Amount</th>
-                      <th>Voucher Type</th>
-                      <th>Check Date</th>
-                      <th>Check Status</th>
-                      <th>Action</th>
+                      <th class="text-dark">#</th>
+                      <th class="text-dark">From Account</th>
+                      <th class="text-dark">Bank</th>
+                      <th class="text-dark">Check No.</th>
+                      <th class="text-dark">Amount</th>
+                      <th class="text-dark">Voucher Type</th>
+                      <th class="text-dark">Check Date</th>
+                      <th class="text-dark">Check Status</th>
+                      <th class="text-dark">Action</th>
                     </tr>
                   </thead>
                   <tbody> 

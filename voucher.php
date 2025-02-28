@@ -441,15 +441,15 @@ if (isset($_REQUEST['id'])) {
                 <table class="table  dataTable" id="voucher_expense_tb">
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>From Account</th>
-                      <th>To Account</th>
-                      <th>Amount</th>
-                      <th>Hint</th>
-                      <th>Voucher Type</th>
-                      <th>Date</th>
-                      <th>By</th>
-                      <th>Action</th>
+                      <th class="text-dark">#</th>
+                      <th class="text-dark">From Account</th>
+                      <th class="text-dark">To Account</th>
+                      <th class="text-dark">Amount</th>
+                      <th class="text-dark">Hint</th>
+                      <th class="text-dark">Voucher Type</th>
+                      <th class="text-dark">Date</th>
+                      <th class="text-dark">By</th>
+                      <th class="text-dark">Action</th>
                     </tr>
                   </thead>
                   <tbody> 

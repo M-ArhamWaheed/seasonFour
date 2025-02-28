@@ -145,13 +145,13 @@
 
 <thead>
      <tr>
-       <th>Order No.</th>
-       <th>Customer Details</th>
-       <th>Order Date</th>
-        <th>Piad Amount</th>
-       <th>Remaining Amount</th>
+       <th class="text-dark">Order No.</th>
+       <th class="text-dark">Customer Details</th>
+       <th class="text-dark">Order Date</th>
+        <th class="text-dark">Piad Amount</th>
+       <th class="text-dark">Remaining Amount</th>
         <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin"): ?>
-       <th>Action</th>
+       <th class="text-dark">Action</th>
      <?php endif; ?>
      </tr>
 </thead>

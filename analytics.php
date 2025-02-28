@@ -556,9 +556,9 @@ if (!empty($_REQUEST['from_date']) AND !empty($_REQUEST['to_date'])) {
     <div class="col-sm-12" align="center">
       <table class="table" width="100%" align="center">
         <thead>
-          <th>Sr No.</th>
-          <th>Account Details</th>
-          <th>Balance</th>
+          <th class="text-dark">Sr No.</th>
+          <th class="text-dark">Account Details</th>
+          <th class="text-dark">Balance</th>
         </thead>
         <tbody>
           <?php $q=mysqli_query($dbc,"SELECT * FROM customers WHERE customer_type='bank' AND customer_status=1 ");

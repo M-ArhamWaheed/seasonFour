@@ -22,13 +22,13 @@
                             <table class="table  dataTable" id="view_purchase_tb">
                   <thead >
                     <tr  >
-                      <th>#</th>
-                      <th > Date</th>
-                      <th>Supplier Name</th>
-                      <th>Phone</th>
-                      <th>Comment</th>
-                      <th>Amount</th>
-                      <th>Action</th>
+                      <th class="text-dark">#</th>
+                      <th class="text-dark" > Date</th>
+                      <th class="text-dark">Supplier Name</th>
+                      <th class="text-dark">Phone</th>
+                      <th class="text-dark">Comment</th>
+                      <th class="text-dark">Amount</th>
+                      <th class="text-dark">Action</th>
                     </tr>
                   </thead>
                   <tbody> 

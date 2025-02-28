@@ -116,16 +116,17 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 
               <div class="col-6 col-sm-2 col-md-2">
                 <label>Price/piece</label>
-                <input type="number" min="0" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_price">
-              </div>
-              <div class="col-6 col-sm-1 col-md-1">
-                <label>Sale Rate</label>
-                <input type="number" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_sale_price">
+                <input type="number" step="0.001" min="0" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_price">
               </div>
               <div class="col-6 col-sm-2 col-md-1">
                 <label>Quantity</label>
                 <input type="number" class="form-control" id="get_product_quantity" value="1" min="1" name="quantity">
               </div>
+              <div class="col-6 col-sm-1 col-md-1">
+                <label>Sale Rate</label>
+                <input type="number"  <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_sale_price">
+              </div>
+              
               <div class="col-sm-1">
                 <br>
                 <button type="button" class="btn btn-success btn-sm mt-2 float-right" id="addProductPurchase"><i class="fa fa-plus"></i> <b>Add</b></button>
@@ -135,17 +136,17 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
             <div class="row">
               <div class="col-12">
 
-                <table class="table  saleTable" id="myDiv">
-                  <thead class="table-bordered">
-                    <tr>
-                      <th>Code</th>
-                      <th>Product Name</th>
-                      <th>Product Details</th>
-                      <th>Unit Price</th>
-                      <th>Sale Rate</th>
-                      <th>Quantity</th>
-                      <th>Total Price</th>
-                      <th>Action</th>
+                <table class="table  saleTable " id="myDiv">
+                  <thead class="table-bordered ">
+                    <tr class="text-dark">
+                      <th class="text-dark">Code</th>
+                      <th class="text-dark">Product Name</th>
+                      <th class="text-dark">Product Details</th>
+                      <th class="text-dark">Unit Price</th>
+                      <th class="text-dark">Sale Rate</th>
+                      <th class="text-dark">Quantity</th>
+                      <th class="text-dark">Total Price</th>
+                      <th class="text-dark">Action</th>
                     </tr>
                   </thead>
                   <tbody class="table table-bordered" id="purchase_product_tb">

@@ -142,13 +142,13 @@
                  <table class="table  saleTable" id="myDiv">
                    <thead class="table-bordered">
                      <tr>
-                       <th>Code</th>
-                       <th>Product Name</th>
-                       <th>Product Details</th>
-                       <th>Unit Price</th>
-                       <th>Quantity</th>
-                       <th>Total Price</th>
-                       <th>Action</th>
+                       <th class="text-dark">Code</th>
+                       <th class="text-dark">Product Name</th>
+                       <th class="text-dark">Product Details</th>
+                       <th class="text-dark">Unit Price</th>
+                       <th class="text-dark">Quantity</th>
+                       <th class="text-dark">Total Price</th>
+                       <th class="text-dark">Action</th>
                      </tr>
                    </thead>
                    <tbody class="table table-bordered" id="purchase_product_tb">

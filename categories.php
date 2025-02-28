@@ -88,12 +88,12 @@ if (isset($_REQUEST['edit_categories_id'])) {
 			<table class="table dataTable" id="tableData">
 				<thead>
 			<tr>	
-				<th>ID</th>
-				<th> Name</th>
-        <th>Sale Price</th>
-        <th>Purchase Price</th>
-				<th>Status</th>
-				<th>Action</th>
+				<th class="text-dark">ID</th>
+				<th class="text-dark"> Name</th>
+        <th class="text-dark">Sale Price</th>
+        <th class="text-dark">Purchase Price</th>
+				<th class="text-dark">Status</th>
+				<th class="text-dark">Action</th>
 			</tr>
 			</thead>
 			<tbody>

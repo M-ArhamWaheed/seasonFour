@@ -101,16 +101,15 @@ $Getdata = mysqli_fetch_assoc(mysqli_query($dbc,"SELECT * FROM customers WHERE c
 
 	<thead>
 		<tr class="">
-			<th> ID</th>
-			<th>Name</th>
-			<th>Email</th>
-			<th>Phone</th>
-			
-			<th>Created Date</th>
+			<th class="text-dark"> ID</th>
+			<th class="text-dark">Name</th>
+			<th class="text-dark">Email</th>
+			<th class="text-dark">Phone</th>
+			<th class="text-dark">Created Date</th>
 			<?php if($_REQUEST['type'] == 'customer'): ?>
-			<th> Creadit LIMIT</th>
+			<th class="text-dark"> Creadit LIMIT</th>
 		<?php endif; ?>
-			<th>Action</th>
+			<th class="text-dark">Action</th>
 
 			
 			

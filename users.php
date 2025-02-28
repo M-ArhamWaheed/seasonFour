@@ -99,15 +99,15 @@
 			<table class="table example1" id="myTable"  >
 				<thead>
 			<tr>	
-				<th>User ID</th>
-				<th>Username</th>
-				<th>Email</th>
-				<th>Phone</th>
-				<th>Address</th>
-				<th>User Role</th>
-				<th>Status</th>
-				<th>Action</th>
-				<th>Set Privileges </th>
+				<th class="text-dark">User ID</th>
+				<th class="text-dark">Username</th>
+				<th class="text-dark">Email</th>
+				<th class="text-dark">Phone</th>
+				<th class="text-dark">Address</th>
+				<th class="text-dark">User Role</th>
+				<th class="text-dark">Status</th>
+				<th class="text-dark">Action</th>
+				<th class="text-dark">Set Privileges </th>
 			</tr>
 			</thead>
 			<tbody>

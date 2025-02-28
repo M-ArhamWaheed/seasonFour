@@ -30,9 +30,9 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Dated</th>
-							<th>Name</th>
-							<th>Amount</th>
+							<th class="text-dark">Dated</th>
+							<th class="text-dark">Name</th>
+							<th class="text-dark">Amount</th>
 						</tr>
 					</thead>
 					<tbody>

@@ -542,6 +542,7 @@ if (isset($_REQUEST['sale_order_client_name'])) {
 			'payment_account' => @$_REQUEST['payment_account'],
 			'payment_type' => 'cash_in_hand',
 			'vehicle_no' => @$_REQUEST['vehicle_no'],
+			
 			'order_narration' => @$_REQUEST['order_narration'],
 			'freight' => @$_REQUEST['freight'],
 		];
@@ -735,6 +736,7 @@ if (isset($_REQUEST['credit_order_client_name']) && empty($_REQUEST['quotation_f
 			'payment_type' => 'credit_sale',
 			'credit_sale_type' => @$_REQUEST['credit_sale_type'],
 			'vehicle_no' => @$_REQUEST['vehicle_no'],
+			'return_days' => @$_REQUEST['return_days'],
 			'freight' => @$_REQUEST['freight'],
 		];
 		//'payment_status'=>1,

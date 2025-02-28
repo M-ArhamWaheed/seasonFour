@@ -23,15 +23,13 @@
             <table class="table  dataTable" id="view_orders_tb">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Customer Name</th>
-                  <th>Customer Contact</th>
-                  <th>Order Date</th>
-                  <th>Amount</th>
-                  <th>Order Type</th>
-
-
-                  <th>Action</th>
+                  <th class="text-dark">#</th>
+                  <th class="text-dark">Customer Name</th>
+                  <th class="text-dark">Customer Contact</th>
+                  <th class="text-dark">Order Date</th>
+                  <th class="text-dark">Amount</th>
+                  <th class="text-dark">Order Type</th>
+                  <th class="text-dark">Action</th>
                 </tr>
               </thead>
               <tbody>

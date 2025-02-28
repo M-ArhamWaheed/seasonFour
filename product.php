@@ -144,22 +144,22 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
               <table class="table dataTable col-12" style="width: 100%" id="product_tb">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Brand/Category</th>
+                    <th class="text-dark">#</th>
+                    <th class="text-dark">Code</th>
+                    <th class="text-dark">Name</th>
+                    <th class="text-dark">Brand/Category</th>
                     <?php
                     if ($UserData['user_role'] == 'admin'):
                     ?>
-                      <th>Purchase</th>
+                      <th class="text-dark">Purchase</th>
                     <?php
                     endif;
                     ?>
-                    <th>Selling Price</th>
+                    <th class="text-dark">Selling Price</th>
                     <?php if ($get_company['stock_manage'] == 1): ?>
-                      <th>Quanity instock</th>
+                      <th class="text-dark">Quanity instock</th>
                     <?php endif; ?>
-                    <th class="d-print-none
+                    <th class="d-print-none text-dark
 ">Action</th>
                   </tr>
                 </thead>

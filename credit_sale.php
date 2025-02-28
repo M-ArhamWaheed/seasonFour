@@ -84,7 +84,7 @@
                  <input type="text" autocomplete="off" name="order_narration" id="order_narration" value="<?= @$fetchOrder['order_narration'] ?>" class="form-control">
 
                </div>
-               <div class="col-sm-2">
+               <!-- <div class="col-sm-2">
                  <label>Vehicle NO </label>
                  <input type="text" id="vehicle_no" value="<?= @$fetchOrder['vehicle_no'] ?>" class="form-control" autocomplete="off" name="vehicle_no" list="vehicle_no_list">
                  <datalist id="vehicle_no_list">
@@ -93,6 +93,18 @@
                     while ($r = mysqli_fetch_assoc($q)) {
                     ?>
                      <option value="<?= $r['vehicle_no'] ?>"><?= $r['vehicle_no'] ?></option>
+                   <?php   } ?>
+                 </datalist>
+               </div> -->
+               <div class="col-sm-2">
+                 <label>Return Days</label>
+                 <input type="text" id="return_days" value="<?= @$fetchOrder['return_days'] ?>" class="form-control" autocomplete="off" name="return_days" list="return_days_list">
+                 <datalist id="return_days_list">
+                   <?php
+                    $q = mysqli_query($dbc, "SELECT  return_days FROM orders");
+                    while ($r = mysqli_fetch_assoc($q)) {
+                    ?>
+                     <option value="<?= $r['return_days'] ?>"><?= $r['return_days'] ?></option>
                    <?php   } ?>
                  </datalist>
                </div>
@@ -145,13 +157,13 @@
                  <table class="table  saleTable" id="myDiv">
                    <thead class="table-bordered">
                      <tr>
-                       <th>Code</th>
-                       <th>Product Name</th>
-                       <th>Product Details</th>
-                       <th>Unit Price</th>
-                       <th>Quantity</th>
-                       <th>Total Price</th>
-                       <th>Action</th>
+                       <th class="text-dark">Code</th>
+                       <th class="text-dark">Product Name</th>
+                       <th class="text-dark">Product Details</th>
+                       <th class="text-dark">Unit Price</th>
+                       <th class="text-dark">Quantity</th>
+                       <th class="text-dark">Total Price</th>
+                       <th class="text-dark">Action</th>
                      </tr>
                    </thead>
                    <tbody class="table table-bordered" id="purchase_product_tb">

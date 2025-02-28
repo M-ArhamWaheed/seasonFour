@@ -68,9 +68,9 @@
                    </select><br />
                  </div>
                  <div class="input-group-prepend">
-                   <span class="input-group-text" id="basic-addon1">Balance : <span id="customer_account_exp">0</span> </span>
-                   <span class="input-group-text" id="basic-addon1">Limit : <span id="customer_Limit">0</span> </span>
-                   <span class="input-group-text" id="basic-addon1">R Limit : <span id="R_Limit">0</span> </span>
+                   <!-- <span class="input-group-text" id="basic-addon1">Balance : <span id="customer_account_exp">0</span> </span> -->
+                   <!-- <span class="input-group-text" id="basic-addon1">Limit : <span id="customer_Limit">0</span> </span> -->
+                   <!-- <span class="input-group-text" id="basic-addon1">R Limit : <span id="R_Limit">0</span> </span> -->
                  </div>
 
 
@@ -146,13 +146,13 @@
                  <table class="table  saleTable" id="myDiv">
                    <thead class="table-bordered">
                      <tr>
-                       <th>Code</th>
-                       <th>Product Name</th>
-                       <th>Product Details</th>
-                       <th>Unit Price</th>
-                       <th>Quantity</th>
-                       <th>Total Price</th>
-                       <th>Action</th>
+                       <th class="text-dark">Code</th>
+                       <th class="text-dark">Product Name</th>
+                       <th class="text-dark">Product Details</th>
+                       <th class="text-dark">Unit Price</th>
+                       <th class="text-dark">Quantity</th>
+                       <th class="text-dark">Total Price</th>
+                       <th class="text-dark">Action</th>
                      </tr>
                    </thead>
                    <tbody class="table table-bordered" id="purchase_product_tb">

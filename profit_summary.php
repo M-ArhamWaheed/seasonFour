@@ -23,11 +23,11 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Dated</th>
-						<th>Sale</th>
-						<th>Profit</th>
-						<th>Expense</th>
-						<th>Net Profit</th>
+						<th class="text-dark">Dated</th>
+						<th class="text-dark">Sale</th>
+						<th class="text-dark">Profit</th>
+						<th class="text-dark">Expense</th>
+						<th class="text-dark">Net Profit</th>
 					</tr>
 				</thead>
 				<tbody>
