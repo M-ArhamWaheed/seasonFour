@@ -198,7 +198,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                       <td class="table-bordered">
                         <div class="form-group row">
                           <div class="col-sm-6">
-                            <input type="number" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
+                            <input type="number" step="0.001" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
 
 
                           </div>

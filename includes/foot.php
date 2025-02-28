@@ -81,7 +81,7 @@
                </div>
                <div class="col-sm-3 mt-3 mb-sm-0">
                  <label for="">Sale Rate</label>
-                 <input type="number"  class="form-control" id="current_rate" placeholder=" Rate" name="current_rate" required value="<?= @$fetchproduct['current_rate'] ?>">
+                 <input type="number"   class="form-control" id="current_rate" placeholder=" Rate" name="current_rate" required value="<?= @$fetchproduct['current_rate'] ?>">
                </div>
                <div class="col-sm-4 mt-3 row">
                  <div class="col-10">

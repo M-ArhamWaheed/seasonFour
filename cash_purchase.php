@@ -197,7 +197,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                       <td class="table-bordered"> <strong>Grand Total :</strong> </td>
                       <td class="table-bordered" id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
                       <td class="table-bordered">Paid :</td>
-                      <td class="table-bordered"><input type="number" max="" class="form-control form-control-sm" id="paid_ammount" onkeyup="getRemaingAmount()" required name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
+                      <td class="table-bordered"><input type="number" step="0.001" max="" class="form-control form-control-sm" id="paid_ammount" onkeyup="getRemaingAmount()" required name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
 
                       </td>
                     </tr>

@@ -1462,13 +1462,13 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 
 		$data = [
 			'lpo_date' => $_REQUEST['purchase_date'],
-			'bill_no' => $_REQUEST['bill_no'],
+			'bill_no' => @$_REQUEST['bill_no'],
 			'client_name' => @$_REQUEST['cash_purchase_supplier'],
 			'client_contact' => @$_REQUEST['client_contact'],
 			'lpo_narration' => @$_REQUEST['purchase_narration'],
 			'payment_account' => @$_REQUEST['payment_account'],
 			'customer_account' => @$_REQUEST['customer_account'],
-			'paid' => $_REQUEST['paid_ammount'],
+			'paid' => @$_REQUEST['paid_ammount'],
 			'payment_status' => 1,
 			'payment_type' => "lpo",
 		];

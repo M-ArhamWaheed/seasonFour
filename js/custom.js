@@ -437,7 +437,8 @@ function getCustomer_name(value) {
 function getRemaingAmount() {
   var paid_ammount = $("#paid_ammount").val();
   var product_grand_total_amount = $("#product_grand_total_amount").html();
-  var total = parseInt(product_grand_total_amount) - parseInt(paid_ammount);
+  var total = product_grand_total_amount - paid_ammount;
+  // alert(total)
   $("#remaining_ammount").val(total);
 }
 
@@ -1172,3 +1173,11 @@ function setAmountPaid(id, paid) {
     }
   });
 }
+// $(document).ready(function () {
+//   $(document).on("input", "input[type='number']", function () {
+//       let val = $(this).val();
+//       if (!isNaN(val) && val !== "") {
+//           $(this).val(val); // Ensures the value remains unchanged
+//       }
+//   });
+// });
