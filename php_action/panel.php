@@ -14,7 +14,8 @@ if (!empty($_REQUEST['action']) AND $_REQUEST['action']=="add_nav_menu") {
 			'nav_edit'=>@$_REQUEST['nav_edit'],
 			'nav_delete'=>@$_REQUEST['nav_delete'],
 			'nav_add'=>@$_REQUEST['nav_add'],
-
+			'nav_add'=>@$_REQUEST['nav_add'],
+			'nav_option_sort'=>@$_REQUEST['nav_option_sort'],
 		];
 	if ($_REQUEST['edit_menu_id']=='') {
 			if (insert_data($dbc,"menus",$data)) {
