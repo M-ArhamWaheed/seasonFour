@@ -111,7 +111,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               <div class="col-6 col-sm-2 col-md-2">
                 <label>Product Details</label>
                 <input type="text" class="form-control" id="get_product_detail">
-              
+
               </div>
               <div class="col-6 col-sm-1 col-md-2">
                 <label>Unit Price</label>
@@ -125,26 +125,25 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                 <label>Amount</label>
                 <input type="number" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_sale_price">
               </div>
-              
+
               <div class="col-sm-1">
                 <br>
                 <button type="button" class="btn btn-success btn-sm mt-2 float-right" id="addProductPurchase"><i class="fa fa-plus"></i> <b>Add</b></button>
               </div>
 
             </div>
-            <div class="row">
+            <div class="row mt-5">
               <div class="col-12">
 
                 <table class="table  saleTable" id="myDiv">
                   <thead class="table-bordered">
                     <tr>
                       <th class="text-dark">Code</th>
-                      <th class="text-dark">Product Name</th>
-                      <th class="text-dark">Product Details</th>
+                      <th class="text-dark" style="width: 15%;">Product Name</th>
+                      <th class="text-dark" style="width: 30%;">Product Details</th>
                       <th class="text-dark">Unit Price</th>
-                      <th class="text-dark">Sale Rate</th>
                       <th class="text-dark">Quantity</th>
-                      <th class="text-dark">Total Price</th>
+                      <th class="text-dark">Amount</th>
                       <th class="text-dark">Action</th>
                     </tr>
                   </thead>
@@ -166,7 +165,6 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                           <td><?= $r['product_name'] ?></td>
                           <td><?= $r['product_detail'] ?></td>
                           <td><?= $r['rate'] ?></td>
-                          <td><?= $r['sale_rate'] ?></td>
                           <td><?= $r['quantity'] ?></td>
                           <td><?= (float)$r['rate'] * (float)$r['quantity'] ?></?>
                           </td>
@@ -182,19 +180,27 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                   </tbody>
 
                   <tfoot>
-                    <tr>
+                    <tr  class="table-bordered">
                       <td colspan="4"></td>
-
                       <td class="table-bordered"> Sub Total :</td>
                       <td class="table-bordered" id="product_total_amount"><?= @$fetchPurchase['total_amount'] ?></td>
-                      <td class="table-bordered"> Discount :</td>
-                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchPurchase['discount'] ?>" min="0" max="100" name="ordered_discount">
+                      <td class="table-bordered"></td>
                       </td>
                     </tr>
                     <tr>
-                      <td colspan="4" class="border-none"></td>
+                      <td colspan="4" class="table-bordered"></td>
+                      <td class="table-bordered"> Discount :</td>
+                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchPurchase['discount'] ?>" min="0" max="100" name="ordered_discount">
+                      <td class="table-bordered"></td>
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4" class="table-bordered"></td>
                       <td class="table-bordered"> <strong>Net Total :</strong> </td>
-                      <td colspan="3" class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
+                      <td  class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
+                      <td class="table-bordered"></td>
+
                       <!-- <td class="table-bordered">Paid :</td> -->
                       <!-- <td class="table-bordered">
                         <div class="form-group row">
