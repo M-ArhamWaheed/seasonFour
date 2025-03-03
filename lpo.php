@@ -180,7 +180,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                   </tbody>
 
                   <tfoot>
-                    <tr  class="table-bordered">
+                    <tr class="table-bordered">
                       <td colspan="4"></td>
                       <td class="table-bordered"> Sub Total :</td>
                       <td class="table-bordered" id="product_total_amount"><?= @$fetchPurchase['total_amount'] ?></td>
@@ -198,7 +198,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                     <tr>
                       <td colspan="4" class="table-bordered"></td>
                       <td class="table-bordered"> <strong>Net Total :</strong> </td>
-                      <td  class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
+                      <td class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
                       <td class="table-bordered"></td>
 
                       <!-- <td class="table-bordered">Paid :</td> -->
@@ -263,3 +263,19 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 
 </html>
 <?php include_once 'includes/foot.php'; ?>
+
+
+<script>
+  $(document).ready(function() {
+    // Function to calculate and update the quantity
+    function calculateQuantity() {
+      var price = $("#get_product_price").val() || 0;
+      var quantity = $("#get_product_quantity").val() || 0;
+      var total_price = price * quantity;
+      $("#get_product_sale_price").val(total_price);
+    }
+
+    // Bind the calculate function to input changes
+    $("#get_product_price, #get_product_quantity").on("input", calculateQuantity);
+  });
+</script>
