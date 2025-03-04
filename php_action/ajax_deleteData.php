@@ -95,7 +95,30 @@ require_once '../includes/functions.php';
  			$msg = mysqli_error($dbc);
  			$sts = "error";
  		}
- 	}else{
+ 	}elseif ($table=="lpo"){
+		$get_company =mysqli_fetch_assoc(mysqli_query($dbc,"SELECT * FROM company ORDER BY id DESC LIMIT 1"));
+
+ 		if ($get_company['stock_manage']==1) {
+						$proQ=get($dbc,"lpo_item WHERE lpo_id='".$id."' ");
+
+						// while ($proR=mysqli_fetch_assoc($proQ)) {
+						// 	$newqty=0;
+						// 	$quantity_instock=mysqli_fetch_assoc(mysqli_query($dbc,"SELECT quantity_instock FROM  product WHERE product_id='".$proR['product_id']."' "));
+						// 	$newqty=(int)$quantity_instock['quantity_instock']-(int)$proR['quantity'];
+						// 	$quantity_update=mysqli_query($dbc,"UPDATE product SET  quantity_instock='$newqty' WHERE product_id='".$proR['product_id']."' ");
+					
+
+						// }
+					}
+ 		$vouchers=fetchRecord($dbc,'lpo', $row, $id);
+ 		if(mysqli_query($dbc,"DELETE FROM lpo WHERE $row='$id'")){
+ 			$msg = "Data Has been deleted...";
+ 			$sts ="success";
+ 		}else{
+ 			$msg = mysqli_error($dbc);
+ 			$sts = "error";
+ 		}
+	}else{
  		if(deleteFromTable($dbc,$table,$row,$id)){
  			$msg = $table." Has been deleted...";
  			$sts ="success";

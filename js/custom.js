@@ -578,8 +578,8 @@ $("#addProductPurchase").on("click", function () {
 
   //      sweeetalert("Remainig Limit Exceed 😊 ","error",1500);
   // }else{
-    $("#get_product_detail").val("");
-    $("#get_product_name").val(null).trigger("change");
+  $("#get_product_detail").val("");
+  $("#get_product_name").val(null).trigger("change");
   if (
     id != "" &&
     product_quantity != "" &&
@@ -723,14 +723,17 @@ function getOrderTotal() {
 
   getRemaingAmount();
 }
-function editByid(id, code, pro_details, price, sale_price, qty) {
+function editByid(id, code, pro_details, price,qty) {
   // alert(pro_details);
-  $(".searchableSelect").val(id);
+  $("#get_product_name").val(id);
 
   $("#get_product_code").val(code);
-  $("#get_product_quantity").val(qty).change();
-  $("#get_product_detail").val(pro_details);
-  $("#get_product_sale_price").val(sale_price).change();
+  $("#get_product_quantity").val(qty);
+  let total = price * qty;
+  setTimeout(function () {
+    $("#get_product_detail").val(pro_details);
+    $("#get_product_sale_price").val(total);
+  }, 500);
   $("#add_pro_type").val("update");
 
   var effect = function () {

@@ -39,7 +39,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 ");
                 $data = mysqli_fetch_assoc($result);
                 $next_increment = $data['Auto_increment']; ?>
-                <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
+                <input type="text" name="next_increment" id="next_increment" value="SS-LPO-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
               </div>
               <div class="col-md-2">
                 <label>LPO Date</label>
@@ -53,13 +53,13 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               <div class="col-sm-4">
                 <label>Select Supplier</label>
                 <div class="input-group">
-                  <select class="form-control" name="cash_purchase_supplier" id="credit_order_client_name" required onchange="getBalance(this.value,'customer_account_exp')" aria-label="Username" aria-describedby="basic-addon1">
+                  <select class="form-control searchableSelect" name="cash_purchase_supplier" id="credit_order_client_name" required onchange="getBalance(this.value,'customer_account_exp')" aria-label="Username" aria-describedby="basic-addon1">
                     <option value="">Select Supplier</option>
                     <?php
                     $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='supplier'");
                     while ($r = mysqli_fetch_assoc($q)) {
                     ?>
-                      <option <?= @($fetchPurchase['customer_account'] == $r['customer_id']) ? "selected" : "" ?> data-id="<?= $r['customer_id'] ?>" data-contact="<?= $r['customer_phone'] ?>" value="<?= $r['customer_name'] ?>"><?= $r['customer_name'] ?></option>
+                      <option <?= @($fetchPurchase['customer_account'] == $r['customer_id']) ? "selected" : "" ?> data-id="<?= $r['customer_id'] ?>" data-contact="<?= $r['customer_phone'] ?>" value="<?= $r['customer_name'] ?>"><?= $r['customer_name'] ?> | <?= $r['customer_phone'] ?></option>
                     <?php   } ?>
                   </select>
                   <div class="input-group-prepend">
@@ -171,7 +171,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                           <td>
 
                             <button type="button" onclick="removeByid(`#product_idN_<?= $r['product_id'] ?>`)" class="fa fa-trash text-danger" href="#"></button>
-                            <button type="button" onclick="editByid(<?= $r['product_id'] ?>,`<?= $r['product_code'] ?>`,`<?= $r['product_detail'] ?>`,<?= $r['rate'] ?>,<?= $r['sale_rate'] ?>,<?= $r['quantity'] ?>)" class="fa fa-edit text-success ml-2 "></button>
+                            <button type="button" onclick="editByid(<?= $r['product_id'] ?>,`<?= $r['product_code'] ?>`,`<?= $r['product_detail'] ?>`,<?= $r['rate'] ?>,<?= $r['quantity'] ?>)" class="fa fa-edit text-success ml-2 "></button>
 
                           </td>
                         </tr>
@@ -190,7 +190,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                     <tr>
                       <td colspan="4" class="table-bordered"></td>
                       <td class="table-bordered"> Discount :</td>
-                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchPurchase['discount'] ?>" min="0" max="100" name="ordered_discount">
+                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? $fetchPurchase['discount'] : "0" ?>" min="0" max="100" name="ordered_discount">
                       <td class="table-bordered"></td>
 
                       </td>

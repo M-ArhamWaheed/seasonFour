@@ -22,7 +22,6 @@
                             <table class="table  dataTable" id="view_purchase_tb">
                   <thead >
                     <tr  >
-                      <th class="text-dark">#</th>
                       <th class="text-dark" > Date</th>
                       <th class="text-dark">Supplier Name</th>
                       <th class="text-dark">Phone</th>
@@ -40,7 +39,6 @@
 
                        ?>
                        <tr class="text-capitalize">
-                          <td><?=$r['lpo_id']?></td>
                           <td><?=$r['lpo_date']?></td>
                           <td><?=ucfirst($r['client_name'])?></td>
                           <td><?=$r['client_contact']?></td>
