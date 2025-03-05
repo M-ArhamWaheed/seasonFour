@@ -5,6 +5,7 @@
   if (!empty($_REQUEST['edit_order_id'])) {
     # code...
     $fetchOrder = fetchRecord($dbc, "orders", "order_id", base64_decode($_REQUEST['edit_order_id']));
+    // print_r($fetchOrder);
   }
 
   ?>
@@ -19,7 +20,7 @@
 
            <div class="row">
              <div class="col-12 mx-auto h4">
-               <b class="text-center card-text pb-3"><?= @$credit_sale_type_text ?> Credit Sale</b>
+               <b class="text-center card-text pb-3"> Sale</b>
 
 
                <!-- <a href="#" onclick="reload_page()" class="btn btn-admin float-right btn-sm">Add New</a> -->
@@ -32,37 +33,67 @@
              <input type="hidden" name="product_order_id" value="<?= !isset($_REQUEST['edit_order_id']) ? "" : base64_decode($_REQUEST['edit_order_id']) ?>">
              <div class="row form-group">
                <input type="hidden" name="payment_type" id="payment_type" value="credit_sale">
+               <input type="hidden" name="form_type" id="form_type" value="credit_sale">
                <input type="hidden" name="quotation_form" id="quotation_form" value="">
 
                <div class="col-md-1">
-                 <label>Order ID#</label>
+                 <label>ID#</label>
                  <?php $result = mysqli_query($dbc, "
     SHOW TABLE STATUS LIKE 'orders'
 ");
                   $data = mysqli_fetch_assoc($result);
                   $next_increment = $data['Auto_increment']; ?>
-                 <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['order_id'] ?>" readonly class="form-control">
+                 <input type="text" name="next_increment" id="next_increment" value="SS-S-<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['order_id'] ?>" readonly class="form-control">
                </div>
                <div class="col-md-2">
-                 <label>Order Date</label>
+                 <label> Date</label>
                  <input type="text" name="order_date" id="order_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchOrder['order_date'] ?>" readonly class="form-control">
                </div>
                <input type="hidden" name="credit_sale_type" value="<?= @$credit_sale_type ?>" id="credit_sale_type">
-               <div class="col-md-2">
-                 <label>Bill No</label>
-                 <input type="text" name="bill_no" autocomplete="off" id="get_bill_no" value="<?= @$fetchOrder['bill_no'] ?>" class="form-control">
+               <div class="col-md-1">
+                 <label for="Sale Type">Sale Type</label>
+                 <select name="sale_type" onchange="saleType(this.value)" class="form-control" id="sale_type">
+                   <option <?= isset($_REQUEST['edit_purchase_id']) ? "" : "selected" ?> value="cash" <?= @$fetchOrder['payment_type'] == "cash" ? "selected" : "" ?>>Cash</option>
+                   <option value="credit" <?= @$fetchOrder['payment_type'] == "credit" ? "selected" : "" ?>>Credit</option>
+                 </select>
+
                </div>
-               <div class="col-sm-3">
+               <div class="col-sm-2 cash-sale-div1">
+                 <label>Customer Number</label>
+                 <input type="number" onchange="getCustomer_name(this.value)" value="<?= @$fetchOrder['client_contact'] ?>" autocomplete="off" min="0" class="form-control" name="client_contact" list="phone">
+                 <datalist id="phone">
+                   <?php
+                    $q = mysqli_query($dbc, "SELECT DISTINCT client_contact from orders");
+                    while ($r = mysqli_fetch_assoc($q)) {
+                    ?>
+                     <option value="<?= $r['client_contact'] ?>"><?= $r['client_contact'] ?></option>
+                   <?php   } ?>
+
+                 </datalist>
+               </div>
+               <div class="col-sm-2 cash-sale-div2">
+                 <label>Customer Name</label>
+                 <input type="text" id="sale_order_client_name" value="<?= @$fetchOrder['client_name'] ?>" class="form-control" autocomplete="off" name="sale_order_client_name" list="client_name">
+                 <datalist id="client_name">
+                   <?php
+                    $q = mysqli_query($dbc, "SELECT DISTINCT client_name FROM orders");
+                    while ($r = mysqli_fetch_assoc($q)) {
+                    ?>
+                     <option value="<?= $r['client_name'] ?>"><?= $r['client_name'] ?></option>
+                   <?php   } ?>
+                 </datalist>
+               </div>
+               <div class="col-sm-3 return_days-div">
                  <label>Customer Account</label>
                  <div class="input-group">
 
-                   <select class="form-control" onchange="getBalance(this.value,'customer_account_exp')" name="credit_order_client_name" id="credit_order_client_name" required aria-label="Username" aria-describedby="basic-addon1">
+                   <select class="form-control searchableSelect" onchange="getBalance(this.value,'customer_account_exp')" name="credit_order_client_name" id="credit_order_client_name" aria-label="Username" aria-describedby="basic-addon1">
                      <option value="">Customer Account</option>
                      <?php
                       $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='customer'");
                       while ($r = mysqli_fetch_assoc($q)) {
                       ?>
-                       <option <?= @($fetchOrder['customer_account'] == $r['customer_id']) ? "selected" : "" ?> data-id="<?= $r['customer_id'] ?>" data-contact="<?= $r['customer_phone'] ?>" value="<?= $r['customer_name'] ?>"><?= $r['customer_name'] ?></option>
+                       <option <?= @($fetchOrder['customer_account'] == $r['customer_id']) ? "selected" : "" ?> data-id="<?= $r['customer_id'] ?>" data-contact="<?= $r['customer_phone'] ?>" value="<?= $r['customer_name'] ?>"><?= $r['customer_name'] ?> | <?= $r['customer_phone'] ?></option>
                      <?php   } ?>
                    </select><br />
                  </div>
@@ -96,7 +127,7 @@
                    <?php   } ?>
                  </datalist>
                </div> -->
-               <div class="col-sm-2">
+               <div class="col-sm-2 return_days-div">
                  <label>Return Days</label>
                  <input type="text" id="return_days" value="<?= @$fetchOrder['return_days'] ?>" class="form-control" autocomplete="off" name="return_days" list="return_days_list">
                  <datalist id="return_days_list">
@@ -109,8 +140,8 @@
                  </datalist>
                </div>
              </div> <!-- end of form-group -->
-             <div class="form-group row">
-               <div class="col-6 col-md-2">
+             <div class="form-group row mb-5">
+               <div class="col-6 col-md-1">
                  <label>Product Code</label>
                  <input type="text" name="product_code" autocomplete="off" id="get_product_code" class="form-control">
                </div>
@@ -141,9 +172,17 @@
                  <label>Price</label>
                  <input type="number" min="0" class="form-control" id="get_product_price">
                </div>
+               <div class="col-6 col-sm-1 col-md-1">
+                 <label>Final Price</label>
+                 <input type="number" min="0" readonly class="form-control" id="get_final_rate">
+               </div>
                <div class="col-6 col-sm-2 col-md-2">
                  <label>Quantity</label>
                  <input type="text" class="form-control" id="get_product_quantity" value="1" min="1" name="quantity">
+               </div>
+               <div class="col-6 col-sm-1 col-md-1">
+                 <label>Amount</label>
+                 <input type="number" readonly class="form-control" id="get_product_sale_price">
                </div>
                <div class="col-sm-1">
                  <br>
@@ -161,6 +200,7 @@
                        <th class="text-dark">Product Name</th>
                        <th class="text-dark">Product Details</th>
                        <th class="text-dark">Unit Price</th>
+                       <th class="text-dark">Final Rate</th>
                        <th class="text-dark">Quantity</th>
                        <th class="text-dark">Total Price</th>
                        <th class="text-dark">Action</th>
@@ -171,7 +211,7 @@
                         $q = mysqli_query($dbc, "SELECT  product.*,brands.*,order_item.* FROM order_item INNER JOIN product ON product.product_id=order_item.product_id INNER JOIN brands ON product.brand_id=brands.brand_id   WHERE order_item.order_id='" . base64_decode($_REQUEST['edit_order_id']) . "'");
 
                         while ($r = mysqli_fetch_assoc($q)) {
-
+                          // print_r($r);
                       ?>
                          <tr id="product_idN_<?= $r['product_id'] ?>">
                            <input type="hidden" data-price="<?= $r['rate'] ?>" data-quantity="<?= $r['quantity'] ?>" id="product_ids_<?= $r['product_id'] ?>" class="product_ids" name="product_ids[]" value="<?= $r['product_id'] ?>">
@@ -179,17 +219,19 @@
                            <input type="hidden" id="product_detail_<?= $r['product_id'] ?>" name="product_detail[]" value="<?= $r['product_detail'] ?>">
                            <input type="hidden" id="product_rate_<?= $r['product_id'] ?>" name="product_rates[]" value="<?= $r['rate'] ?>">
                            <input type="hidden" id="product_totalrate_<?= $r['product_id'] ?>" name="product_totalrates[]" value="<?= $r['rate'] ?>">
+                           <input type="hidden" id="product_final_rate_<?= $r['product_id'] ?>" name="product_final_rates[]" value="<?= $r['final_rate'] ?>">
                            <td><?= $r['product_code'] ?></td>
                            <td><?= $r['product_name'] ?></td>
                            <td><?= $r['product_detail'] ?></td>
                            <td><?= $r['rate'] ?></td>
+                           <td><?= $r['final_rate'] ?></td>
                            <td><?= $r['quantity'] ?></td>
                            <td><?= (float)$r['rate'] * (float)$r['quantity'] ?></?>
                            </td>
                            <td>
 
                              <button type="button" onclick="removeByid(`#product_idN_<?= $r['product_id'] ?>`)" class="fa fa-trash text-danger" href="#"></button>
-                             <button type="button" onclick="editByid(<?= $r['product_id'] ?>,`<?= $r['product_code'] ?>`,`<?= $r['product_detail'] ?>`,<?= $r['rate'] ?>,<?= $r['quantity'] ?>)" class="fa fa-edit text-success ml-2 "></button>
+                             <button type="button" onclick="editByid(<?= $r['product_id'] ?>,`<?= $r['product_code'] ?>`,`<?= $r['product_detail'] ?>`,<?= $r['rate'] ?>,<?= $r['quantity'] ?>, <?= $r['final_rate'] ?>)" class="fa fa-edit text-success ml-2 "></button>
 
                            </td>
                          </tr>
@@ -199,52 +241,56 @@
 
                    <tfoot>
                      <tr>
-                       <td colspan="3"></td>
+                       <td colspan="5"></td>
 
                        <td class="table-bordered"> Sub Total :</td>
                        <td class="table-bordered" id="product_total_amount"><?= @$fetchOrder['total_amount'] ?></td>
+                       <td class="table-bordered"> </td>
+                     </tr>
+                     <tr>
+                       <td colspan="5"></td>
+
                        <td class="table-bordered"> Discount :</td>
                        <td class="table-bordered" id="getDiscount">
-                         <div class="row">
-
-                           <div class="col-sm-6 pr-0">
-
-                             <input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm " value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchOrder['discount'] ?>" min="0" max="100" name="ordered_discount">
-
-                           </div>
-                           <div class="col-sm-6 pl-0">
-                             <input onkeyup="getOrderTotal()" type="number" id="freight" class="form-control form-control-sm " placeholder="Freight" value="<?= @$fetchOrder['freight'] ?>" min="0" name="freight">
+                         <div class="">
 
 
-                           </div>
+                           <input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm " value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchOrder['discount'] ?>" min="0" max="100" name="ordered_discount">
+                           <input onkeyup="getOrderTotal()" type="number" id="freight" class="form-control form-control-sm d-none" placeholder="Freight" value="0" min="0" name="freight">
 
                          </div>
                        </td>
+                       <td class="table-bordered"> </td>
                      </tr>
                      <tr>
-                       <td colspan="3" class="border-none"></td>
+                       <td colspan="5"></td>
+
                        <td class="table-bordered"> <strong>Grand Total :</strong> </td>
                        <td class="table-bordered" id="product_grand_total_amount"><?= @$fetchOrder['grand_total'] ?></td>
+                       <td class="table-bordered"> </td>
+                     </tr>
+                     <tr>
+                       <td colspan="5"></td>
+
                        <td class="table-bordered">Paid :</td>
                        <td class="table-bordered">
                          <div class="form-group row">
-                           <div class="col-sm-6">
+                           <div class="col-sm-12">
                              <input type="text" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value=" <?= @isset($fetchOrder['paid']) ? $fetchOrder['paid'] : "0" ?>">
                            </div>
-                           <div class="col-sm-6">
+                           <!-- <div class="col-sm-6">
                              <div class="custom-control custom-switch">
                                <input type="checkbox" class="custom-control-input" id="full_payment_check">
                                <label class="custom-control-label" for="full_payment_check">Full Payment</label>
                              </div>
-                           </div>
+                           </div> -->
                          </div>
                        </td>
+                       <td class="table-bordered"> </td>
                      </tr>
                      <tr>
-                       <td colspan="3" class="border-none"></td>
-                       <td class="table-bordered">Remaing Amount :</td>
-                       <td class="table-bordered"><input type="number" class="form-control form-control-sm" id="remaining_ammount" required readonly name="remaining_ammount" value="<?= @$fetchOrder['due'] ?>">
-                       </td>
+                       <td colspan="5"></td>
+
                        <td class="table-bordered">Account :</td>
                        <td class="table-bordered">
 
@@ -261,11 +307,16 @@
                            </div>
                          </div>
                        </td>
-
-
-
-
+                       <td class="table-bordered"> </td>
                      </tr>
+                     <tr>
+                       <td colspan="5"></td>
+
+                       <td class="table-bordered">Remaing Amount :</td>
+                       <td class="table-bordered"><input type="number" class="form-control form-control-sm" id="remaining_ammount" required readonly name="remaining_ammount" value="<?= @$fetchOrder['due'] ?>">
+                       <td class="table-bordered"> </td>
+                     </tr>
+
 
                    </tfoot>
                  </table>

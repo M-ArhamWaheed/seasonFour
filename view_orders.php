@@ -22,12 +22,12 @@
                             <table class="table  dataTable" id="view_orders_tb">
                   <thead>
                     <tr>
-                      <th class="text-dark">#</th>
+                      <th class="text-dark"> Date</th>
                       <th class="text-dark">Customer Name</th>
-                      <th class="text-dark">Customer Contact</th>
-                      <th class="text-dark">Order Date</th>
+                      <th class="text-dark">Phone</th>
                       <th class="text-dark">Amount</th>
-                      <th class="text-dark">Order Type</th>
+                      <th class="text-dark">Comment</th>
+                      <th class="text-dark">Sale Type</th>
                       <th class="text-dark">Action</th>
                     </tr>
                   </thead>
@@ -40,16 +40,16 @@
 
                        ?>
                        <tr>
-                          <td><?=$r['order_id']?></td>
+                         <td><?=$r['order_date']?></td>
                           <td><?=ucfirst($r['client_name'])?></td>
                           <td><?=$r['client_contact']?></td>
-                          <td><?=$r['order_date']?></td>
                           <td><?=$r['grand_total']?></td>
+                          <td><?=$r['order_narration']?></td>
                            <td><?=$r['payment_type']?></td>
                           
                 
                          
-                          <td>
+                          <td class="d-flex">
                             <?php  if (@$get_company['sale_interface']=="barcode") {
                                       $cash_sale_url="cash_salebarcode.php";
                                       $credit_sale_url="credit_sale.php";
@@ -62,7 +62,7 @@
                                     }
                             ?>
                            <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin" AND $r['payment_type']=="cash_in_hand"): ?>
-                           <form action="<?=$cash_sale_url?>" method="POST">
+                           <form action="credit_sale.php?credit_type=15days" method="POST">
                               <input type="hidden" name="edit_order_id" value="<?=base64_encode($r['order_id'])?>">
                               <button type="submit" class="btn btn-admin btn-sm m-1" >Edit</button>
                             </form>
@@ -70,7 +70,7 @@
  
                           <?php   endif; ?>
                            <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin" AND $r['payment_type']=="credit_sale"): ?>
-                           <form action="<?=$credit_sale_url?>" method="POST">
+                           <form action="credit_sale.php?credit_type=15days" method="POST">
 
                               <input type="hidden" name="edit_order_id" value="<?=base64_encode($r['order_id'])?>">
                               <input type="hidden" name="credit_type" value="<?=$r['credit_sale_type']?>">
@@ -90,7 +90,6 @@
                           
 
                              <a target="_blank" href="print_sale.php?type=order&id=<?=$r['order_id']?>" class="btn btn-admin2 btn-sm m-1">Print</a>
-                              <a target="_blank" href=" print_gatepass.php?type=order&id=<?=$r['order_id']?>" class="btn btn-admin2 btn-sm my-1">Gatepass</a>
                             </td>
                        </tr>
                      <?php  } ?>
