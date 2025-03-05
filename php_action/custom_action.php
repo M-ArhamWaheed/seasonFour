@@ -979,7 +979,6 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 
 		$data = [
 			'purchase_date' => $_REQUEST['purchase_date'],
-			'bill_no' => $_REQUEST['bill_no'],
 			'client_name' => @$_REQUEST['cash_purchase_supplier'],
 			'client_contact' => @$_REQUEST['client_contact'],
 			'purchase_narration' => @$_REQUEST['purchase_narration'],
@@ -1034,7 +1033,7 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 
 					$x++;
 				} //end of foreach
-				$total_grand = $total_ammount - $total_ammount * ((float)$_REQUEST['ordered_discount'] / 100);
+				$total_grand = $total_ammount - @$_REQUEST['ordered_discount'];
 
 				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
 				if ($_REQUEST['payment_type'] == "credit_purchase") :
@@ -1138,7 +1137,7 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 
 					$x++;
 				} //end of foreach
-				$total_grand = $total_ammount - $total_ammount * ((float)$_REQUEST['ordered_discount'] / 100);
+				$total_grand =  $total_ammount - @$_REQUEST['ordered_discount'];
 				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
 
 
@@ -1490,7 +1489,6 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 					$order_items = [
 						'product_id' => $_REQUEST['product_ids'][$x],
 						'rate' => $product_rates,
-						'sale_rate' => $product_salerates,
 						'total' => $total,
 						'lpo_id' => $last_id,
 						'product_detail' => @$_REQUEST['product_detail'][$x],
@@ -1570,7 +1568,6 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 					$purchase_item = [
 						'product_id' => $_REQUEST['product_ids'][$x],
 						'rate' => $product_rates,
-						'sale_rate' => $product_salerates,
 						'total' => $total,
 						'lpo_id' => $_REQUEST['product_purchase_id'],
 						'product_detail' => @$_REQUEST['product_detail'][$x],

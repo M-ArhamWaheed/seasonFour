@@ -265,17 +265,3 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 <?php include_once 'includes/foot.php'; ?>
 
 
-<script>
-  $(document).ready(function() {
-    // Function to calculate and update the quantity
-    function calculateQuantity() {
-      var price = $("#get_product_price").val() || 0;
-      var quantity = $("#get_product_quantity").val() || 0;
-      var total_price = price * quantity;
-      $("#get_product_sale_price").val(total_price);
-    }
-
-    // Bind the calculate function to input changes
-    $("#get_product_price, #get_product_quantity").on("input", calculateQuantity);
-  });
-</script>

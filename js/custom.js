@@ -667,6 +667,7 @@ $("#addProductPurchase").on("click", function () {
 `);
 
       getOrderTotal();
+      $("#purchase_type").change();
     }
   } else {
     if (max_qty < product_quantity) {
@@ -722,8 +723,9 @@ function getOrderTotal() {
   }
 
   getRemaingAmount();
+  $("#purchase_type").change();
 }
-function editByid(id, code, pro_details, price,qty) {
+function editByid(id, code, pro_details, price, qty) {
   // alert(pro_details);
   $("#get_product_name").val(id);
 
@@ -1171,3 +1173,30 @@ function setAmountPaid(id, paid) {
     }
   });
 }
+
+let purchaseType = (value) => {
+  if (value == "cash") {
+    let total_amount = $("#product_grand_total_amount").text();
+    $("#paid_ammount").val(total_amount);
+    $("#paid_ammount").attr("readonly", true);
+    $("#remaining_ammount").val(0);
+    $("#payment_type").val("cash_purchase");
+  } else {
+    let total_amount = $("#product_grand_total_amount").text();
+    $("#paid_ammount").val(0);
+    $("#remaining_ammount").val(total_amount);
+    $("#paid_ammount").attr("readonly", false);
+    $("#payment_type").val("credit_purchase");
+  }
+};
+
+$(document).ready(function () {
+  function calculateQuantity() {
+    var price = $("#get_product_price").val() || 0;
+    var quantity = $("#get_product_quantity").val() || 0;
+    var total_price = price * quantity;
+    $("#get_product_sale_price").val(total_price);
+  }
+
+  $("#get_product_price, #get_product_quantity").on("input", calculateQuantity);
+});
