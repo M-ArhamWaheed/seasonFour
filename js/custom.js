@@ -656,7 +656,6 @@ $("#addProductPurchase").on("click", function () {
       });
     } else {
       total_price = parseFloat(price) * parseFloat(product_quantity);
-      alert(final_rate);
       $("#purchase_product_tb").append(`
     <tr id="product_idN_${id}">
         <input type="hidden" data-price="${price}" data-quantity="${product_quantity}" 
