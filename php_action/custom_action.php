@@ -1023,12 +1023,12 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 						$qty = (float)$quantity_instock['quantity_instock'] + $product_quantites;
 						$quantity_update = mysqli_query($dbc, "UPDATE product SET  quantity_instock='$qty' WHERE product_id='" . $product_id . "' ");
 					}
-					if (isset($_REQUEST['product_salerates'][$x])) {
-						$product_id = $_REQUEST['product_ids'][$x];
-						$quantity_instock = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT current_rate FROM  product WHERE product_id='" . $product_id . "' "));
-						$current_rate = $_REQUEST['product_salerates'][$x];
-						$quantity_update = mysqli_query($dbc, "UPDATE product SET  current_rate='$current_rate' WHERE product_id='" . $product_id . "' ");
-					}
+					// if (isset($_REQUEST['product_salerates'][$x])) {
+					// 	$product_id = $_REQUEST['product_ids'][$x];
+					// 	$quantity_instock = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT current_rate FROM  product WHERE product_id='" . $product_id . "' "));
+					// 	$current_rate = $_REQUEST['product_salerates'][$x];
+					// 	$quantity_update = mysqli_query($dbc, "UPDATE product SET  current_rate='$current_rate' WHERE product_id='" . $product_id . "' ");
+					// }
 
 
 
