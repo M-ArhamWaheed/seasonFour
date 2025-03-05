@@ -485,6 +485,7 @@ $("#get_product_name").on("change", function () {
       $("#get_product_price").val(response.price);
       $("#get_product_sale_price").val(response.price);
       $("#get_product_detail").val(response.description);
+      $("#get_final_rate").val(response.final_rate);
       $("#instockQty").html("instock :" + response.qty);
       console.log(response.qty);
       if (payment_type == "cash_in_hand" || payment_type == "credit_sale") {
@@ -552,7 +553,7 @@ function getRandomInt(max) {
 $("#addProductPurchase").on("click", function () {
   var total_price = 0;
   var payment_type = $("#payment_type").val();
-
+  var form = $("#quotation_form").val();
   var name = $("#get_product_name :selected").text();
   var pro_details = $("#get_product_detail").val();
 
@@ -563,6 +564,7 @@ $("#addProductPurchase").on("click", function () {
   var product_quantity = $("#get_product_quantity").val();
   product_quantity = parseInt(product_quantity);
   var pro_type = $("#add_pro_type").val();
+  var final_rate = $("#get_final_rate").val();
   var max_qty = $("#get_product_quantity").attr("max");
   max_qty = parseInt(max_qty);
   if (payment_type == "cash_purchase" || payment_type == "credit_purchase") {
@@ -584,7 +586,8 @@ $("#addProductPurchase").on("click", function () {
     id != "" &&
     product_quantity != "" &&
     max_qty >= product_quantity &&
-    code != ""
+    code != "" &&
+    final_rate != ""
   ) {
     $("#get_product_name").val(null).trigger("change");
     $("#add_pro_type").val("add");
@@ -592,6 +595,7 @@ $("#addProductPurchase").on("click", function () {
     $("#get_product_price").val("");
     $("#get_product_sale_price").val("");
     $("#get_product_detail").val("");
+    $("#get_final_rate").val("");
     // $('#get_product_code').trigger('keyup');
     $("#get_product_quantity").val("1");
     $("#get_product_code").focus();
@@ -623,12 +627,20 @@ $("#addProductPurchase").on("click", function () {
             <td>${name}</td>
             <td>${pro_details}</td>
             <td>${price}</td>
+            ${
+              payment_type === "credit_sale"
+                ? `
+              <input type="hidden" id="product_final_rate_${id}" name="product_final_rates[]" value="${final_rate}">
+              <td>${final_rate}</td>
+          `
+                : ""
+            }
             <td>${Currentquantity}</td>
             <td>${total_price}</td>
             <td>
                 <button type="button" onclick="removeByid('#product_idN_${id}')" 
                         class="fa fa-trash text-danger"></button>
-                <button type="button" onclick="editByid(${id}, '${code}', '${pro_details}', '${price}', '${product_quantity}')" 
+                <button type="button" onclick="editByid(${id}, '${code}', '${pro_details}', '${price}', '${product_quantity}' , '${final_rate}')" 
                         class="fa fa-edit text-success"></button>
             </td>
         </tr>
@@ -655,6 +667,14 @@ $("#addProductPurchase").on("click", function () {
         <td>${name}</td>
         <td>${pro_details}</td>
         <td>${price}</td>
+        ${
+          payment_type === "credit_sale"
+            ? `
+          <input type="hidden" id="product_final_rate_${id}" name="product_final_rates[]" value="${final_rate}">
+          <td>${final_rate}</td>
+      `
+            : ""
+        }
         <td>${product_quantity}</td>
         <td>${total_price}</td>
         <td>
@@ -725,12 +745,13 @@ function getOrderTotal() {
   getRemaingAmount();
   $("#purchase_type").change();
 }
-function editByid(id, code, pro_details, price, qty) {
+function editByid(id, code, pro_details, price, qty, final_rate) {
   // alert(pro_details);
   $("#get_product_name").val(id);
 
   $("#get_product_code").val(code);
   $("#get_product_quantity").val(qty);
+  $("#get_final_rate").val(qty);
   let total = price * qty;
   setTimeout(function () {
     $("#get_product_detail").val(pro_details);

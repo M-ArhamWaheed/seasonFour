@@ -23,10 +23,9 @@
             <table class="table  dataTable" id="view_orders_tb">
               <thead>
                 <tr>
-                  <th class="text-dark">#</th>
+                  <th class="text-dark">Date</th>
                   <th class="text-dark">Customer Name</th>
-                  <th class="text-dark">Customer Contact</th>
-                  <th class="text-dark">Order Date</th>
+                  <th class="text-dark">Phone</th>
                   <th class="text-dark">Amount</th>
                   <th class="text-dark">Order Type</th>
                   <th class="text-dark">Action</th>
@@ -39,13 +38,12 @@
                   $c++;
                 ?>
                   <tr class="text-capitalize">
-                    <td><?= $r['quotation_id'] ?></td>
+                    <td><?= $r['quotation_date'] ?></td>
                     <td><?= ucfirst($r['client_name']) ?></td>
                     <td><?= $r['client_contact'] ?></td>
-                    <td><?= $r['quotation_date'] ?></td>
                     <td><?= $r['total_amount'] ?></td>
                     <td class="text-uppercase"><?= $r['payment_type'] ?></td>
-                    <td>
+                    <td class="d-flex">
                       <?php if (@$get_company['sale_interface'] == "barcode") {
                         $cash_sale_url = "cash_salebarcode.php";
                         $credit_sale_url = "credit_sale.php";

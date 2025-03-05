@@ -200,24 +200,24 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                       <td class="table-bordered"> <strong>Net Total :</strong> </td>
                       <td class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
                       <td class="table-bordered"></td>
-
-                      <!-- <td class="table-bordered">Paid :</td> -->
-                      <!-- <td class="table-bordered">
-                        <div class="form-group row">
-                          <div class="col-sm-6">
-                            <input type="number" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
-
-
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="full_payment_check">
-                              <label class="custom-control-label" for="full_payment_check">Full Payment</label>
-                            </div>
-                          </div>
-                        </div>
-                      </td> -->
                     </tr>
+                    
+                                          <!-- <td class="table-bordered">Paid :</td> -->
+                                          <!-- <td class="table-bordered">
+                                            <div class="form-group row">
+                                              <div class="col-sm-6">
+                                                <input type="number" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
+                    
+                    
+                                              </div>
+                                              <div class="col-sm-6">
+                                                <div class="custom-control custom-switch">
+                                                  <input type="checkbox" class="custom-control-input" id="full_payment_check">
+                                                  <label class="custom-control-label" for="full_payment_check">Full Payment</label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td> -->
                     <tr>
                       <td colspan="4" class="border-none"></td>
                       <!-- <td class="table-bordered">Remaing Amount :</td>
