@@ -534,7 +534,7 @@ $total_profit = isset($total_profit) ? $total_profit : 0;
 
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     $bill_no = $row['bill_no'];
-                                                    $grand_total = number_format($row['grand_total']);
+                                                    $grand_total = $row['grand_total'];
                                                     $profit = number_format($row['profit']);
 
                                                     echo "
