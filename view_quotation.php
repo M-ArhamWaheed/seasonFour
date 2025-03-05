@@ -82,7 +82,6 @@
 
 
                       <a target="_blank" href="print_sale.php?type=quotation&id=<?= $r['quotation_id'] ?>" class="btn btn-admin2 btn-sm m-1">Print</a>
-                      <a target="_blank" href=" print_gatepass.php?type=order&id=<?= $r['quotation_id'] ?>" class="btn btn-admin2 btn-sm my-1">Gatepass</a>
                     </td>
                   </tr>
                 <?php  } ?>
