@@ -1035,7 +1035,7 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 
 					$x++;
 				} //end of foreach
-				$total_grand = $total_ammount - @$_REQUEST['ordered_discount'];
+				$total_grand = (float)$total_ammount - (float)@$_REQUEST['ordered_discount'];
 
 				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
 				if ($_REQUEST['payment_type'] == "credit_purchase") :
@@ -1139,7 +1139,7 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 
 					$x++;
 				} //end of foreach
-				$total_grand =  $total_ammount - @$_REQUEST['ordered_discount'];
+				$total_grand = (float)$total_ammount - (float)@$_REQUEST['ordered_discount'];
 				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
 
 

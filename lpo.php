@@ -39,7 +39,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 ");
                 $data = mysqli_fetch_assoc($result);
                 $next_increment = $data['Auto_increment']; ?>
-                <input type="text" name="next_increment" id="next_increment" value="SS-LPO-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
+                <input type="text" name="next_increment" id="next_increment" value="SF-LPO-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
               </div>
               <div class="col-md-2">
                 <label>LPO Date</label>
@@ -190,7 +190,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                     <tr>
                       <td colspan="4" class="table-bordered"></td>
                       <td class="table-bordered"> Discount :</td>
-                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? $fetchPurchase['discount'] : "0" ?>" min="0" max="100" name="ordered_discount">
+                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? $fetchPurchase['discount'] : "0" ?>" min="0" name="ordered_discount">
                       <td class="table-bordered"></td>
 
                       </td>
@@ -201,9 +201,9 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                       <td class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
                       <td class="table-bordered"></td>
                     </tr>
-                    
-                                          <!-- <td class="table-bordered">Paid :</td> -->
-                                          <!-- <td class="table-bordered">
+
+                    <!-- <td class="table-bordered">Paid :</td> -->
+                    <!-- <td class="table-bordered">
                                             <div class="form-group row">
                                               <div class="col-sm-6">
                                                 <input type="number" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
@@ -245,10 +245,9 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-6 offset-6">
-
-                <button class="btn btn-admin float-right " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
-
+              <div class="col-sm-12 d-flex justify-content-end">
+                <a href="lpo.php" class="btn btn-dark pt-2 float-right btn-sm">Add New</a>
+                <button class="btn btn-admin ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
               </div>
             </div>
           </form>
@@ -263,5 +262,3 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 
 </html>
 <?php include_once 'includes/foot.php'; ?>
-
-

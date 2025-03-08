@@ -572,7 +572,7 @@ $("#addProductPurchase").on("click", function () {
     max_qty = getRandomInt(99999999999);
   }
   // console.log(final_rate);
-  
+
   // console.log(max_qty);
   var GrandTotalAva = $("#remaining_ammount").val();
   var ThisTotal = price * product_quantity + Number(GrandTotalAva);
@@ -616,7 +616,6 @@ $("#addProductPurchase").on("click", function () {
           }
           total_price = parseFloat(price) * parseFloat(Currentquantity);
           if (Currentquantity <= max_qty) {
-
             $("#product_idN_" + id).replaceWith(`
         <tr id="product_idN_${id}">
             <input type="hidden" data-price="${price}" data-quantity="${Currentquantity}" 
@@ -1257,3 +1256,29 @@ $(document).ready(function () {
 
   $("#get_product_price, #get_product_quantity").on("input", calculateQuantity);
 });
+
+// Change Date Format
+
+// $(document).ready(function () {
+//   $("input[type='date']").each(function () {
+//     let dateInput = $(this);
+
+//     // Convert and set the initial value
+//     if (dateInput.val()) {
+//       dateInput.val(formatDate(dateInput.val()));
+//     }
+
+//     // On change, reformat the date
+//     dateInput.on("change", function () {
+//       let formattedDate = formatDate($(this).val());
+//       $(this).val(formattedDate);
+//     });
+
+//     // Function to format YYYY-MM-DD to DD-MM-YYYY
+//     function formatDate(date) {
+//       if (!date) return "";
+//       let [year, month, day] = date.split("-");
+//       return `${day}-${month}-${year}`;
+//     }
+//   });
+// });

@@ -158,6 +158,7 @@
         font-size: 16px;
         font-weight: bold;
         text-align: center;
+
     }
 
     .netamount {
@@ -350,6 +351,15 @@
                             </p>
                         </div>
                     </div>
+                    <div class="invoice-details">
+                        <div>
+                            <p class="text-capitalize"><strong>Customer Contact:</strong> <?= $order['client_contact']  ?></p>
+                            <!-- <p><strong>Bill No:</strong> 1996</p> -->
+                        </div>
+                        <div>
+                            
+                        </div>
+                    </div>
                     <table>
                         <thead>
                             <tr>
@@ -361,41 +371,61 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $c = 0; 
-                             $totalAm = 0;
+                            <?php $c = 0;
+                            $totalAm = 0;
                             while ($r = mysqli_fetch_assoc($order_item)) {
                                 $c++;
 
                             ?>
                                 <tr>
                                     <td class="text-center">1</td>
-                                    <td class="text-center" class="descri"><?=strtoupper($r['product_name'])?> | <?=strtoupper($r['product_detail'])?> </td>
+                                    <td class="text-center" class="descri"><?= strtoupper($r['product_name']) ?> | <?= strtoupper($r['product_detail']) ?> </td>
                                     <td class="text-center"><?= $r['quantity'] ?></td>
                                     <td class="text-center"><?= $r['rate'] ?></td>
-                                    <td class="text-center"><?= $r['rate'] *  $r['quantity']?></td>
+                                    <td class="text-center"><?= $r['rate'] *  $r['quantity'] ?></td>
                                 </tr>
                             <?php
                                 $totalQTY += $r['quantity'];
-                                $totalAm+= $r['rate'] *  $r['quantity'];
+                                $totalAm += $r['rate'] *  $r['quantity'];
                             } ?>
                         </tbody>
                         <tfoot>
-                            <tr class="tablefooter">
+                            <tr class="tablefooter" style="font-size: 14px;">
                                 <td></td>
                                 <td></td>
-                                <td><?= $totalQTY ?></td>
                                 <td></td>
-                                <td><?= $totalAm ?></td>
+                                <td>Discount:</td>
+                                <td><?= $order['discount'] ?></td>
                             </tr>
+                            <tr class="tablefooter" style="font-size: 14px;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-sm">Net Amount:</td>
+                                <td><?= $order['grand_total'] ?></td>
+                            </tr>
+                            <?php if ($order['grand_total'] !== "") { ?>
+                                <tr class="tablefooter" style="font-size: 14px;">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-sm">Paid:</td>
+                                    <td><?= $order['paid'] ?></td>
+                                </tr>
+                                <tr class="tablefooter" style="font-size: 14px;">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-sm">Remaining:</td>
+                                    <td><?= $order['due'] ?></td>
+                                </tr>
+                            <?php } ?>
                     </table>
                     </tfoot>
                 </div>
             </div>
 
-            <div class="netamount">
-                <p><strong>Discount:</strong> <?=  $order['discount'] ?></p>
-                <p><strong>Net Amount:</strong> <?=  $order['grand_total'] ?></p>
-            </div>
+
 
             <div>
                 <div class="return">

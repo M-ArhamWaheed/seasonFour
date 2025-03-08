@@ -32,21 +32,21 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
             <input type="hidden" name="payment_type" id="payment_type" value="credit_purchase">
             <input type="hidden" name="lpo_form" id="lpo_form" value="">
             <div class="row form-group">
-              <div class="col-md-2">
-                <label>Purchase ID#</label>
+              <div class="col-md-1">
+                <label> ID#</label>
                 <?php $result = mysqli_query($dbc, "
     SHOW TABLE STATUS LIKE 'purchase'
 ");
                 $data = mysqli_fetch_assoc($result);
                 $next_increment = $data['Auto_increment']; ?>
-                <input type="text" name="next_increment" id="next_increment" value="SS-CP-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['purchase_id'] ?>" readonly class="form-control">
+                <input type="text" name="next_increment" id="next_increment" value="SF-CP-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['purchase_id'] ?>" readonly class="form-control">
               </div>
               <div class="col-md-2">
                 <label>Purchase Date</label>
 
                 <input type="text" name="purchase_date" id="purchase_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchPurchase['purchase_date'] ?>" readonly class="form-control">
               </div>
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <label for="Sale Type">Purchase Type</label>
                 <select name="purchase_type" onchange="purchaseType(this.value)" class="form-control" id="purchase_type">
                   <option value="cash" <?= @$fetchPurchase['payment_type'] == "cash" ? "selected" : "" ?>>Cash</option>
@@ -146,7 +146,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                       <th class="text-dark">Product Details</th>
                       <th class="text-dark">Unit Price</th>
                       <th class="text-dark">Quantity</th>
-                      <th class="text-dark" style="width: 25%;">Total Price</th>
+                      <th class="text-dark" style="width: 25%;">Amount</th>
                       <th class="text-dark">Action</th>
                     </tr>
                   </thead>
@@ -259,10 +259,9 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-6 offset-6">
-
-                <button class="btn btn-admin float-right " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
-
+              <div class="col-sm-12 d-flex justify-content-end">
+                <a href="credit_purchase.php" class="btn btn-dark  pb-2btn-sm">Cancel</a>
+                <button class="btn btn-admin float-right ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
               </div>
             </div>
           </form>

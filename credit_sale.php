@@ -36,26 +36,31 @@
                <input type="hidden" name="form_type" id="form_type" value="credit_sale">
                <input type="hidden" name="quotation_form" id="quotation_form" value="">
 
-               <div class="col-md-1">
-                 <label>ID#</label>
-                 <?php $result = mysqli_query($dbc, "
+              
+               <div class="col-md-4 d-flex ">
+                 <div  class="w-100 pe-1">
+                   <label>ID#</label>
+                   <?php $result = mysqli_query($dbc, "
     SHOW TABLE STATUS LIKE 'orders'
 ");
-                  $data = mysqli_fetch_assoc($result);
-                  $next_increment = $data['Auto_increment']; ?>
-                 <input type="text" name="next_increment" id="next_increment" value="SS-S-<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['order_id'] ?>" readonly class="form-control">
-               </div>
-               <div class="col-md-2">
-                 <label> Date</label>
-                 <input type="text" name="order_date" id="order_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchOrder['order_date'] ?>" readonly class="form-control">
-               </div>
-               <input type="hidden" name="credit_sale_type" value="<?= @$credit_sale_type ?>" id="credit_sale_type">
-               <div class="col-md-1">
-                 <label for="Sale Type">Sale Type</label>
-                 <select name="sale_type" onchange="saleType(this.value)" class="form-control" id="sale_type">
-                   <option <?= isset($_REQUEST['edit_purchase_id']) ? "" : "selected" ?> value="cash" <?= @$fetchOrder['payment_type'] == "cash" ? "selected" : "" ?>>Cash</option>
-                   <option value="credit" <?= @$fetchOrder['payment_type'] == "credit" ? "selected" : "" ?>>Credit</option>
-                 </select>
+                    $data = mysqli_fetch_assoc($result);
+                    $next_increment = $data['Auto_increment']; ?>
+                   <input type="text" name="next_increment" id="next_increment" value="SF-S-<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['order_id'] ?>" readonly class="form-control">
+                 </div>
+
+                 <div class="w-100 pe-1 pl-1">
+                   <label> Date</label>
+                   <input type="text" name="order_date" id="order_date" value="<?= @empty($_REQUEST['edit_order_id']) ? date('Y-m-d') : $fetchOrder['order_date'] ?>" readonly class="form-control">
+                   <input type="hidden" name="credit_sale_type" value="<?= @$credit_sale_type ?>" id="credit_sale_type">
+                 </div>
+
+                 <div class="w-100 pl-1">
+                   <label for="Sale Type">Sale Type</label>
+                   <select name="sale_type" onchange="saleType(this.value)" class="form-control" id="sale_type">
+                     <option <?= isset($_REQUEST['edit_purchase_id']) ? "" : "selected" ?> value="cash" <?= @$fetchOrder['payment_type'] == "cash" ? "selected" : "" ?>>Cash</option>
+                     <option value="credit" <?= @$fetchOrder['payment_type'] == "credit" ? "selected" : "" ?>>Credit</option>
+                   </select>
+                 </div>
 
                </div>
                <div class="col-sm-2 cash-sale-div1">
@@ -142,7 +147,7 @@
              </div> <!-- end of form-group -->
              <div class="form-group row mb-5">
                <div class="col-6 col-md-1">
-                 <label>Product Code</label>
+                 <label>Code</label>
                  <input type="text" name="product_code" autocomplete="off" id="get_product_code" class="form-control">
                </div>
                <div class="col-6 col-md-2">
@@ -202,7 +207,7 @@
                        <th class="text-dark">Unit Price</th>
                        <th class="text-dark">Final Rate</th>
                        <th class="text-dark">Quantity</th>
-                       <th class="text-dark">Total Price</th>
+                       <th class="text-dark">Amount</th>
                        <th class="text-dark">Action</th>
                      </tr>
                    </thead>
@@ -255,7 +260,7 @@
                          <div class="">
 
 
-                           <input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm " value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchOrder['discount'] ?>" min="0" max="100" name="ordered_discount">
+                           <input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm " value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchOrder['discount'] ?>" min="0"  name="ordered_discount">
                            <input onkeyup="getOrderTotal()" type="number" id="freight" class="form-control form-control-sm d-none" placeholder="Freight" value="0" min="0" name="freight">
 
                          </div>
@@ -323,9 +328,9 @@
                </div>
              </div>
              <div class="row">
-               <div class="col-sm-6 offset-6">
-
-                 <button class="btn btn-admin float-right " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
+               <div class="col-sm-12 d-flex justify-content-end">
+                 <a href="credit_sale.php?credit_type=15days" class="btn btn-dark pt-2 float-right btn-sm">Add New</a>
+                 <button class="btn btn-admin ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
 
                </div>
              </div>

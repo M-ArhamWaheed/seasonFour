@@ -36,13 +36,13 @@ if (!empty($_REQUEST['edit_order_id'])) {
               <input type="hidden" name="payment_type" id="payment_type" value="credit_sale">
               <input type="hidden" name="quotation_form" id="quotation_form" value="quotation_form">
               <div class="col-md-1">
-                <label>Quotation ID#</label>
+                <label> ID#</label>
                 <?php $result = mysqli_query($dbc, "
     SHOW TABLE STATUS LIKE 'orders'
 ");
                 $data = mysqli_fetch_assoc($result);
                 $next_increment = $data['Auto_increment']; ?>
-                <input type="text" name="next_increment" id="next_increment" value="SS-Q-<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['quotation_id'] ?>" readonly class="form-control">
+                <input type="text" name="next_increment" id="next_increment" value="SF-Q-<?= @empty($_REQUEST['edit_order_id']) ? $next_increment : $fetchOrder['quotation_id'] ?>" readonly class="form-control">
               </div>
               <div class="col-md-2">
                 <label>Date</label>
@@ -213,10 +213,10 @@ if (!empty($_REQUEST['edit_order_id'])) {
 
                           </div>
                           <div class="col-sm-6 pl-0">
-                             <input onkeyup="getOrderTotal()" type="number" id="freight" class="form-control form-control-sm d-none" placeholder="Freight" value="0" min="0" name="freight">
+                            <input onkeyup="getOrderTotal()" type="number" id="freight" class="form-control form-control-sm d-none" placeholder="Freight" value="0" min="0" name="freight">
 
 
-                           </div>
+                          </div>
 
 
                         </div>
@@ -236,9 +236,9 @@ if (!empty($_REQUEST['edit_order_id'])) {
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-6 offset-6">
-
-                <button class="btn btn-admin float-right " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
+              <div class="col-sm-12 d-flex justify-content-end">
+                <a href="quotation.php" class="btn btn-dark pt-2 float-right btn-sm">Add New</a>
+                <button class="btn btn-admin ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
 
               </div>
             </div>
