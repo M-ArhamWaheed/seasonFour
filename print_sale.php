@@ -352,23 +352,24 @@
                 </div>
                 <div class="content">
                     <div class="invoice-details">
-                        <div>
-                            <p class="text-capitalize"><strong>Customer Contact :</strong> <?= $order['client_contact']  ?></p>
-                            <!-- <p><strong>Bill No:</strong> 1996</p> -->
-                        </div>
-                        <div>
+                    <div>
                             <p class="text-capitalize"><strong>ID :</strong> <?= $unique_id  ?></p>
                         </div>
-                    </div>
-                    <div class="invoice-details">
+                     
                         <div>
                             <p class="text-capitalize"><strong>Customer Name :</strong> <?= $order['client_name']  ?></p>
                             <!-- <p><strong>Bill No:</strong> 1996</p> -->
                         </div>
-                        <div>
+                    </div>
+                    <div class="invoice-details">
+                    <div>
                             <p><strong>DATE:</strong> <?= $date  ?> </p>
                             <!-- <p><strong>TIME:</strong> <?= date($order['timestamp']) ?> -->
                             </p>
+                        </div>
+                        <div>
+                            <p class="text-capitalize"><strong>Customer Contact :</strong> <?= $order['client_contact']  ?></p>
+                            <!-- <p><strong>Bill No:</strong> 1996</p> -->
                         </div>
                     </div>
                     <table>

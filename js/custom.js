@@ -761,7 +761,8 @@ function editByid(id, code, pro_details, price, qty, final_rate) {
   setTimeout(function () {
     $("#get_product_detail").val(pro_details);
     $("#get_product_sale_price").val(total);
-  }, 500);
+    $("#get_product_price").val(price);
+  }, 2000);
   $("#add_pro_type").val("update");
 
   var effect = function () {
