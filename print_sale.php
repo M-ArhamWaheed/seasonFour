@@ -215,6 +215,7 @@
 
         if ($_REQUEST['type'] == "purchase") {
             $nameSHow = 'Supplier';
+            $id_name = "Purchase Id";
             $order = fetchRecord($dbc, "purchase", "purchase_id", $_REQUEST['id']);
             $unique_id = 'SF-CP-' . $order['purchase_id'];
             $comment = $order['purchase_narration'];
@@ -228,6 +229,7 @@
             $order_item = mysqli_query($dbc, "SELECT purchase_item.*,product.* FROM purchase_item INNER JOIN product ON purchase_item.product_id=product.product_id WHERE purchase_item.purchase_id='" . $_REQUEST['id'] . "'");
         } elseif ($_REQUEST['type'] == "order") {
             $nameSHow = 'Customer';
+            $id_name = "Sale Id";
             $order = fetchRecord($dbc, "orders", "order_id", $_REQUEST['id']);
             $unique_id = 'SF-S-' . $order['order_id'];
             $unique_id = $order['purchase_id'];
@@ -252,6 +254,7 @@
             }
         } elseif ($_REQUEST['type'] == "quotation") {
             $nameSHow = 'Customer';
+            $id_name = "Quotation Id";
             $invoice_name = "Quotation";
             $order = fetchRecord($dbc, "quotations", "quotation_id", $_REQUEST['id']);
             $unique_id = 'SF-Q-' . $order['quotation_id'];
@@ -272,6 +275,7 @@
         } elseif ($_REQUEST['type'] == "lpo") {
             $nameSHow = 'Customer';
             $invoice_name = "LPO";
+            $id_name = "LPO Id";
             $order = fetchRecord($dbc, "lpo", "lpo_id", $_REQUEST['id']);
             $unique_id = 'SF-LPO-' . $order['lpo_id'];
             $getDate = $order['lpo_date'];
@@ -353,7 +357,7 @@
                 <div class="content">
                     <div class="invoice-details">
                     <div>
-                            <p class="text-capitalize"><strong>ID :</strong> <?= $unique_id  ?></p>
+                            <p class="text-uppercase"><strong><?=  $id_name ?>  :</strong> <?= $unique_id  ?></p>
                         </div>
                      
                         <div>
