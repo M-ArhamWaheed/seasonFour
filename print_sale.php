@@ -216,19 +216,26 @@
         if ($_REQUEST['type'] == "purchase") {
             $nameSHow = 'Supplier';
             $order = fetchRecord($dbc, "purchase", "purchase_id", $_REQUEST['id']);
+            $unique_id = 'SF-CP-' . $order['purchase_id'];
             $comment = $order['purchase_narration'];
             $table_row = "390px";
             $getDate = $order['purchase_date'];
             if ($order['payment_type'] == "credit_purchase") {
-
-                $order_type = "credit purchase";
+                $invoice_name = "credit purchase invoice";
             } else {
-                $order_type = "cash purchase";
+                $invoice_name = "cash purchase invoice";
             }
             $order_item = mysqli_query($dbc, "SELECT purchase_item.*,product.* FROM purchase_item INNER JOIN product ON purchase_item.product_id=product.product_id WHERE purchase_item.purchase_id='" . $_REQUEST['id'] . "'");
         } elseif ($_REQUEST['type'] == "order") {
             $nameSHow = 'Customer';
             $order = fetchRecord($dbc, "orders", "order_id", $_REQUEST['id']);
+            $unique_id = 'SF-S-' . $order['order_id'];
+            $unique_id = $order['purchase_id'];
+            if ($order['payment_type'] == "credit_sale") {
+                $invoice_name = "Credit Sale Invoice";
+            } else {
+                $invoice_name = "Cash Sale Invoice";
+            }
             $getDate = $order['order_date'];
             $comment = $order['order_narration'];
             $order_item = mysqli_query($dbc, "SELECT order_item.*,product.* FROM order_item INNER JOIN product ON order_item.product_id=product.product_id WHERE order_item.order_id='" . $_REQUEST['id'] . "'");
@@ -245,7 +252,9 @@
             }
         } elseif ($_REQUEST['type'] == "quotation") {
             $nameSHow = 'Customer';
+            $invoice_name = "Quotation";
             $order = fetchRecord($dbc, "quotations", "quotation_id", $_REQUEST['id']);
+            $unique_id = 'SF-Q-' . $order['quotation_id'];
             $getDate = $order['quotation_date'];
             $comment = $order['quotation_narration'];
             $order_item = mysqli_query($dbc, "SELECT quotation_item.*,product.* FROM quotation_item INNER JOIN product ON quotation_item.product_id=product.product_id WHERE quotation_item.quotation_id='" . $_REQUEST['id'] . "'");
@@ -262,7 +271,9 @@
             }
         } elseif ($_REQUEST['type'] == "lpo") {
             $nameSHow = 'Customer';
+            $invoice_name = "LPO";
             $order = fetchRecord($dbc, "lpo", "lpo_id", $_REQUEST['id']);
+            $unique_id = 'SF-LPO-' . $order['lpo_id'];
             $getDate = $order['lpo_date'];
             $comment = $order['lpo_narration'];
             $order_item = mysqli_query($dbc, "SELECT lpo_item.*,product.* FROM lpo_item INNER JOIN product ON lpo_item.product_id=product.product_id WHERE lpo_item.lpo_id='" . $_REQUEST['id'] . "'");
@@ -332,7 +343,7 @@
                 <p>جميع أنواع قطع غيار المكيفات والثلاجات والغسالات</p>
             </div>
             <div class="invo">
-                <h2>INVOICE</h2>
+                <h2 class="text-uppercase"><?= $invoice_name ?></h2>
             </div>
 
             <div class="invoice-bg">
@@ -342,22 +353,22 @@
                 <div class="content">
                     <div class="invoice-details">
                         <div>
-                            <p class="text-capitalize"><strong>Customer:</strong> <?= $order['client_name']  ?></p>
+                            <p class="text-capitalize"><strong>Customer Contact :</strong> <?= $order['client_contact']  ?></p>
+                            <!-- <p><strong>Bill No:</strong> 1996</p> -->
+                        </div>
+                        <div>
+                            <p class="text-capitalize"><strong>ID :</strong> <?= $unique_id  ?></p>
+                        </div>
+                    </div>
+                    <div class="invoice-details">
+                        <div>
+                            <p class="text-capitalize"><strong>Customer Name :</strong> <?= $order['client_name']  ?></p>
                             <!-- <p><strong>Bill No:</strong> 1996</p> -->
                         </div>
                         <div>
                             <p><strong>DATE:</strong> <?= $date  ?> </p>
                             <!-- <p><strong>TIME:</strong> <?= date($order['timestamp']) ?> -->
                             </p>
-                        </div>
-                    </div>
-                    <div class="invoice-details">
-                        <div>
-                            <p class="text-capitalize"><strong>Customer Contact:</strong> <?= $order['client_contact']  ?></p>
-                            <!-- <p><strong>Bill No:</strong> 1996</p> -->
-                        </div>
-                        <div>
-                            
                         </div>
                     </div>
                     <table>
@@ -404,22 +415,25 @@
                                 <td class="text-sm">Net Amount:</td>
                                 <td><?= $order['grand_total'] ?></td>
                             </tr>
-                            <?php if ($order['grand_total'] !== "") { ?>
-                                <tr class="tablefooter" style="font-size: 14px;">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-sm">Paid:</td>
-                                    <td><?= $order['paid'] ?></td>
-                                </tr>
-                                <tr class="tablefooter" style="font-size: 14px;">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-sm">Remaining:</td>
-                                    <td><?= $order['due'] ?></td>
-                                </tr>
-                            <?php } ?>
+                            <?php if ($_REQUEST['type'] !== 'lpo' && $_REQUEST['type'] !== 'quotation') { ?>
+                                <?php if ($order['grand_total'] !== "") { ?>
+                                    <tr class="tablefooter" style="font-size: 14px;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-sm">Paid:</td>
+                                        <td><?= $order['paid'] ?></td>
+                                    </tr>
+                                    <tr class="tablefooter" style="font-size: 14px;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-sm">Remaining:</td>
+                                        <td><?= $order['due'] ?></td>
+                                    </tr>
+                            <?php }
+                            } ?>
+
                     </table>
                     </tfoot>
                 </div>

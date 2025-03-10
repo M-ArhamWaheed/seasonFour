@@ -201,7 +201,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                     </tr>
                     <tr>
                       <td colspan="4" class="table-bordered"></td>
-                      <td class="table-bordered"> <strong>Grand Total :</strong> </td>
+                      <td class="table-bordered"> <strong>Net Total :</strong> </td>
                       <td class="table-bordered" id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
                       </td>
                       <td class="table-bordered"></td>
@@ -232,7 +232,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                       <td class="table-bordered">
 
                         <div class="input-group">
-                          <select required class="form-control" onchange="getBalance(this.value,'payment_account_bl')" name="payment_account" id="payment_account" aria-label="Username" aria-describedby="basic-addon1">
+                          <select  class="form-control" onchange="getBalance(this.value,'payment_account_bl')" name="payment_account" id="payment_account" aria-label="Username" aria-describedby="basic-addon1">
                             <option value="">Select Account</option>
                             <?php $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='bank'");
                             while ($r = mysqli_fetch_assoc($q)): ?>

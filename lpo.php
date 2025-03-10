@@ -246,7 +246,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
             </div>
             <div class="row">
               <div class="col-sm-12 d-flex justify-content-end">
-                <a href="lpo.php" class="btn btn-dark pt-2 float-right btn-sm">Add New</a>
+                <a href="lpo.php" class="btn btn-dark pt-2 float-right btn-sm">Cancel</a>
                 <button class="btn btn-admin ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
               </div>
             </div>

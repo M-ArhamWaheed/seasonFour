@@ -55,16 +55,17 @@ if (@$getCustomer) {
 											<label for="active">Status:</label>
 											<select name="customer_status" required class="form-control ">
 												<option value="1">Active</option>
-												<option value="0">Deactive</option>
+												<option value="0">Inactive</option>
 											</select>
 
 										</div>
 									</div>
+									<?php if ($_REQUEST['type'] == 'customer') { ?>
 										<div class="col-sm-12 my-3 mx-0 px-0">
-
 											<label for="email">Limit Amount:</label>
 											<input type="number" class="form-control" id="check_amount" name="check_amount" placeholder="Amount Here" value="<?= @$Getdata['customer_limit'] ?>" required>
 										</div>
+									<?php } ?>
 
 
 
@@ -105,7 +106,9 @@ if (@$getCustomer) {
 
 									<thead>
 										<tr class="">
-											<th class="text-dark"> ID</th>
+											<?php if ($_REQUEST['expense']) { ?>
+												<th class="text-dark"> ID</th>
+											<?php } ?>
 											<th class="text-dark">Name</th>
 											<th class="text-dark">Email</th>
 											<th class="text-dark">Phone</th>
@@ -125,7 +128,9 @@ if (@$getCustomer) {
 											$customer_id = $r['customer_id'];
 										?>
 											<tr>
-												<td><?= $r['customer_id'] ?></td>
+												<?php if ($_REQUEST['expense']) { ?>
+													<td><?= $r['customer_id'] ?></td>
+												<?php } ?>
 												<td class="text-capitalize"><?= $r['customer_name'] ?></td>
 												<td class="text-lowercase"><?= $r['customer_email'] ?></td>
 												<td><?= $r['customer_phone'] ?></td>

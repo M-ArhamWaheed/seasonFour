@@ -598,6 +598,8 @@ $("#addProductPurchase").on("click", function () {
     $("#get_product_sale_price").val("");
     $("#get_product_detail").val("");
     $("#get_final_rate").val("");
+    $("#instockQty").text("instock :0");
+
     // $('#get_product_code').trigger('keyup');
     $("#get_product_quantity").val("1");
     $("#get_product_code").focus();
@@ -1205,8 +1207,10 @@ let purchaseType = (value) => {
     $("#paid_ammount").attr("readonly", true);
     $("#remaining_ammount").val(0);
     $("#payment_type").val("cash_purchase");
+    $("#payment_account").attr("required", true);
   } else {
     let total_amount = $("#product_grand_total_amount").text();
+    $("#payment_account").attr("required", false);
     $("#paid_ammount").val(0);
     $("#remaining_ammount").val(total_amount);
     $("#paid_ammount").attr("readonly", false);
