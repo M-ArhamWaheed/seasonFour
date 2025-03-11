@@ -44,12 +44,11 @@
                     <td><?= $r['total_amount'] ?></td>
                     <td class="text-uppercase"><?= $r['quotation_narration'] ?></td>
                     <td class="d-flex">
-                      
                       <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "quotation"): ?>
                         <form action="quotation.php" method="POST">
 
                           <input type="hidden" name="edit_order_id" value="<?= base64_encode($r['quotation_id']) ?>">
-                          <input type="hidden" name="credit_type" value="<?= $r['credit_sale_type'] ?>">
+                          <input type="hidden" name="credit_type" value="quotation">
 
                           <button type="submit" class="btn btn-admin btn-sm m-1">Edit</button>
                         </form>
