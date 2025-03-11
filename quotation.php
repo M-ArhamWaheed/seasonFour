@@ -108,7 +108,7 @@ if (!empty($_REQUEST['edit_order_id'])) {
                   $result = mysqli_query($dbc, "SELECT * FROM product WHERE status=1 ");
                   while ($row = mysqli_fetch_array($result)) {
                     $getBrand = fetchRecord($dbc, "brands", "brand_id", $row['brand_id']);
-                    $getCat = fetchRecord($dbc, "categories", "categories_id", $row['categories_id']);
+                    $getCat = fetchRecord($dbc, "categories", "categories_id", $row['category_id']);
                   ?>
 
                     <option data-price="<?= $row["current_rate"] ?>" <?= empty($r['product_id']) ? "" : "selected" ?> value="<?= $row["product_id"] ?>">
@@ -237,7 +237,7 @@ if (!empty($_REQUEST['edit_order_id'])) {
             </div>
             <div class="row">
               <div class="col-sm-12 d-flex justify-content-end">
-                <a href="quotation.php" class="btn btn-dark pt-2 float-right btn-sm">Add New</a>
+                <a href="quotation.php" class="btn btn-dark pt-2 float-right btn-sm">Cancel</a>
                 <button class="btn btn-admin ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
 
               </div>

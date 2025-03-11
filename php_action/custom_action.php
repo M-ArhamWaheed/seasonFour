@@ -488,7 +488,10 @@ if (isset($_REQUEST['get_products_list'])) {
 		$q = mysqli_query($dbc, "SELECT * FROM product WHERE product_code LIKE '%" . $_REQUEST['get_products_list'] . "%' AND status=1 ");
 		if (mysqli_num_rows($q) > 0) {
 			while ($r = mysqli_fetch_assoc($q)) {
-				echo '<option value="' . $r['product_id'] . '">' . $r['product_name'] . '</option>';
+				$getBrand = fetchRecord($dbc, "brands", "brand_id", $r['brand_id']);
+				$getCat = fetchRecord($dbc, "categories", "categories_id", $r['category_id']);
+				echo '<option value="' . $r['product_id'] . '">' . $r["product_name"] . ' | ' . @$getBrand["brand_name"] . ' (' . @$getCat["categories_name"] . ')</option>';
+
 			}
 		} else {
 			echo '<option value="">Not Found</option>';

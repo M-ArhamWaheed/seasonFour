@@ -156,16 +156,16 @@
                  <select class="form-control searchableSelect" id="get_product_name" name="product_id">
                    <option value="">Select Product</option>
                    <?php
-                    $result = mysqli_query($dbc, "SELECT * FROM product WHERE status=1 ");
-                    while ($row = mysqli_fetch_array($result)) {
-                      $getBrand = fetchRecord($dbc, "brands", "brand_id", $row['brand_id']);
-                      $getCat = fetchRecord($dbc, "categories", "categories_id", $row['categories_id']);
-                    ?>
+                  $result = mysqli_query($dbc, "SELECT * FROM product WHERE status=1 ");
+                  while ($row = mysqli_fetch_array($result)) {
+                    $getBrand = fetchRecord($dbc, "brands", "brand_id", $row['brand_id']);
+                    $getCat = fetchRecord($dbc, "categories", "categories_id", $row['category_id']);
+                  ?>
 
-                     <option data-price="<?= $row["current_rate"] ?>" <?= empty($r['product_id']) ? "" : "selected" ?> value="<?= $row["product_id"] ?>">
-                       <?= $row["product_name"] ?> | <?= @$getBrand["brand_name"] ?>(<?= @$getCat["categories_name"] ?>) </option>
+                    <option data-price="<?= $row["current_rate"] ?>" <?= empty($r['product_id']) ? "" : "selected" ?> value="<?= $row["product_id"] ?>">
+                      <?= $row["product_name"] ?> | <?= @$getBrand["brand_name"] ?>(<?= @$getCat["categories_name"] ?>) </option>
 
-                   <?php   } ?>
+                  <?php   } ?>
                  </select>
                  <span class="text-center w-100" id="instockQty"></span>
                </div>
@@ -270,7 +270,7 @@
                      <tr>
                        <td colspan="5"></td>
 
-                       <td class="table-bordered"> <strong>Grand Total :</strong> </td>
+                       <td class="table-bordered"> <strong>Net Total :</strong> </td>
                        <td class="table-bordered" id="product_grand_total_amount"><?= @$fetchOrder['grand_total'] ?></td>
                        <td class="table-bordered"> </td>
                      </tr>
@@ -329,7 +329,7 @@
              </div>
              <div class="row">
                <div class="col-sm-12 d-flex justify-content-end">
-                 <a href="credit_sale.php?credit_type=15days" class="btn btn-dark pt-2 float-right btn-sm">Add New</a>
+                 <a href="credit_sale.php?credit_type=15days" class="btn btn-dark pt-2 float-right btn-sm">Cancel</a>
                  <button class="btn btn-admin ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
 
                </div>

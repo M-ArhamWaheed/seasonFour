@@ -27,7 +27,7 @@
                   <th class="text-dark">Customer Name</th>
                   <th class="text-dark">Phone</th>
                   <th class="text-dark">Amount</th>
-                  <th class="text-dark">Order Type</th>
+                  <th class="text-dark">Comment</th>
                   <th class="text-dark">Action</th>
                 </tr>
               </thead>
@@ -42,27 +42,9 @@
                     <td><?= ucfirst($r['client_name']) ?></td>
                     <td><?= $r['client_contact'] ?></td>
                     <td><?= $r['total_amount'] ?></td>
-                    <td class="text-uppercase"><?= $r['payment_type'] ?></td>
+                    <td class="text-uppercase"><?= $r['quotation_narration'] ?></td>
                     <td class="d-flex">
-                      <?php if (@$get_company['sale_interface'] == "barcode") {
-                        $cash_sale_url = "cash_salebarcode.php";
-                        $credit_sale_url = "credit_sale.php";
-                      } elseif ($get_company['sale_interface'] == "keyboard") {
-                        $cash_sale_url = "cash_salegui.php";
-                        $credit_sale_url = "credit_sale.php";
-                      } else {
-                        $cash_sale_url = "cash_sale.php";
-                        $credit_sale_url = "credit_sale.php";
-                      }
-                      ?>
-                      <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "cash_in_hand"): ?>
-                        <form action="<?= $cash_sale_url ?>" method="POST">
-                          <input type="hidden" name="edit_order_id" value="<?= base64_encode($r['quotation_id']) ?>">
-                          <button type="submit" class="btn btn-admin btn-sm m-1">Edit</button>
-                        </form>
-
-
-                      <?php endif; ?>
+                      
                       <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "quotation"): ?>
                         <form action="quotation.php" method="POST">
 
