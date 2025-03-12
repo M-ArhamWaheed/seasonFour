@@ -1,330 +1,486 @@
-
 <!DOCTYPE html>
 <html>
 <?php include_once 'includes/head.php';
-    
 
- ?>
-<style type="text/css">
-    .container{
-        height: 100% !important;
-        background-color: #fff;
-        border-bottom: 1px dashed #000 !important;
-    }
-    .border{
 
-        border: 1px solid #000 !important;
+?>
+<style>
+    @page {
+        size: A4;
+        margin: 10mm;
+        /* Adjust margins as needed */
     }
-    .thead_row th{
-        color: #000 !important;
-        font-size: 18px !important;
-        border: 1px solid #000;
-        text-align: center;
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
     }
-     tbody td{
-    
-        border: 1px solid #000;
-        text-align: center;
-    }
-    table{
+
+    .invoice-container {
         width: 100%;
-        
-
+        /* A4 width */
+        min-height: 297mm;
+        /* A4 height */
+        background: white;
+        padding: 10mm;
+        box-shadow: none;
     }
-    .table_row{
 
-        border: 1px solid #000;
-        padding: 0px;
+    @media print {
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .invoice-container {
+            width: 100%;
+            min-height: 297mm;
+            padding: 10mm;
+            box-shadow: none;
+        }
+
+        .bg-img img {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
     }
-    .tbody_row tr td{
-        font-size: 17px;
-        font-weight: bolder;
+
+    .seasonh {
+        font-size: 20px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header p {
+        font-size: 12px;
+    }
+
+    .image {
+        width: 150px;
+        height: 150px;
+    }
+
+    .fright {
+        text-align: end;
+    }
+
+    .heding {
+        color: darkgreen;
+    }
+
+    .heding h2 {
+        font-size: 16px;
+    }
+
+    .heding p {
+        font-size: 14px;
+    }
+
+    .invo {
         text-align: center;
-        color: #000;
-
     }
-    .tfoot_row tr td{
-            font-size: 17px;
-        font-weight: bolder;
-        color: #000;
+
+    .label {
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        background-color: darkgreen;
+        color: white;
+        border-radius: 30px;
+        margin: 0;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .label p {
+        margin: 0;
+    }
+
+    .invoice-bg {}
+
+    .content {
+        position: relative;
+        width: 100%;
+    }
+
+    .bg-img {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        width: 80%;
+        ;
+    }
+
+    .bg-image {
+        width: 400px;
+        opacity: 0.05;
+    }
+
+    .invoice-details {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        background-color: transparent !important;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th {
+        border: 1px dotted darkgreen;
+        padding: 8px;
+        text-align: center;
+        color: darkgreen !important;
+    }
+
+    table td {
+        text-align: center;
+        padding: 10px 0px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+
+    table .descri {
+        text-align: left;
+    }
+
+    .tablefooter {
+        border-top: 1px dotted darkgreen !important;
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: bold;
         text-align: center;
 
+    }
+
+    .netamount {
+        text-align: end;
+        padding-right: 30px;
+    }
+
+    .return {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        font-weight: bold;
+        border-bottom: 3px solid black;
+        margin-top: 200px;
+    }
+
+    .footer {
+        margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .centerdiv {
+        margin: 0 5px;
+        font-weight: bold;
+    }
+
+    .center {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .qr {
+        margin-top: 15px;
+        width: 100px;
+    }
+
+    p {
+        font-size: 14px;
     }
 </style>
 
 <body>
-<?php   for ($i=0; $i < 2; $i++) : 
-    $totalQTY= 0;
-            if($i>0){
-           $margin = "margin-top:-270px !important";
-           $copy = "Company Copy";
-           
-       }else{
-         $margin = "";
-           $copy = "Customer Copy";
-       } 
+    <?php for ($i = 0; $i < 1; $i++) :
+        $totalQTY = 0;
+        if ($i > 0) {
+            $margin = "margin-top:-270px !important";
+            $copy = "Company Copy";
+        } else {
+            $margin = "";
+            $copy = "Customer Copy";
+        }
 
-     if ($_REQUEST['type']=="purchase") {
-        $nameSHow = 'Supplier';
-       $order=fetchRecord($dbc,"purchase","purchase_id",$_REQUEST['id']);
-       $comment = $order['purchase_narration'];
-        $table_row="390px";
-       $getDate=$order['purchase_date'];
-         if ($order['payment_type']=="credit_purchase") {
-        
-            $order_type="credit purchase";
-       
-            }else{
-                $order_type="cash purchase";
+        if ($_REQUEST['type'] == "purchase") {
+            $nameSHow = 'Supplier';
+            $id_name = "Purchase Id";
+            $order = fetchRecord($dbc, "purchase", "purchase_id", $_REQUEST['id']);
+            $unique_id = 'SF-CP-' . $order['purchase_id'];
+            $comment = $order['purchase_narration'];
+            $table_row = "390px";
+            $getDate = $order['purchase_date'];
+            if ($order['payment_type'] == "credit_purchase") {
+                $invoice_name = "credit purchase invoice";
+            } else {
+                $invoice_name = "cash purchase invoice";
             }
-    $order_item=mysqli_query($dbc,"SELECT purchase_item.*,product.* FROM purchase_item INNER JOIN product ON purchase_item.product_id=product.product_id WHERE purchase_item.purchase_id='".$_REQUEST['id']."'");
- }elseif($_REQUEST['type']=="order"){
-     $nameSHow = 'Customer';
-  $order=fetchRecord($dbc,"orders","order_id",$_REQUEST['id']);
-   $getDate=$order['order_date'];
-    $comment = $order['order_narration'];
-    $order_item=mysqli_query($dbc,"SELECT order_item.*,product.* FROM order_item INNER JOIN product ON order_item.product_id=product.product_id WHERE order_item.order_id='".$_REQUEST['id']."'");
-    if ($order['payment_type']=="credit_sale") {
-         $table_row="300px";
-        if ($order['payment_type']=="none") {
-            $order_type="credit sale";
-        }else{
-             $order_type=$order['credit_sale_type']." (Credit)";   
-        }
-    }else{
-        $order_type="cash sale";
-        $table_row="350px";
-    }
-
- }elseif($_REQUEST['type']=="quotation"){
-     $nameSHow = 'Customer';
-  $order=fetchRecord($dbc,"quotations","quotation_id",$_REQUEST['id']);
-   $getDate=$order['quotation_date'];
-    $comment = $order['quotation_narration'];
-    $order_item=mysqli_query($dbc,"SELECT quotation_item.*,product.* FROM quotation_item INNER JOIN product ON quotation_item.product_id=product.product_id WHERE quotation_item.quotation_id='".$_REQUEST['id']."'");
-    if ($order['payment_type']=="quotation") {
-         $table_row="300px";
-        if ($order['payment_type']=="none") {
-            $order_type="Quotation";
-        }else{
-             $order_type=" (Quotation)";   
-        }
-    }else{
-        $order_type="Quotation";
-        $table_row="350px";
-    }
-
-}elseif($_REQUEST['type']=="lpo"){
-     $nameSHow = 'Customer';
-  $order=fetchRecord($dbc,"lpo","lpo_id",$_REQUEST['id']);
-   $getDate=$order['lpo_date'];
-    $comment = $order['lpo_narration'];
-    $order_item=mysqli_query($dbc,"SELECT lpo_item.*,product.* FROM lpo_item INNER JOIN product ON lpo_item.product_id=product.product_id WHERE lpo_item.lpo_id='".$_REQUEST['id']."'");
-    if ($order['payment_type']=="lpo") {
-         $table_row="300px";
-        if ($order['payment_type']=="none") {
-            $order_type="LPO";
-        }else{
-             $order_type=" (LPO)";   
-        }
-    }else{
-        $order_type="LPO";
-        $table_row="350px";
-    }
-
-}
-       ?>
-       
-<div class="container">
-<?php //if ($order['payment_type']!="cash_in_hand"): ?>
-                
-           
-            <header>
-                <div class="row">
-                     <div class="col-sm-5">
-                         <!-- <img src="img/logo/<?=$get_company['logo']?>" width="90" height="90" class="img-fluid float-right" style="margin-top: 10px"> -->
-                </div>
-        <div class="col-sm-12 text-center">
-          <h1 style="margin-left: 0px; color: red;font-weight: bold;font-size: 30px"><?=$get_company['name']?></h1>
-          <p style="margin-top: -18px;font-size: 20px;"><u>Mechanical & Electronic Parts</u> </p>
-          <p style="margin-top: -10px; font-weight: bolder;font-size: 15px">PH  No. :<?=$get_company['company_phone']?> - <?=$get_company['personal_phone']?></p>
-          <p style="margin-top: -15px; font-weight: bolder;font-size: 18px;"><?=$get_company['email']?></p>
-          <p style="margin-top: -15px; font-weight: bolder;font-size: 15px"><?=$get_company['address']?> </p>
-
-          
-  
-
-          
-        </div>
-        <center style="width: 100%;margin-top: -5px;"></center>
-      </div>
-            </header>
-             <?php //endif ?>
-    <div class="row">
-        <div class="pt-2  col-sm-6  ">
-        <p class="h4 border p-2 font-weight-bold float-left"> Invoice # <b><?=$_REQUEST['id']?></b></p>
-    </div>
-    <div class="pt-2   col-sm-6">
-        
-         <p class="h4 border p-2 font-weight-bold float-right"> Date :  <b>
-            <?php //getDateFormat("D d-M-Y h:i a",($order['timestamp']))?>
-               <?php 
-               echo $date = date('D d-M-Y h:i A', strtotime($order['timestamp'] . " +10 hours"));
-               ?> 
-
-
-            </b></p>
-    </div>
-    </div>
-<div class="row">
-        <div class="  col-sm-3  ">
-        <p class="h4 border border-bottom-0 text-center p-0 m-0 font-weight-bold"> <?=$nameSHow?> Name </p>
-        <p class="h4 border p-0 m-0 font-weight-bold text-center"><b><?=ucwords($order['client_name'])?></b></p>
-    </div>
-    <div class="col-sm-5">
-        <h2 class="text-center p-0 m-0">Bill</h2>
-        <h4 class="text-center p-0 m-0"><?=@$order_type?></h4>
-    </div>
-    <div class="  col-sm-4 ">
-        <p class="h4 border border-bottom-0 text-center p-0 m-0 font-weight-bold"> <?=$nameSHow?> Address </p>
-        <p class="h4 border p-0 m-0 font-weight-bold text-center"><b><?=$order['client_contact']?></b></p>
-    </div>
-
-    </div>
-    <div class="row table_row mt-4" style="min-height: <?=$table_row?>;">
-        <div class="col-sm-12 p-0">
-            <table class="w-100">
-                <thead class="thead_row">
-                    <th>Sr</th>
-                    <th>DESCRIPTION</th>
-                    <th>PRICE</th>
-                    <th>QUANTITY</th>
-                    <th>TOTAL</th>
-                </thead>
-                <tbody class="tbody_row">
-                        <?php  $c=0; while ($r=mysqli_fetch_assoc($order_item)) { $c++;
-
-                       ?>
-                        <tr>
-                            <td><?=$c?></td>
-                            <td ><?=strtoupper($r['product_name'])?> 
-                            <?php
-                            if($r['product_detail']){
-                            ?>
-                            (<?=$r['product_detail']?>)
-                            <?php
-                        }
-                            ?>
-                        </td>
-                            <td ><?=$r['rate']?></td>
-                            <td ><?=$r['quantity']?></td>
-                            <td ><?=$r['rate']*$r['quantity']?></td>
-                        </tr>
-
-                   <?php 
-                   $totalQTY += $r['quantity'];
-               } ?>
-                    </tbody>
-                    <tfoot class="tfoot_row">
-              
-                           <tr>
-                            <td colspan="3"></td>
-                            <td class="border"><b>Sub Total</b></td>
-                            <td class="border"><?=$order['total_amount']?></td>
-                            </tr>
-                            <tr>
-                            <td colspan="3"></td>
-                            <td class="border"><b>Total Quantity</b></td>
-                            <td class="border"><?=$totalQTY?></td>
-                            </tr>
-                    <?php
-                    if ($order['discount']>0) {
-                       
-                    
-                    ?>
-                     <tr>
-                        <td colspan="3"></td>
-                        <td class="border">DISCOUNT%</td>
-                        <td class="border"><?=$order['discount']?>%</td>
-                    </tr>
-                    <?php
+            $order_item = mysqli_query($dbc, "SELECT purchase_item.*,product.* FROM purchase_item INNER JOIN product ON purchase_item.product_id=product.product_id WHERE purchase_item.purchase_id='" . $_REQUEST['id'] . "'");
+        } elseif ($_REQUEST['type'] == "order") {
+            $nameSHow = 'Customer';
+            $id_name = "Sale Id";
+            $order = fetchRecord($dbc, "orders", "order_id", $_REQUEST['id']);
+            $unique_id = 'SF-S-' . $order['order_id'];
+            $unique_id = $order['purchase_id'];
+            if ($order['payment_type'] == "credit_sale") {
+                $invoice_name = "Credit Sale Invoice";
+            } else {
+                $invoice_name = "Cash Sale Invoice";
+            }
+            $getDate = $order['order_date'];
+            $comment = $order['order_narration'];
+            $order_item = mysqli_query($dbc, "SELECT order_item.*,product.* FROM order_item INNER JOIN product ON order_item.product_id=product.product_id WHERE order_item.order_id='" . $_REQUEST['id'] . "'");
+            if ($order['payment_type'] == "credit_sale") {
+                $table_row = "300px";
+                if ($order['payment_type'] == "none") {
+                    $order_type = "credit sale";
+                } else {
+                    $order_type = $order['credit_sale_type'] . " (Credit)";
                 }
-                    ?>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="border">FREIGHT</td>
-                        
-                        <td class="border"><b><?=empty($order['freight'])?"0":$order['freight']?></b></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="border">GRAND TOTAL</td>
-                        
-                        <td class="border"><b><?=number_format($order['grand_total'],2)?></b></td>
-                    </tr>
-                    <?php if ($_REQUEST['type']=="order" AND $order['payment_type']=="credit_sale"): ?>
-                      
-                     <tr>
-                        <td colspan="3"></td>
-                        <td class="border">Previous Balance</td>
-                        
-                        <td class="border"><b><?=getcustomerBlance($dbc,$order['customer_account'])-$order['due']?></b></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="border">Current Balance</td>
-                        
-                        <td class="border"><b><?=getcustomerBlance($dbc,$order['customer_account'])?></b></td>
-                    </tr>
-                    
-                    <?php endif; ?>   
-                    </tfoot>
-            </table>
-        </div>
-    </div>
-    <?php
-    if($comment):
-    ?>
-    <div class="row" >
-        <table border="1" class="table table-responsive w-100">
-            <tr>
-                <th class="h4">Comment</th>
-                <td class="h5"><?=$comment?></td>
-            </tr>
-        </table>
-    </div>
-    <?php
-endif;
-    ?>
-    <div class="row" style="font-size: 18px">
-                    <div class="col-sm-3 h4">
-                        Prepared By : __________________ 
-                    </div>
-                     <div class="col-sm-6 ">
-                        <?php
-                        if (isset($order['vehicle_no'])) {
-                            // code...
-                        
-                        ?>
-                       <p class="4 mt-1 text-center"> Vehicle No : <b><u><?=strtoupper($order['vehicle_no'])?></u></b></p>
+            } else {
+                $order_type = "cash sale";
+                $table_row = "350px";
+            }
+        } elseif ($_REQUEST['type'] == "quotation") {
+            $nameSHow = 'Customer';
+            $id_name = "Quotation Id";
+            $invoice_name = "Quotation";
+            $order = fetchRecord($dbc, "quotations", "quotation_id", $_REQUEST['id']);
+            $unique_id = 'SF-Q-' . $order['quotation_id'];
+            $getDate = $order['quotation_date'];
+            $comment = $order['quotation_narration'];
+            $order_item = mysqli_query($dbc, "SELECT quotation_item.*,product.* FROM quotation_item INNER JOIN product ON quotation_item.product_id=product.product_id WHERE quotation_item.quotation_id='" . $_REQUEST['id'] . "'");
+            if ($order['payment_type'] == "quotation") {
+                $table_row = "300px";
+                if ($order['payment_type'] == "none") {
+                    $order_type = "Quotation";
+                } else {
+                    $order_type = " (Quotation)";
+                }
+            } else {
+                $order_type = "Quotation";
+                $table_row = "350px";
+            }
+        } elseif ($_REQUEST['type'] == "lpo") {
+            $nameSHow = 'Customer';
+            $invoice_name = "LPO";
+            $id_name = "LPO Id";
+            $order = fetchRecord($dbc, "lpo", "lpo_id", $_REQUEST['id']);
+            $unique_id = 'SF-LPO-' . $order['lpo_id'];
+            $getDate = $order['lpo_date'];
+            $comment = $order['lpo_narration'];
+            $order_item = mysqli_query($dbc, "SELECT lpo_item.*,product.* FROM lpo_item INNER JOIN product ON lpo_item.product_id=product.product_id WHERE lpo_item.lpo_id='" . $_REQUEST['id'] . "'");
+            if ($order['payment_type'] == "lpo") {
+                $table_row = "300px";
+                if ($order['payment_type'] == "none") {
+                    $order_type = "LPO";
+                } else {
+                    $order_type = " (LPO)";
+                }
+            } else {
+                $order_type = "LPO";
+                $table_row = "350px";
+            }
+        }
 
-                        <?php
-                    }
-                        ?>
-                    <p class="mt-1 text-dark text-center"> Software Developed By :<b>Samz Creation (0345-7573667)</b> </p>
-                     <p class="text-dark text-center p-0 m-0"><?=$copy?></p>
+
+        $date = date('D d-M-Y h:i A', strtotime($order['timestamp'] . " +10 hours"));
+
+    ?>
+
+        <div class="invoice-container">
+            <div class="header">
+                <div>
+                    <div class="heding">
+                        <h2><span class="seasonh">season</span> FOUR</h2>
+                        <p>A/C & REFRIGERATION CONTRACTING EST</p>
                     </div>
-                     <div class="col-sm-3 h4">
-                        Recevied By  : _________________ 
+                    <div>
+                        <p>
+                            Farwaniyah Branch Block 4,5t 45-55529970
+                            <i class="fa-brands fa-whatsapp"></i> 66944871
+                        </p>
+                        <p>
+                            Shuwaikh Branch Block 3,5t 53-66945212
+                            <i class="fa-brands fa-whatsapp"></i> 99408640
+                        </p>
+                        <p>Telefex : 24734306</p>
+                        <p><i class="fa-solid fa-envelope"></i> season4-kw@hotmail.com</p>
+                        <p><i class="fa-brands fa-instagram"></i> seasonfourkwt</p>
                     </div>
                 </div>
-</div> <!-- end of container --> 
-<?php endfor; ?>
+                <div class="image"><img class="image" src="img/logo/<?= $get_company['logo'] ?>" alt="" /></div>
+                <div class="fright">
+                    <div class="heding">
+                        <h2>الموسم الرابع</h2>
+                        <p>مؤسسة المقاولات لتكييف الهواء والتبريد</p>
+                    </div>
+                    <div>
+                        <p>
+                            فرع الفروانية قطعة 4.5 45-55529970
+                            <i class="fa-brands fa-whatsapp"></i> 66944871
+                        </p>
+                        <p>
+                            فرع الشويخ قطعة 3.5 53-66945212
+                            <i class="fa-brands fa-whatsapp"></i> 99408640
+                        </p>
+                        <p>تليفليكس : 24734306</p>
+                        <p><i class="fa-solid fa-envelope"></i> season4-kw@hotmail.com</p>
+                        <p><i class="fa-brands fa-instagram"></i> seasonfourkwt</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="label">
+                <p>ALL TYPES OF A/C, REFRIGERATOR, WASHING MACHINE SPARE PARTS</p>
+                <p>جميع أنواع قطع غيار المكيفات والثلاجات والغسالات</p>
+            </div>
+            <div class="invo">
+                <h2 class="text-uppercase"><?= $invoice_name ?></h2>
+            </div>
+
+            <div class="invoice-bg">
+                <div class="bg-img">
+                    <img class="bg-image" src="img/logo/<?= $get_company['logo'] ?>" alt="" />
+                </div>
+                <div class="content">
+                    <div class="invoice-details">
+                    <div>
+                            <p class="text-uppercase"><strong><?=  $id_name ?>  :</strong> <?= $unique_id  ?></p>
+                        </div>
+                     
+                        <div>
+                            <p class="text-capitalize"><strong>Customer Name :</strong> <?= $order['client_name']  ?></p>
+                            <!-- <p><strong>Bill No:</strong> 1996</p> -->
+                        </div>
+                    </div>
+                    <div class="invoice-details">
+                    <div>
+                            <p><strong>DATE:</strong> <?= $date  ?> </p>
+                            <!-- <p><strong>TIME:</strong> <?= date($order['timestamp']) ?> -->
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-capitalize"><strong>Customer Contact :</strong> <?= $order['client_contact']  ?></p>
+                            <!-- <p><strong>Bill No:</strong> 1996</p> -->
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">S.No</th>
+                                <th style="width: 10%;">Description</th>
+                                <th style="width: 10%;">Qty</th>
+                                <th style="width: 10%;">Unit Price</th>
+                                <th style="width: 10%;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $c = 0;
+                            $totalAm = 0;
+                            while ($r = mysqli_fetch_assoc($order_item)) {
+                                $c++;
+
+                            ?>
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center" class="descri"><?= strtoupper($r['product_name']) ?> | <?= strtoupper($r['product_detail']) ?> </td>
+                                    <td class="text-center"><?= $r['quantity'] ?></td>
+                                    <td class="text-center"><?= $r['rate'] ?></td>
+                                    <td class="text-center"><?= $r['rate'] *  $r['quantity'] ?></td>
+                                </tr>
+                            <?php
+                                $totalQTY += $r['quantity'];
+                                $totalAm += $r['rate'] *  $r['quantity'];
+                            } ?>
+                        </tbody>
+                        <tfoot>
+                            <tr class="tablefooter" style="font-size: 14px;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Discount:</td>
+                                <td><?= $order['discount'] ?></td>
+                            </tr>
+                            <tr class="tablefooter" style="font-size: 14px;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-sm">Net Amount:</td>
+                                <td><?= $order['grand_total'] ?></td>
+                            </tr>
+                            <?php if ($_REQUEST['type'] !== 'lpo' && $_REQUEST['type'] !== 'quotation') { ?>
+                                <?php if ($order['grand_total'] !== "") { ?>
+                                    <tr class="tablefooter" style="font-size: 14px;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-sm">Paid:</td>
+                                        <td><?= $order['paid'] ?></td>
+                                    </tr>
+                                    <tr class="tablefooter" style="font-size: 14px;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-sm">Remaining:</td>
+                                        <td><?= $order['due'] ?></td>
+                                    </tr>
+                            <?php }
+                            } ?>
+
+                    </table>
+                    </tfoot>
+                </div>
+            </div>
+
+
+
+            <div>
+                <div class="return">
+                    <p>
+                        Goods can be returned within 14 days original packaging & Invoice
+                    </p>
+                    <p>يمكن إرجاع البضائع خلال 14 يومًا مع العبوة الأصلية والفاتورة</p>
+                </div>
+
+                <div class="footer">
+                    <div>
+                        <img class="qr" src="img/logo/frame.svg" alt="" />
+                    </div>
+                    <div class="centerdiv text-center">
+                        <p>
+                            Please issue The cheque In the name of "Season Four Electronic &
+                            Repairing"
+                        </p>
+                        <p>
+                            "يرجى إصدار الشيك باسم "مؤسسة فصول الاربعة للاجهزة الكهربائية والالكترونية وتصليحها""</p>
+                        <div class="center">
+                            <div><span>Receiver's Sign </span><span> علامة المستقبل</span></div>
+                            <div><span>Salesman's Sign </span><span> علامة البائع</span></div>
+                        </div>
+                    </div>
+                    <div><img class="qr" src="img/logo/frame-2.svg" alt="" /></div>
+                </div>
+            </div>
+        </div><!-- end of container -->
+    <?php endfor; ?>
 
 
 </body>
+
 </html>
 <script type="text/javascript">
     window.print();
- //   window.close();
+    //   window.close();
 </script>

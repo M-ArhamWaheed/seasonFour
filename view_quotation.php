@@ -23,12 +23,11 @@
             <table class="table  dataTable" id="view_orders_tb">
               <thead>
                 <tr>
-                  <th class="text-dark">#</th>
+                  <th class="text-dark">Date</th>
                   <th class="text-dark">Customer Name</th>
-                  <th class="text-dark">Customer Contact</th>
-                  <th class="text-dark">Order Date</th>
+                  <th class="text-dark">Phone</th>
                   <th class="text-dark">Amount</th>
-                  <th class="text-dark">Order Type</th>
+                  <th class="text-dark">Comment</th>
                   <th class="text-dark">Action</th>
                 </tr>
               </thead>
@@ -39,37 +38,17 @@
                   $c++;
                 ?>
                   <tr class="text-capitalize">
-                    <td><?= $r['quotation_id'] ?></td>
+                    <td><?= $r['quotation_date'] ?></td>
                     <td><?= ucfirst($r['client_name']) ?></td>
                     <td><?= $r['client_contact'] ?></td>
-                    <td><?= $r['quotation_date'] ?></td>
                     <td><?= $r['total_amount'] ?></td>
-                    <td class="text-uppercase"><?= $r['payment_type'] ?></td>
-                    <td>
-                      <?php if (@$get_company['sale_interface'] == "barcode") {
-                        $cash_sale_url = "cash_salebarcode.php";
-                        $credit_sale_url = "credit_sale.php";
-                      } elseif ($get_company['sale_interface'] == "keyboard") {
-                        $cash_sale_url = "cash_salegui.php";
-                        $credit_sale_url = "credit_sale.php";
-                      } else {
-                        $cash_sale_url = "cash_sale.php";
-                        $credit_sale_url = "credit_sale.php";
-                      }
-                      ?>
-                      <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "cash_in_hand"): ?>
-                        <form action="<?= $cash_sale_url ?>" method="POST">
-                          <input type="hidden" name="edit_order_id" value="<?= base64_encode($r['quotation_id']) ?>">
-                          <button type="submit" class="btn btn-admin btn-sm m-1">Edit</button>
-                        </form>
-
-
-                      <?php endif; ?>
+                    <td class="text-uppercase"><?= $r['quotation_narration'] ?></td>
+                    <td class="d-flex">
                       <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "quotation"): ?>
                         <form action="quotation.php" method="POST">
 
                           <input type="hidden" name="edit_order_id" value="<?= base64_encode($r['quotation_id']) ?>">
-                          <input type="hidden" name="credit_type" value="<?= $r['credit_sale_type'] ?>">
+                          <input type="hidden" name="credit_type" value="quotation">
 
                           <button type="submit" class="btn btn-admin btn-sm m-1">Edit</button>
                         </form>
@@ -84,7 +63,6 @@
 
 
                       <a target="_blank" href="print_sale.php?type=quotation&id=<?= $r['quotation_id'] ?>" class="btn btn-admin2 btn-sm m-1">Print</a>
-                      <a target="_blank" href=" print_gatepass.php?type=order&id=<?= $r['quotation_id'] ?>" class="btn btn-admin2 btn-sm my-1">Gatepass</a>
                     </td>
                   </tr>
                 <?php  } ?>

@@ -49,7 +49,7 @@
               </div>
               <div class="col-sm-2 mt-2 ">
                 <strong class="text-center"><?=$c?></strong> 
-              </div>
+              </div>    
            </li>
            <?php  
     $c++; }} ?>

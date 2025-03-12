@@ -39,7 +39,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
 ");
                 $data = mysqli_fetch_assoc($result);
                 $next_increment = $data['Auto_increment']; ?>
-                <input type="text" name="next_increment" id="next_increment" value="<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
+                <input type="text" name="next_increment" id="next_increment" value="SF-LPO-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchPurchase['lpo_id'] ?>" readonly class="form-control">
               </div>
               <div class="col-md-2">
                 <label>LPO Date</label>
@@ -53,13 +53,13 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               <div class="col-sm-4">
                 <label>Select Supplier</label>
                 <div class="input-group">
-                  <select class="form-control" name="cash_purchase_supplier" id="credit_order_client_name" required onchange="getBalance(this.value,'customer_account_exp')" aria-label="Username" aria-describedby="basic-addon1">
+                  <select class="form-control searchableSelect" name="cash_purchase_supplier" id="credit_order_client_name" required onchange="getBalance(this.value,'customer_account_exp')" aria-label="Username" aria-describedby="basic-addon1">
                     <option value="">Select Supplier</option>
                     <?php
                     $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='supplier'");
                     while ($r = mysqli_fetch_assoc($q)) {
                     ?>
-                      <option <?= @($fetchPurchase['customer_account'] == $r['customer_id']) ? "selected" : "" ?> data-id="<?= $r['customer_id'] ?>" data-contact="<?= $r['customer_phone'] ?>" value="<?= $r['customer_name'] ?>"><?= $r['customer_name'] ?></option>
+                      <option <?= @($fetchPurchase['customer_account'] == $r['customer_id']) ? "selected" : "" ?> data-id="<?= $r['customer_id'] ?>" data-contact="<?= $r['customer_phone'] ?>" value="<?= $r['customer_name'] ?>"><?= $r['customer_name'] ?> | <?= $r['customer_phone'] ?></option>
                     <?php   } ?>
                   </select>
                   <div class="input-group-prepend">
@@ -111,7 +111,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               <div class="col-6 col-sm-2 col-md-2">
                 <label>Product Details</label>
                 <input type="text" class="form-control" id="get_product_detail">
-              
+
               </div>
               <div class="col-6 col-sm-1 col-md-2">
                 <label>Unit Price</label>
@@ -125,26 +125,25 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                 <label>Amount</label>
                 <input type="number" <?= ($_SESSION['user_role'] == "admin") ? "" : "readonly" ?> class="form-control" id="get_product_sale_price">
               </div>
-              
+
               <div class="col-sm-1">
                 <br>
                 <button type="button" class="btn btn-success btn-sm mt-2 float-right" id="addProductPurchase"><i class="fa fa-plus"></i> <b>Add</b></button>
               </div>
 
             </div>
-            <div class="row">
+            <div class="row mt-5">
               <div class="col-12">
 
                 <table class="table  saleTable" id="myDiv">
                   <thead class="table-bordered">
                     <tr>
                       <th class="text-dark">Code</th>
-                      <th class="text-dark">Product Name</th>
-                      <th class="text-dark">Product Details</th>
+                      <th class="text-dark" style="width: 15%;">Product Name</th>
+                      <th class="text-dark" style="width: 30%;">Product Details</th>
                       <th class="text-dark">Unit Price</th>
-                      <th class="text-dark">Sale Rate</th>
                       <th class="text-dark">Quantity</th>
-                      <th class="text-dark">Total Price</th>
+                      <th class="text-dark">Amount</th>
                       <th class="text-dark">Action</th>
                     </tr>
                   </thead>
@@ -166,14 +165,13 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                           <td><?= $r['product_name'] ?></td>
                           <td><?= $r['product_detail'] ?></td>
                           <td><?= $r['rate'] ?></td>
-                          <td><?= $r['sale_rate'] ?></td>
                           <td><?= $r['quantity'] ?></td>
                           <td><?= (float)$r['rate'] * (float)$r['quantity'] ?></?>
                           </td>
                           <td>
 
                             <button type="button" onclick="removeByid(`#product_idN_<?= $r['product_id'] ?>`)" class="fa fa-trash text-danger" href="#"></button>
-                            <button type="button" onclick="editByid(<?= $r['product_id'] ?>,`<?= $r['product_code'] ?>`,`<?= $r['product_detail'] ?>`,<?= $r['rate'] ?>,<?= $r['sale_rate'] ?>,<?= $r['quantity'] ?>)" class="fa fa-edit text-success ml-2 "></button>
+                            <button type="button" onclick="editByid(<?= $r['product_id'] ?>,`<?= $r['product_code'] ?>`,`<?= $r['product_detail'] ?>`,<?= $r['rate'] ?>,<?= $r['quantity'] ?>)" class="fa fa-edit text-success ml-2 "></button>
 
                           </td>
                         </tr>
@@ -182,36 +180,44 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                   </tbody>
 
                   <tfoot>
-                    <tr>
+                    <tr class="table-bordered">
                       <td colspan="4"></td>
-
                       <td class="table-bordered"> Sub Total :</td>
                       <td class="table-bordered" id="product_total_amount"><?= @$fetchPurchase['total_amount'] ?></td>
-                      <td class="table-bordered"> Discount :</td>
-                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchPurchase['discount'] ?>" min="0" max="100" name="ordered_discount">
+                      <td class="table-bordered"></td>
                       </td>
                     </tr>
                     <tr>
-                      <td colspan="4" class="border-none"></td>
-                      <td class="table-bordered"> <strong>Net Total :</strong> </td>
-                      <td colspan="3" class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
-                      <!-- <td class="table-bordered">Paid :</td> -->
-                      <!-- <td class="table-bordered">
-                        <div class="form-group row">
-                          <div class="col-sm-6">
-                            <input type="number" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
+                      <td colspan="4" class="table-bordered"></td>
+                      <td class="table-bordered"> Discount :</td>
+                      <td class="table-bordered" id="getDiscount"><input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm" value="<?= @empty($_REQUEST['edit_order_id']) ? $fetchPurchase['discount'] : "0" ?>" min="0" name="ordered_discount">
+                      <td class="table-bordered"></td>
 
-
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="full_payment_check">
-                              <label class="custom-control-label" for="full_payment_check">Full Payment</label>
-                            </div>
-                          </div>
-                        </div>
-                      </td> -->
+                      </td>
                     </tr>
+                    <tr>
+                      <td colspan="4" class="table-bordered"></td>
+                      <td class="table-bordered"> <strong>Net Total :</strong> </td>
+                      <td class="table-bordered " id="product_grand_total_amount"><?= @$fetchPurchase['grand_total'] ?></td>
+                      <td class="table-bordered"></td>
+                    </tr>
+
+                    <!-- <td class="table-bordered">Paid :</td> -->
+                    <!-- <td class="table-bordered">
+                                            <div class="form-group row">
+                                              <div class="col-sm-6">
+                                                <input type="number" min="0" class="form-control form-control-sm" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
+                    
+                    
+                                              </div>
+                                              <div class="col-sm-6">
+                                                <div class="custom-control custom-switch">
+                                                  <input type="checkbox" class="custom-control-input" id="full_payment_check">
+                                                  <label class="custom-control-label" for="full_payment_check">Full Payment</label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td> -->
                     <tr>
                       <td colspan="4" class="border-none"></td>
                       <!-- <td class="table-bordered">Remaing Amount :</td>
@@ -239,10 +245,9 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-6 offset-6">
-
-                <button class="btn btn-admin float-right " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
-
+              <div class="col-sm-12 d-flex justify-content-end">
+                <a href="lpo.php" class="btn btn-dark pt-2 float-right btn-sm">Cancel</a>
+                <button class="btn btn-admin ml-2 " name="sale_order_btn" value="print" type="submit" id="sale_order_btn">Save and Print</button>
               </div>
             </div>
           </form>

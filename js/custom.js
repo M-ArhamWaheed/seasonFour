@@ -486,6 +486,7 @@ $("#get_product_name").on("change", function () {
       $("#get_product_price").val(response.price);
       $("#get_product_sale_price").val(response.price);
       $("#get_product_detail").val(response.description);
+      $("#get_final_rate").val(response.final_rate);
       $("#instockQty").html("instock :" + response.qty);
       console.log(response.qty);
       if (payment_type == "cash_in_hand" || payment_type == "credit_sale") {
@@ -553,23 +554,27 @@ function getRandomInt(max) {
 $("#addProductPurchase").on("click", function () {
   var total_price = 0;
   var payment_type = $("#payment_type").val();
-
+  var form = $("#quotation_form").val();
   var name = $("#get_product_name :selected").text();
   var pro_details = $("#get_product_detail").val();
 
   var price = $("#get_product_price").val();
   var sale_price = $("#get_product_sale_price").val();
-  var id = $("#get_product_name :selected").val();
+  var id = $("#get_product_name").val();
   var code = $("#get_product_code").val();
   var product_quantity = $("#get_product_quantity").val();
   product_quantity = parseInt(product_quantity);
   var pro_type = $("#add_pro_type").val();
+  var final_rate = $("#get_final_rate").val();
   var max_qty = $("#get_product_quantity").attr("max");
+
   max_qty = parseInt(max_qty);
   if (payment_type == "cash_purchase" || payment_type == "credit_purchase") {
     max_qty = getRandomInt(99999999999);
   }
-  console.log(max_qty);
+  // console.log(final_rate);
+
+  // console.log(max_qty);
   var GrandTotalAva = $("#remaining_ammount").val();
   var ThisTotal = price * product_quantity + Number(GrandTotalAva);
   //alert(ThisTotal);
@@ -579,18 +584,23 @@ $("#addProductPurchase").on("click", function () {
 
   //      sweeetalert("Remainig Limit Exceed 😊 ","error",1500);
   // }else{
-
+  $("#get_product_detail").val("");
+  $("#get_product_name").val(null).trigger("change");
   if (
     id != "" &&
     product_quantity != "" &&
     max_qty >= product_quantity &&
     code != ""
   ) {
-    $("#get_product_name ").prop("selectedIndex", 0);
+    $("#get_product_name").val(null).trigger("change");
     $("#add_pro_type").val("add");
     $("#get_product_code").val("");
     $("#get_product_price").val("");
     $("#get_product_sale_price").val("");
+    $("#get_product_detail").val("");
+    $("#get_final_rate").val("");
+    $("#instockQty").text("instock :0");
+
     // $('#get_product_code').trigger('keyup');
     $("#get_product_quantity").val("1");
     $("#get_product_code").focus();
@@ -622,15 +632,20 @@ $("#addProductPurchase").on("click", function () {
             <td>${name}</td>
             <td>${pro_details}</td>
             <td>${price}</td>
-            ${sale_price ? `<td>${sale_price}</td>` : ""}
+            ${
+              payment_type === "credit_sale" || payment_type === "cash_in_hand"
+                ? `
+              <input type="hidden" id="product_final_rate_${id}" name="product_final_rates[]" value="${final_rate}">
+              <td>${final_rate}</td>
+          `
+                : ""
+            }
             <td>${Currentquantity}</td>
             <td>${total_price}</td>
             <td>
                 <button type="button" onclick="removeByid('#product_idN_${id}')" 
                         class="fa fa-trash text-danger"></button>
-                <button type="button" onclick="editByid(${id}, '${code}', '${pro_details}', '${price}','${
-              sale_price ? `${sale_price}` : ""
-            }', '${product_quantity}')" 
+                <button type="button" onclick="editByid(${id}, '${code}', '${pro_details}', '${price}', '${product_quantity}' , '${final_rate}')" 
                         class="fa fa-edit text-success"></button>
             </td>
         </tr>
@@ -643,7 +658,6 @@ $("#addProductPurchase").on("click", function () {
       });
     } else {
       total_price = parseFloat(price) * parseFloat(product_quantity);
-
       $("#purchase_product_tb").append(`
     <tr id="product_idN_${id}">
         <input type="hidden" data-price="${price}" data-quantity="${product_quantity}" 
@@ -657,21 +671,28 @@ $("#addProductPurchase").on("click", function () {
         <td>${name}</td>
         <td>${pro_details}</td>
         <td>${price}</td>
-        ${sale_price ? `<td>${sale_price}</td>` : ""}
+        ${
+          payment_type === "credit_sale" || payment_type === "cash_in_hand"
+            ? `
+          <input type="hidden" id="product_final_rate_${id}" name="product_final_rates[]" value="${final_rate}">
+          <td>${final_rate}</td>
+      `
+            : ""
+        }
         <td>${product_quantity}</td>
         <td>${total_price}</td>
         <td>
             <button type="button" onclick="removeByid('#product_idN_${id}')" 
                     class="fa fa-trash text-danger"></button>
-            <button type="button" onclick="editByid(${id}, '${code}', '${pro_details}', '${price}','${
-        sale_price ? `${sale_price}` : ""
-      }', '${product_quantity}')" 
+            <button type="button" onclick="editByid(${id}, '${code}', '${pro_details}', '${price}','${product_quantity}')" 
                     class="fa fa-edit text-success"></button>
         </td>
     </tr>
 `);
 
       getOrderTotal();
+      $("#purchase_type").change();
+      $("#sale_type").change();
     }
   } else {
     if (max_qty < product_quantity) {
@@ -727,15 +748,22 @@ function getOrderTotal() {
   }
 
   getRemaingAmount();
+  $("#purchase_type").change();
+  $("#sale_type").change();
 }
-function editByid(id, code, pro_details, price, sale_price, qty) {
+function editByid(id, code, pro_details, price, qty, final_rate) {
   // alert(pro_details);
-  $(".searchableSelect").val(id);
+  $("#get_product_name").val(id);
 
   $("#get_product_code").val(code);
   $("#get_product_quantity").val(qty);
-  $("#get_product_detail").val(pro_details);
-  $("#get_product_sale_price").val(sale_price);
+  $("#get_final_rate").val(qty);
+  let total = price * qty;
+  setTimeout(function () {
+    $("#get_product_detail").val(pro_details);
+    $("#get_product_sale_price").val(total);
+    $("#get_product_price").val(price);
+  }, 2000);
   $("#add_pro_type").val("update");
 
   var effect = function () {
@@ -1173,11 +1201,99 @@ function setAmountPaid(id, paid) {
     }
   });
 }
+<<<<<<< HEAD
 // $(document).ready(function () {
 //   $(document).on("input", "input[type='number']", function () {
 //       let val = $(this).val();
 //       if (!isNaN(val) && val !== "") {
 //           $(this).val(val); // Ensures the value remains unchanged
 //       }
+=======
+
+let purchaseType = (value) => {
+  if (value == "cash") {
+    let total_amount = $("#product_grand_total_amount").text();
+    $("#paid_ammount").val(total_amount);
+    $("#paid_ammount").attr("readonly", true);
+    $("#remaining_ammount").val(0);
+    $("#payment_type").val("cash_purchase");
+    $("#payment_account").attr("required", true);
+  } else {
+    let total_amount = $("#product_grand_total_amount").text();
+    $("#payment_account").attr("required", false);
+    $("#paid_ammount").val(0);
+    $("#remaining_ammount").val(total_amount);
+    $("#paid_ammount").attr("readonly", false);
+    $("#payment_type").val("credit_purchase");
+  }
+};
+let saleType = (value) => {
+  if (value == "cash") {
+    let total_amount = $("#product_grand_total_amount").text();
+    $("#paid_ammount").val(total_amount);
+    $("#paid_ammount").attr("readonly", true);
+    $("#remaining_ammount").val(0);
+    $("#payment_type").val("cash_in_hand");
+    $("#form_type").val("cash_in_hand");
+    $(".return_days-div").hide();
+    $(".cash-sale-div1").show();
+    $(".cash-sale-div2").show();
+    $(".input-group-prepend").hide();
+    $("#credit_order_client_name").attr("name", "zksjf");
+    $("#sale_order_client_name").attr("name", "sale_order_client_name");
+    $("#client_contact").attr("name", "sdsa");
+  } else {
+    let total_amount = $("#product_grand_total_amount").text();
+    $("#paid_ammount").val(0);
+    $("#payment_type").val("credit_sale");
+    $("#form_type").val("credit_sale");
+    $("#credit_order_client_name").attr("name", "credit_order_client_name");
+    $("#sale_order_client_name").attr("name", "skd");
+    $("#client_contact").attr("name", "client_contact");
+    $("#remaining_ammount").val(total_amount);
+    $("#paid_ammount").attr("readonly", false);
+    $(".return_days-div").show();
+    $(".input-group-prepend").show();
+    $(".cash-sale-div1").hide();
+    $(".cash-sale-div2").hide();
+  }
+};
+
+$(document).ready(function () {
+  $("#sale_type").change();
+  function calculateQuantity() {
+    var price = $("#get_product_price").val() || 0;
+    var quantity = $("#get_product_quantity").val() || 0;
+    var total_price = price * quantity;
+    $("#get_product_sale_price").val(total_price);
+  }
+
+  $("#get_product_price, #get_product_quantity").on("input", calculateQuantity);
+});
+
+// Change Date Format
+
+// $(document).ready(function () {
+//   $("input[type='date']").each(function () {
+//     let dateInput = $(this);
+
+//     // Convert and set the initial value
+//     if (dateInput.val()) {
+//       dateInput.val(formatDate(dateInput.val()));
+//     }
+
+//     // On change, reformat the date
+//     dateInput.on("change", function () {
+//       let formattedDate = formatDate($(this).val());
+//       $(this).val(formattedDate);
+//     });
+
+//     // Function to format YYYY-MM-DD to DD-MM-YYYY
+//     function formatDate(date) {
+//       if (!date) return "";
+//       let [year, month, day] = date.split("-");
+//       return `${day}-${month}-${year}`;
+//     }
+>>>>>>> fe47cb4b2e216567891a58154d34409cfa8c7af4
 //   });
 // });
