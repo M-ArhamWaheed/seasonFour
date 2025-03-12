@@ -40,52 +40,53 @@ $btn_name = isset($_REQUEST['edit_categories_id']) ? "Update" : "Add";
                     id="categories_id" name="categories_id">
 
                 </div>
-                <!-- <div class="col-sm-3">
-                  <label for="">Sale Price</label>
-                  <input type="text" class="form-control" value="<?= @$categories['category_price'] ?>" id="category_price" name="category_price"  min="1"> 
-                </div>
-                 <div class="col-sm-3">
-                  <label for="">Purchase Price</label>
-                  <input type="text" class="form-control" value="<?= @$categories['category_purchase'] ?>" id="category_price" name="category_purchase"  min="1"> 
-                </div> -->
+             
                 <div class="col-sm-4">
                   <label for="categories_country">Country</label>
                   <select class="form-control searchableSelect" id="categories_country" name="categories_country">
                     <option value="<?= @$categories['categories_country'] ?>">Select Country</option>
                     <?php
-                    $countries = [
-                      "United States",
-                      "Canada",
-                      "United Kingdom",
-                      "Australia",
-                      "Germany",
-                      "France",
-                      "Italy",
-                      "Spain",
-                      "India",
-                      "China",
-                      "Japan",
-                      "Brazil",
-                      "Mexico",
-                      "Russia",
-                      "South Africa"
-                    ];
+                   $countries = [
+                    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+                    "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
+                    "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia",
+                    "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso",
+                    "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic",
+                    "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic of the",
+                    "Congo, Republic of the", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus",
+                    "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor",
+                    "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini",
+                    "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana",
+                    "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras",
+                    "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy",
+                    "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South",
+                    "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
+                    "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives",
+                    "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
+                    "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia",
+                    "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia",
+                    "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru",
+                    "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis",
+                    "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
+                    "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia",
+                    "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka",
+                    "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania",
+                    "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+                    "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
+                    "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+                ];
 
-                    $i = 0;
-                    $totalCountries = count($countries);
-
-                    while ($i < $totalCountries) {
-                      $country = $countries[$i];
+                    foreach ($countries as $country) {
+                      // Trim whitespace and compare case-insensitively
+                      $selected = (trim(strtolower(@$categories['categories_country'])) == trim(strtolower($country))) ? 'selected' : '';
                       ?>
-                      <option <?= @$categories['categories_country'] == '$country' ? 'selected' : '' ?>
-                        value="<?= $country ?>">
-                        <?= $country ?>
+                      <option <?= $selected ?> value="<?= htmlspecialchars($country) ?>">
+                          <?= htmlspecialchars($country) ?>
                       </option>
                       <?php
-                      $i++;
-                    }
-                    ?>
-                  </select>
+                  }
+                  ?>
+              </select>
 
                 </div>
 
