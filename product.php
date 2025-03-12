@@ -178,23 +178,25 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
               <table class="table dataTable col-12" style="width: 100%" id="product_tb">
                 <thead>
                   <tr>
-                    <th class="text-dark">#</th>
+                    <!-- <th class="text-dark">#</th> -->
                     <th class="text-dark">Code</th>
                     <th class="text-dark">Name</th>
-                    <th class="text-dark">Brand/Category</th>
+                    <th class="text-dark" style="width: 20%;">Description</th>
+                    <th class="text-dark "style="width: 5%;">Category</th>
+                    <th class="text-dark" style="width: 15%;">Brand</th>
                     <?php
                     if ($UserData['user_role'] == 'admin'):
                       ?>
-                      <th class="text-dark">Purchase</th>
+                      <th class="text-dark" style="width: 20%;">Purchase Rate</th>
                       <?php
                     endif;
                     ?>
-                    <th class="text-dark">Selling Price</th>
-                    <?php if ($get_company['stock_manage'] == 1): ?>
+                    <th class="text-dark" style="width: 15%;">Sale Rate</th>
+                    <!-- <?php if ($get_company['stock_manage'] == 1): ?>
                       <th class="text-dark">Quanity instock</th>
-                    <?php endif; ?>
-                    <th class="d-print-none text-dark
-">Action</th>
+                    <?php endif; ?> -->
+                    <th class="text-dark" style="width: 15%;">Final Rate</th>
+                    <th class="d-print-none text-dark " style="width: 15%;">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -206,10 +208,12 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                     $c++;
                     ?>
                     <tr>
-                      <td><?= $c ?></td>
+                      <!-- <td><?= $c ?></td> -->
                       <td><?= $r['product_code'] ?></td>
                       <td><?= $r['product_name'] ?></td>
-                      <td><?= $brandFetched['brand_name'] ?>/<?= $categoryFetched['categories_name'] ?></td>
+                      <td><?= $r['product_description'] ?></td>
+                      <td><?= $categoryFetched['categories_name'] ?></td>
+                      <td><?= @$brandFetched['brand_name'] ?></td>
                       <?php
                       if ($UserData['user_role'] == 'admin'):
                         ?>
@@ -218,8 +222,9 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                       endif;
                       ?>
                       <td><?= $r['current_rate'] ?>
+                      <td><?= $r['final_rate'] ?>
                       </td>
-                      <?php if ($get_company['stock_manage'] == 1): ?>
+                      <!-- <?php if ($get_company['stock_manage'] == 1): ?>
                         <?php if ($r['quantity_instock'] > $r['alert_at']): ?>
                           <td>
 
@@ -230,8 +235,8 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                           <td><span class="badge p-1  badge-danger"><?= $r['quantity_instock'] ?></span> </td>
 
                         <?php endif; ?>
-                      <?php endif; ?>
-                      <td class="d-print-none">
+                      <?php endif; ?> -->
+                      <td class="d-flex">
 
                         <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin"): ?>
                           <form action="product.php?act=add" method="POST">
@@ -242,11 +247,11 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                         <?php if (@$userPrivileges['nav_delete'] == 1 || $fetchedUserRole == "admin"): ?>
                           <button type="button"
                             onclick="deleteAlert('<?= $r['product_id'] ?>','product','product_id','product_tb')"
-                            class="btn btn-admin2 btn-sm  d-inline-block">Delete</button>
+                            class="btn btn-admin2 btn-sm m-1 d-inline-block">Delete</button>
 
                         <?php endif ?>
                         <a href="print_barcode.php?id=<?= base64_encode($r['product_id']) ?>"
-                          class="btn btn-primary btn-sm">Barcode</a>
+                          class="btn btn-primary btn-sm m-1">Barcode</a>
                       </td>
 
                     </tr>
