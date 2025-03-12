@@ -287,43 +287,4 @@
    <script src="js/apps.js"></script>
    <script src="js/custom.js"></script>
    <script src="js/panel.js"></script>
-   <script>
-     $(document).ready(function() {
-       // Show the input field and hide the dropdown
-       $('#addBrandBtn').on('click', function() {
-         $('#brandDropdownContainer').hide();
-         $('#addBrandBtn').hide();
-         $('#brandInputContainer').show();
-         $('#cancelBrandBtn').show();
-         $('#brand_id').val('').trigger('change');
-       });
-
-       // Hide the input field and show the dropdown
-       $('#cancelBrandBtn').on('click', function() {
-         $('#addBrandBtn').show();
-         $('#cancelBrandBtn').hide();
-         $('#brandInputContainer').hide();
-         $('#brandDropdownContainer').show();
-         $('#new_brand_name').val(''); // Clear the input
-       });
-     });
-     $(document).ready(function() {
-       // Show the input field and hide the dropdown for categories
-       $('#addCategoryBtn').on('click', function() {
-         $('#categoryDropdownContainer').hide();
-         $('#addCategoryBtn').hide();
-         $('#categoryInputContainer').show();
-         $('#cancelCategoryBtn').show();
-         $('#category_id').val('').trigger('change'); // Clear selection
-       });
-
-       // Hide the input field and show the dropdown for categories
-       $('#cancelCategoryBtn').on('click', function() {
-         $('#addCategoryBtn').show();
-         $('#cancelCategoryBtn').hide();
-         $('#categoryInputContainer').hide();
-         $('#categoryDropdownContainer').show();
-         $('#new_category_name').val(''); // Clear the input field
-       });
-     });
-   </script>
+ 
