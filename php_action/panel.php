@@ -154,8 +154,9 @@ if (isset($_REQUEST['add_category_name'])) {
 		$data_array = [
 			'categories_name'=>$_REQUEST['add_category_name'],
 			'categories_status'=>$_REQUEST['categories_status'],
-			'category_price'=>$_REQUEST['category_price'],
-			'category_purchase'=>$_REQUEST['category_purchase'],
+			'category_price'=>@$_REQUEST['category_price'],
+			'category_purchase'=>@$_REQUEST['category_purchase'],
+			'categories_country'=>$_REQUEST['categories_country'],
 		];
 	if ($_REQUEST['categories_id']=='') {
 		if (insert_data($dbc,"categories",$data_array)) {

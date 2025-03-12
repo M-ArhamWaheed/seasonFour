@@ -16,6 +16,7 @@ $(document).ready(function () {
   };
   $("#formData").on("submit", function (e) {
     //console.log('click');
+    // alert("click");
     e.preventDefault();
     var form = $("#formData");
     $.ajax({
@@ -1201,14 +1202,6 @@ function setAmountPaid(id, paid) {
     }
   });
 }
-<<<<<<< HEAD
-// $(document).ready(function () {
-//   $(document).on("input", "input[type='number']", function () {
-//       let val = $(this).val();
-//       if (!isNaN(val) && val !== "") {
-//           $(this).val(val); // Ensures the value remains unchanged
-//       }
-=======
 
 let purchaseType = (value) => {
   if (value == "cash") {
@@ -1294,6 +1287,5 @@ $(document).ready(function () {
 //       let [year, month, day] = date.split("-");
 //       return `${day}-${month}-${year}`;
 //     }
->>>>>>> fe47cb4b2e216567891a58154d34409cfa8c7af4
 //   });
 // });
