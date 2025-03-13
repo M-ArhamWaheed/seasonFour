@@ -210,7 +210,6 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                     <tr>
                       <td colspan="4" class="table-bordered"></td>
                       <td class="table-bordered">Paid :</td>
-<<<<<<< HEAD
                       <td class="table-bordered">
                         <div class="form-group row">
                           <div class="col-sm-6">
@@ -223,19 +222,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                               <input type="checkbox" class="custom-control-input" id="full_payment_check">
                               <label class="custom-control-label" for="full_payment_check">Full Payment</label>
                             </div>
-=======
-                      <td class="table-bordered w-full">
-                        <div class="form-group w-full d-flex  align-items-center">
-                          <div class="w-100">
-                            <input type="number" min="0" <?= isset($_REQUEST['edit_purchase_id']) ? "readonly" : "" ?> class="form-control form-control-sm w-100" id="paid_ammount" required onkeyup="getRemaingAmount()" name="paid_ammount" value="<?= @$fetchPurchase['paid'] ?>">
->>>>>>> fe47cb4b2e216567891a58154d34409cfa8c7af4
-                          </div>
-                          <!-- <div class="custom-control custom-switch pl-5 w-100">
-                            <input type="checkbox" class="custom-control-input" id="full_payment_check">
-                            <label class="custom-control-label" for="full_payment_check">Full Payment</label>
-                          </div> -->
-                        </div>
-                      </td>
+
                       </td>
                       <td class="table-bordered"></td>
 
@@ -247,7 +234,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                       <td class="table-bordered">
 
                         <div class="input-group">
-                          <select  class="form-control" onchange="getBalance(this.value,'payment_account_bl')" name="payment_account" id="payment_account" aria-label="Username" aria-describedby="basic-addon1">
+                          <select class="form-control" onchange="getBalance(this.value,'payment_account_bl')" name="payment_account" id="payment_account" aria-label="Username" aria-describedby="basic-addon1">
                             <option value="">Select Account</option>
                             <?php $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='bank'");
                             while ($r = mysqli_fetch_assoc($q)): ?>
