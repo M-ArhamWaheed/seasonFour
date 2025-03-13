@@ -47,7 +47,7 @@
 
 					?>
 					<tr>
-						<td><?php echo $customer_name; ?>(<?=$row['customer_type']?>)</td>
+						<td class="text-capitalize"><?php echo $customer_name; ?>(<?=$row['customer_type']?>)</td>
 						<td><?php echo $customer_phone; ?></td>
 						<td><?php echo number_format($from_balance['from_balance']); ?></td>
 						<td class="print_hide"><a href="print_balance.php?customer=<?php echo $row[0]; ?>"> <button class="btn btn-info"><span class="glyphicon glyphicon-print"></span> Print</button></td>

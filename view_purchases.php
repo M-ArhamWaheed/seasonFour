@@ -42,9 +42,9 @@
                     <td><?= $r['purchase_date'] ?></td>
                     <td><?= ucfirst($r['client_name']) ?></td>
                     <td><?= $r['client_contact'] ?></td>
-                    <td><?= $r['purchase_narration'] ?></td>
+                    <td class="text-capitalize"><?= $r['purchase_narration'] ?></td>
                     <td><?= $r['grand_total'] ?></td>
-                    <td><?= $r['payment_type'] ?></td>
+                    <td class="text-capitalize"><?= $r['payment_type'] ?></td>
 
 
                     <td class="d-flex">

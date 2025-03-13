@@ -46,8 +46,8 @@
                     <td><?= ucfirst($r['client_name']) ?></td>
                     <td><?= $r['client_contact'] ?></td>
                     <td><?= $r['grand_total'] ?></td>
-                    <td><?= $r['order_narration'] ?></td>
-                    <td><?= $r['payment_type'] ?></td>
+                    <td class="text-capitalize"><?= $r['order_narration'] ?></td>
+                    <td class="text-capitalize"><?= $r['payment_type'] ?></td>
 
 
 

@@ -42,7 +42,7 @@
                     <td><?= ucfirst($r['client_name']) ?></td>
                     <td><?= $r['client_contact'] ?></td>
                     <td><?= $r['total_amount'] ?></td>
-                    <td class="text-uppercase"><?= $r['quotation_narration'] ?></td>
+                    <td class="text-capitalize"><?= $r['quotation_narration'] ?></td>
                     <td class="d-flex">
                       <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "quotation"): ?>
                         <form action="quotation.php" method="POST">

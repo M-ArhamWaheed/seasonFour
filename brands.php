@@ -339,9 +339,9 @@ $btn_name = isset($_REQUEST['edit_brand_id']) ? "Update" : "Add";
                   ?>
                   <tr>
                     <td><?= $c ?></td>
-                    <td><?= @$categoryFetched['categories_name'] ?></td>
-                    <td><?= $r['brand_name'] ?></td>
-                    <td><?= $r['brand_country'] ?></td>
+                    <td class="text-capitalize"><?= @$categoryFetched['categories_name'] ?></td>
+                    <td class="text-capitalize"><?= $r['brand_name'] ?></td>
+                    <td class="text-capitalize"><?= $r['brand_country'] ?></td>
                     <td>
                       <?php if ($r['brand_status'] == 1): ?>
                         Active

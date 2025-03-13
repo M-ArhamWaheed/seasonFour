@@ -43,7 +43,7 @@
                           <td><?=ucfirst($r['client_name'])?></td>
                           <td><?=$r['client_contact']?></td>
                           
-                          <td><?=$r['lpo_narration']?></td>
+                          <td class="text-capitalize"><?=$r['lpo_narration']?></td>
                           <td><?=$r['grand_total']?></td>
                 
                          

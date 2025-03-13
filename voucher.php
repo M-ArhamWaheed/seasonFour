@@ -465,13 +465,13 @@ if (isset($_REQUEST['id'])) {
                        ?>
                        <tr>
                           <td><?=$r['voucher_id']?></td>
-                          <td><?=$customer_id1?></td>
-                          <td><?=@$customer_id2?></td>
+                          <td class="text-capitalize"><?=$customer_id1?></td>
+                          <td class="text-capitalize"><?=@$customer_id2?></td>
                           <td><?=$r['voucher_amount']?></td>
                           <td><?=$r['voucher_hint']?></td>
-                          <td><?=$r['voucher_group']?></td>
-                          <td><?=$r['voucher_date']?></td>
-                          <td><?=$username?></td>
+                          <td class="text-capitalize"><?=$r['voucher_group']?></td>
+                          <td ><?=$r['voucher_date']?></td>
+                          <td class="text-capitalize"><?=$username?></td>
                           <td>
                           <?php if (@$userPrivileges['nav_edit']==1 || $fetchedUserRole=="admin"): ?>
                             <form action="voucher.php" method="POST">

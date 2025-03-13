@@ -90,7 +90,7 @@ if (isset($_REQUEST['edit_expense_id'])) {
                        ?>
                        <tr>
                           <td><?=$c?></td>
-                          <td><?=$r['expense_name']?></td>
+                          <td class="text-capitalize"><?=$r['expense_name']?></td>
                           <td>
                           	<?php if ($r['expense_status']==1): ?>
                           		Active

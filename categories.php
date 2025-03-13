@@ -324,8 +324,8 @@ $btn_name = isset($_REQUEST['edit_categories_id']) ? "Update" : "Add";
                   ?>
                   <tr>
                     <td><?= $c ?></td>
-                    <td><?= $r['categories_name'] ?></td>
-                    <td><?= $r['categories_country'] ?></td>
+                    <td class="text-capitalize"><?= $r['categories_name'] ?></td>
+                    <td class="text-capitalize"><?= $r['categories_country'] ?></td>
                     <!-- <td><?= $r['category_purchase'] ?></td> -->
                     <td>
                       <?php if ($r['categories_status'] == 1): ?>

@@ -45,7 +45,7 @@
 						<td><?=date('D, d-M-Y',strtotime($r['order_date']))?></td>
 						<td>
 							<?php while($fetchOrderGrand=$getOrder->fetch_assoc()): ?>
-								<?php $grand_total+=$fetchOrderGrand['grand_total']; ?>
+								<?php $grand_total+= (float)$fetchOrderGrand['grand_total']; ?>
 							<?php endwhile; ?>
 							<?php echo $grand_total; ?>
 							

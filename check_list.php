@@ -49,11 +49,11 @@
                        ?>
                        <tr>
                           <td><?=$c?></td>
-                          <td><?=$customer_id1?></td>
-                          <td><?=$r['check_bank_name']?></td>
+                          <td class="text-capitalize"><?=$customer_id1?></td>
+                          <td class="text-capitalize"><?=$r['check_bank_name']?></td>
                           <td><?=$r['check_no']?></td>
                           <td><?=@$vouchers['voucher_amount']?></td>
-                          <td><?=$r['check_type']?></td>
+                          <td class="text-capitalize"><?=$r['check_type']?></td>
                           <td><?=$r['check_expiry_date']?></td>
                           <td>
                             <?php if ($r['check_status']==1){ ?>

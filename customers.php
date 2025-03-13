@@ -149,8 +149,8 @@ if (@$getCustomer) {
 														<td><?=date('Y-m-d', strtotime($r['customer_add_date'])); ?></td>
 														<td class="text-capitalize"><?= $r['customer_name'] ?></td>
 														<td><?= $r['customer_phone'] ?></td>
-														<td><?= $r['customer_address'] ?></td>
-														<td><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
+														<td class="text-capitalize"><?= $r['customer_address'] ?></td>
+														<td class="text-capitalize"><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
 
 													<?php } ?>
 													<?php if (@$_REQUEST['type'] == 'expense') { ?>

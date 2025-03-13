@@ -184,7 +184,7 @@
 
     <tr>
       <td><?=$row['order_id']?></td>
-      <td><?=$row['client_name']?> (<?=$row['client_contact']?>)</td>
+      <td class="text-capitalize"><?=$row['client_name']?> (<?=$row['client_contact']?>)</td>
       <td><?=$row['order_date']?></td>
       <td><span style="font-size: 18px;" class=" badge badge-success"><?=$row['paid']?></span> </td>
       <td><span style="font-size: 18px;" class=" badge badge-danger"><?=$row['due']?></span> </td>
@@ -204,7 +204,7 @@
     
      <?php
       $totalPiad += $row['paid'];
-      $totalDue += $row['due'];
+      $totalDue += (float)$row['due'];
      endwhile; ?>
 
      <tr>

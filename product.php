@@ -203,10 +203,10 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                     <tr>
                       <!-- <td><?= $c ?></td> -->
                       <td><?= $r['product_code'] ?></td>
-                      <td><?= $r['product_name'] ?></td>
-                      <td><?= $r['product_description'] ?></td>
-                      <td><?= @$categoryFetched['categories_name'] ?></td>
-                      <td><?= @$brandFetched['brand_name'] ?></td>
+                      <td class="text-capitalize"><?= $r['product_name'] ?></td>
+                      <td class="text-capitalize"><?= $r['product_description'] ?></td>
+                      <td class="text-capitalize"><?= @$categoryFetched['categories_name'] ?></td>
+                      <td class="text-capitalize"><?= @$brandFetched['brand_name'] ?></td>
                       <?php
                       if ($UserData['user_role'] == 'admin'):
                       ?>

@@ -228,7 +228,7 @@ while ($customerR=mysqli_fetch_assoc($customersQ)):
   $net_credit+=$total_credit;
    ?>
       <tr>
-        <td><?=$customerR['customer_name']?></td>
+        <td class="text-capitalize"><?=$customerR['customer_name']?></td>
 
     
 
