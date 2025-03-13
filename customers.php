@@ -57,7 +57,7 @@ if (@$getCustomer) {
 
 											<label for="active">Status:</label>
 											<select name="customer_status" required class="form-control ">
-												<option value="1">Active</option>
+												<option value="1" selected>Active</option>
 												<option value="0">Inactive</option>
 											</select>
 
@@ -66,7 +66,7 @@ if (@$getCustomer) {
 									<?php if ($_REQUEST['type'] == 'customer') { ?>
 										<div class="col-sm-12 my-3 mx-0 px-0">
 											<label for="email">Limit Amount:</label>
-											<input type="number" class="form-control" id="check_amount" name="check_amount" placeholder="Amount Here" value="<?= @$Getdata['customer_limit'] ?>" required>
+											<input type="number" class="form-control" id="check_amount" name="check_amount" placeholder="Amount Here" value="<?= @$Getdata['customer_limit'] ?>" >
 										</div>
 									<?php } ?>
 
@@ -146,7 +146,7 @@ if (@$getCustomer) {
 														<td><?= $r['customer_id'] ?></td>
 													<?php } ?>
 													<?php if (@$_REQUEST['type'] !== 'expense') { ?>
-														<td><?= $r['customer_add_date'] ?></td>
+														<td><?=date('Y-m-d', strtotime($r['customer_add_date'])); ?></td>
 														<td class="text-capitalize"><?= $r['customer_name'] ?></td>
 														<td><?= $r['customer_phone'] ?></td>
 														<td><?= $r['customer_address'] ?></td>
