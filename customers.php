@@ -25,14 +25,14 @@ if (@$getCustomer) {
 									<input type="hidden" name="add_manually_user" value="<?= @$_REQUEST['type'] ?>">
 									<input type="hidden" name="customer_id" value="<?= @$_REQUEST['id'] ?>">
 									<div class="form-group row">
-										<div class="col-sm-6">
+										<div class="col-sm-6 mt-3">
 
 											<label for="email">Name:</label>
 											<input type="text" class="form-control" id="customer_name" name="customer_name" required autofocus="true" placeholder="Full Name" value="<?= @$Getdata['customer_name'] ?>">
 										</div>
 
 										<?php if ($_REQUEST['type'] != "bank" and $_REQUEST['type'] != "expense"): ?>
-											<div class="col-sm-6">
+											<div class="col-sm-6 mt-3">
 
 												<label for="email">Email:</label>
 												<input type="email" class="form-control" id="customer_email" name="customer_email" placeholder="Email" value="<?= @$Getdata['customer_email'] ?>">
@@ -42,7 +42,7 @@ if (@$getCustomer) {
 
 										<?php if ($_REQUEST['type'] != "expense"): ?>
 
-											<div class="col-sm-6">
+											<div class="col-sm-6 mt-3">
 
 												<label for="email">Phone:</label>
 												<input type="number" class="form-control" id="customer_phone" name="customer_phone" placeholder="Phone" value="<?= @$Getdata['customer_phone'] ?>" required>
@@ -51,7 +51,7 @@ if (@$getCustomer) {
 
 
 
-										<div class="col-sm-6">
+										<div class="col-sm-6 mt-3">
 
 
 
@@ -150,7 +150,8 @@ if (@$getCustomer) {
 														<td class="text-capitalize"><?= $r['customer_name'] ?></td>
 														<td><?= $r['customer_phone'] ?></td>
 														<td><?= $r['customer_address'] ?></td>
-														<td><?= $r['customer_status'] ?></td>
+														<td><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
+
 													<?php } ?>
 													<?php if (@$_REQUEST['type'] == 'expense') { ?>
 														<td><?= $r['customer_add_date'] ?></td>

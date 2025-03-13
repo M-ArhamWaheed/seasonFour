@@ -51,7 +51,7 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                     $data = mysqli_fetch_assoc($result);
                     $next_increment = $data['Auto_increment']; ?>
                     <input type="text" name="next_increment" id="next_increment"
-                      value="SF-Prod-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchproduct['product_id'] ?>"
+                      value="SF-PROD-<?= @empty($_REQUEST['edit_purchase_id']) ? $next_increment : $fetchproduct['product_id'] ?>"
                       readonly class="form-control">
                   </div>
 

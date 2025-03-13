@@ -116,6 +116,7 @@ if (!empty($_POST['action']) and $_POST['action'] == "reset_password") {
 /*--------------------------------------Brand and Category-------------------------------------------------------*/
 if (isset($_REQUEST['add_brand_name'])) {
 	$data_array = [
+		'category_id' => $_REQUEST['category_id'],
 		'brand_name' => $_REQUEST['add_brand_name'],
 		'brand_country' => $_REQUEST['brand_country'],
 		'brand_status' => $_REQUEST['brand_status'],
