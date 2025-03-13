@@ -205,7 +205,7 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                       <td><?= $r['product_code'] ?></td>
                       <td><?= $r['product_name'] ?></td>
                       <td><?= $r['product_description'] ?></td>
-                      <td><?= $categoryFetched['categories_name'] ?></td>
+                      <td><?= @$categoryFetched['categories_name'] ?></td>
                       <td><?= @$brandFetched['brand_name'] ?></td>
                       <?php
                       if ($UserData['user_role'] == 'admin'):
