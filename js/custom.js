@@ -32,11 +32,9 @@ $(document).ready(function () {
           $("#formData").each(function () {
             this.reset();
           });
-          setTimeout(function () {
-            location.reload();
-          }, 500);
           $("#tableData").load(location.href + " #tableData > *");
           $(".modal").modal("hide");
+          setTimeout(() => location.reload(), 1000);
         }
         $("#formData_btn").prop("disabled", false);
         console.log(response.sts);

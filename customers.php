@@ -31,21 +31,24 @@ if (@$getCustomer) {
 											<input type="text" class="form-control" id="customer_name" name="customer_name" required autofocus="true" placeholder="Full Name" value="<?= @$Getdata['customer_name'] ?>">
 										</div>
 
-										<div class="col-sm-6">
-											<?php if ($_REQUEST['type'] != "bank" and $_REQUEST['type'] != "expense"): ?>
+										<?php if ($_REQUEST['type'] != "bank" and $_REQUEST['type'] != "expense"): ?>
+											<div class="col-sm-6">
 
 												<label for="email">Email:</label>
 												<input type="email" class="form-control" id="customer_email" name="customer_email" placeholder="Email" value="<?= @$Getdata['customer_email'] ?>">
-											<?php endif ?>
 
-										</div>
-									</div>
-									<div class="form-group row">
-										<div class="col-sm-6">
+											</div>
+										<?php endif ?>
 
-											<label for="email">Phone:</label>
-											<input type="number" class="form-control" id="customer_phone" name="customer_phone" placeholder="Phone" value="<?= @$Getdata['customer_phone'] ?>" required>
-										</div>
+										<?php if ($_REQUEST['type'] != "expense"): ?>
+
+											<div class="col-sm-6">
+
+												<label for="email">Phone:</label>
+												<input type="number" class="form-control" id="customer_phone" name="customer_phone" placeholder="Phone" value="<?= @$Getdata['customer_phone'] ?>" required>
+											</div>
+										<?php endif ?>
+
 
 
 										<div class="col-sm-6">
@@ -68,11 +71,14 @@ if (@$getCustomer) {
 									<?php } ?>
 
 
+									<?php if ($_REQUEST['type'] != "expense"): ?>
 
-									<div class="form-group">
-										<label for="address">Address:</label>
-										<textarea name="customer_address" id="customer_address" cols="30" rows="4" placeholder="Address" class="form-control"><?= @$Getdata['customer_address'] ?></textarea>
-									</div>
+										<div class="form-group">
+											<label for="address">Address:</label>
+											<textarea name="customer_address" id="customer_address" cols="30" rows="4" placeholder="Address" class="form-control"><?= @$Getdata['customer_address'] ?></textarea>
+										</div>
+									<?php endif ?>
+
 
 									<div class="modal-footer">
 										<?php
@@ -90,77 +96,95 @@ if (@$getCustomer) {
 
 								</form>
 							</div>
-						</div>
-
-
-					</div>
-					<div class="col-sm-12">
-
-						<div class="card card-info mt-3">
-							<div class="card-header" align="center">
-								<h5><span class="glyphicon glyphicon-user"></span> <?= ucfirst($_REQUEST['type']) ?> Management system</h5>
 							</div>
-							<div class="card-body">
-
-								<table id="tableData" class=" table dataTable ">
-
-									<thead>
-										<tr class="">
-											<?php if ($_REQUEST['expense']) { ?>
-												<th class="text-dark"> ID</th>
-											<?php } ?>
-											<th class="text-dark">Name</th>
-											<th class="text-dark">Email</th>
-											<th class="text-dark">Phone</th>
-											<th class="text-dark">Created Date</th>
-											<?php if ($_REQUEST['type'] == 'customer'): ?>
-												<th class="text-dark"> Creadit LIMIT</th>
-											<?php endif; ?>
-											<th class="text-dark">Action</th>
 
 
+						</div>
+						<div class="col-sm-12">
 
-										</tr>
-									</thead>
-									<tbody>
-										<?php $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='" . $_REQUEST['type'] . "'");
-										while ($r = mysqli_fetch_assoc($q)):
-											$customer_id = $r['customer_id'];
-										?>
-											<tr>
-												<?php if ($_REQUEST['expense']) { ?>
-													<td><?= $r['customer_id'] ?></td>
+							<div class="card card-info mt-3">
+								<div class="card-header" align="center">
+									<h5><span class="glyphicon glyphicon-user"></span> <?= ucfirst($_REQUEST['type']) ?> Management system</h5>
+								</div>
+								<div class="card-body">
+
+									<table id="tableData" class=" table dataTable ">
+
+										<thead>
+											<tr class="">
+												<?php if (@$_REQUEST['type'] == 'expense') { ?>
+													<th class="text-dark"> ID</th>
 												<?php } ?>
-												<td class="text-capitalize"><?= $r['customer_name'] ?></td>
-												<td class="text-lowercase"><?= $r['customer_email'] ?></td>
-												<td><?= $r['customer_phone'] ?></td>
-
-												<td><?= $r['customer_add_date'] ?></td>
+												<?php if (@$_REQUEST['type'] !== 'expense') { ?>
+													<th class="text-dark">Date</th>
+													<th class="text-dark">Name</th>
+													<th class="text-dark">Phone</th>
+													<th class="text-dark">Address</th>
+													<th class="text-dark">Status</th>
+												<?php } ?>
+												<?php if (@$_REQUEST['type'] == 'expense') { ?>
+													<th class="text-dark">Date</th>
+													<th class="text-dark">Name</th>
+													<th class="text-dark">Status</th>
+												<?php } ?>
 												<?php if ($_REQUEST['type'] == 'customer'): ?>
-													<td><?= $r['customer_limit'] ?></td>
+													<th class="text-dark"> Credit LIMIT</th>
 												<?php endif; ?>
-												<td>
-													<!-- <button class="btn btn-admin btn-sm float-right" onclick="SetLimit(<?= $r['customer_id'] ?>,'<?= $r['customer_name'] ?>')" id="limit">Limit</button> -->
-													<?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin"): ?>
-														<form action="customers.php?type=<?= $_REQUEST['type'] ?>" method="POST">
-															<input type="hidden" name="id" value="<?= $r['customer_id'] ?>">
-															<button type="submit" class="btn btn-admin btn-sm">Edit</button>
-														</form>
-													<?php endif ?>
+												<th class="text-dark">Action</th>
 
-												</td>
 
 
 											</tr>
-										<?php endwhile; ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
+										</thead>
+										<tbody>
+											<?php $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='" . $_REQUEST['type'] . "'");
+											while ($r = mysqli_fetch_assoc($q)):
+												$customer_id = $r['customer_id'];
+											?>
+												<tr>
+													<?php if (@$_REQUEST['type'] == 'expense') { ?>
+														<td><?= $r['customer_id'] ?></td>
+													<?php } ?>
+													<?php if (@$_REQUEST['type'] !== 'expense') { ?>
+														<td><?= $r['customer_add_date'] ?></td>
+														<td class="text-capitalize"><?= $r['customer_name'] ?></td>
+														<td><?= $r['customer_phone'] ?></td>
+														<td><?= $r['customer_address'] ?></td>
+														<td><?= $r['customer_status'] ?></td>
+													<?php } ?>
+													<?php if (@$_REQUEST['type'] == 'expense') { ?>
+														<td><?= $r['customer_add_date'] ?></td>
+														<td class="text-capitalize"><?= $r['customer_name'] ?></td>
+														<td><?= $r['customer_status'] ?></td>
+													<?php } ?>
 
+													<?php if ($_REQUEST['type'] == 'customer'): ?>
+														<td><?= $r['customer_limit'] ?></td>
+													<?php endif; ?>
+													<td class="d-flex">
+														<!-- <button class="btn btn-admin btn-sm float-right" onclick="SetLimit(<?= $r['customer_id'] ?>,'<?= $r['customer_name'] ?>')" id="limit">Limit</button> -->
+														<?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin"): ?>
+															<form action="customers.php?type=<?= $_REQUEST['type'] ?>" method="POST">
+																<input type="hidden" name="id" value="<?= $r['customer_id'] ?>">
+																<button type="submit" class="btn btn-admin btn-sm">Edit</button>
+															</form>
+															<a href="#" onclick="deleteAlert('<?=$r['customer_id']?>','customers','customer_id','tableData')" class="btn btn-danger btn-sm ml-1">Delete</a>
+
+														<?php endif ?>
+
+													</td>
+
+
+												</tr>
+											<?php endwhile; ?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
 					</div>
-				</div>
-			</div> <!-- .container-fluid -->
+				</div> <!-- .container-fluid -->
 
 		</main> <!-- main -->
 	</div> <!-- .wrapper -->

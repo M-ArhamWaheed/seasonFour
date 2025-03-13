@@ -154,99 +154,10 @@
    </div>
 
    <!-- Modal add----------------product              -->
-   <div class="modal fade" id="add_brand_modal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-     <div class="modal-dialog modal-lg" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <h5 class="modal-title" id="defaultModalLabel">Add Brand</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-         </div>
 
-         <div class="modal-body">
-
-           <form action="php_action/panel.php" method="POST" role="form" id="formData">
-             <div class="msg"></div>
-             <div class="form-group row">
-               <div class="col-sm-6">
-                 <label for="">Brand</label>
-                 <input type="text" class="form-control" value="<?= @$brands['brand_name'] ?>" id="add_brand_name" name="add_brand_name">
-                 <input type="hidden" class="form-control " value="<?= @$brands['brand_id'] ?>" id="brand_id" name="brand_id">
-               </div>
-               <div class="col-sm-6">
-                 <label for="">Brand Status</label>
-                 <select class="form-control" id="brand_status" name="brand_status">
-                   <option <?= @($brands['brand_status'] == 0) ? "selected" : "" ?> value="0">Inactive</option>
-                   <option <?= @($brands['brand_status'] == 1) ? "selected" : "selected" ?> value="1">Active</option>
-                 </select>
-               </div>
-             </div>
-             <hr>
-             <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-
-             <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and isset($_REQUEST['edit_brand_id'])): ?>
-               <button type="submit" class="btn btn-admin2 float-right" id="formData_btn">Update</button>
-             <?php endif ?>
-             <?php if (@$userPrivileges['nav_add'] == 1 || $fetchedUserRole == "admin" and !isset($_REQUEST['edit_brand_id'])): ?>
-               <button type="submit" class="btn btn-admin float-right" id="formData_btn">Add</button>
-             <?php endif ?>
-           </form>
-
-         </div>
-         <div class="modal-footer"></div>
-
-       </div>
-     </div>
-   </div>
 
    <!-- Modal add----------------product              -->
-   <div class="modal fade" id="add_category_modal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-     <div class="modal-dialog modal-lg" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <h5 class="modal-title" id="defaultModalLabel">Add Category</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-         </div>
-
-         <div class="modal-body">
-
-           <form action="php_action/panel.php" method="POST" role="form" id="formData1">
-             <div class="msg"></div>
-             <div class="form-group row">
-               <div class="col-sm-3">
-                 <label for="">Name</label>
-                 <input type="text" class="form-control" value="<?= @$categories['categories_name'] ?>" id="categories_name" name="add_category_name">
-                 <input type="hidden" class="form-control " value="<?= @$categories['categories_id'] ?>" id="categories_id" name="categories_id">
-
-               </div>
-               <div class="col-sm-3">
-                 <label for=""> Status</label>
-                 <select class="form-control" id="categories_status" name="categories_status">
-
-                   <option <?= @($categories['categories_status'] == 1) ? "selected" : "selected" ?> value="1">Active</option>
-                   <option <?= @($categories['categories_status'] == 0) ? "selected" : "" ?> value="0">Inactive</option>
-                 </select>
-               </div>
-             </div>
-             <hr>
-             <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-             <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and isset($_REQUEST['edit_categories_id'])): ?>
-               <button type="submit" class="btn btn-admin2 float-right" id="formData_btn">Update</button>
-             <?php endif ?>
-             <?php if (@$userPrivileges['nav_add'] == 1 || $fetchedUserRole == "admin" and !isset($_REQUEST['edit_categories_id'])): ?>
-               <button type="submit" class="btn btn-admin float-right" id="formData1_btn">Add</button>
-             <?php endif ?>
-           </form>
-
-         </div>
-
-       </div>
-     </div>
-   </div>
-
+  
 
    <script src="js/jquery.min.js"></script>
    <script src="js/popper.min.js"></script>

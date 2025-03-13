@@ -95,7 +95,17 @@ require_once '../includes/functions.php';
  			$msg = mysqli_error($dbc);
  			$sts = "error";
  		}
- 	}elseif ($table=="lpo"){
+ 	}
+	 elseif ($table=="customers") {
+		if(mysqli_query($dbc,"UPDATE customers SET customer_status=0 WHERE $row='$id'")){
+			$msg = "Data Has been deleted...";
+			$sts ="success";
+		}else{
+			$msg = mysqli_error($dbc);
+			$sts = "error";
+		}
+	}
+	elseif ($table=="lpo"){
 		$get_company =mysqli_fetch_assoc(mysqli_query($dbc,"SELECT * FROM company ORDER BY id DESC LIMIT 1"));
 
  		if ($get_company['stock_manage']==1) {
