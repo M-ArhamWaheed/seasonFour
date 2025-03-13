@@ -374,7 +374,7 @@ if (!empty($_REQUEST['action']) and $_REQUEST['action'] == "product_module") {
 		'f_days' => @$_REQUEST['f_days'],
 		'alert_at' => @$_REQUEST['alert_at'],
 		'availability' => @$_REQUEST['availability'],
-		'purchase_rate' => $purchase_rate,
+		'purchase_rate' => @$_REQUEST['purchase_rate'],
 		'status' => 1,
 	];
 
