@@ -462,6 +462,7 @@ $("#get_product_name").on("change", function () {
   var code = $("#get_product_name :selected").val();
   var payment_type = $("#payment_type").val();
   var credit_sale_type = $("#credit_sale_type").val();
+  var price_type = $("#price_type").val();
 
   $.ajax({
     type: "POST",
@@ -473,34 +474,38 @@ $("#get_product_name").on("change", function () {
       $("#get_product_code").val(res);
     },
   }); //ajax call }
-  $.ajax({
-    type: "POST",
-    url: "php_action/custom_action.php",
-    data: {
-      getPrice: code,
-      type: "product",
-      credit_sale_type: credit_sale_type,
-      payment_type: payment_type,
-    },
-    dataType: "json",
-    success: function (response) {
-      // alert(response.price);
-      $("#get_product_price").val(response.price);
-      $("#get_product_sale_price").val(response.price);
-      $("#get_product_detail").val(response.description);
-      $("#get_final_rate").val(response.final_rate);
-      $("#instockQty").html("instock :" + response.qty);
-      console.log(response.qty);
-      if (payment_type == "cash_in_hand" || payment_type == "credit_sale") {
-        $("#get_product_quantity").attr("max", response.qty);
-        if (response.qty > 0) {
-          $("#addProductPurchase").prop("disabled", false);
-        } else {
-          $("#addProductPurchase").prop("disabled", true);
+  function fetchProductPrice(price_type) {
+    $.ajax({
+      type: "POST",
+      url: "php_action/custom_action.php",
+      data: {
+        getPrice: code,
+        type: "product",
+        credit_sale_type: credit_sale_type,
+        payment_type: payment_type,
+        price_type: price_type, // Pass either "purchase" or "sale"
+      },
+      dataType: "json",
+      success: function (response) {
+        // alert(response.price);
+        $("#get_product_price").val(response.price);
+        $("#get_product_sale_price").val(response.price);
+        $("#get_product_detail").val(response.description);
+        $("#get_final_rate").val(response.final_rate);
+        $("#instockQty").html("instock :" + response.qty);
+        console.log(response.qty);
+
+        if (payment_type == "cash_in_hand" || payment_type == "credit_sale") {
+          $("#get_product_quantity").attr("max", response.qty);
+          $("#addProductPurchase").prop("disabled", response.qty <= 0);
         }
-      }
-    },
-  }); //ajax call }
+      },
+    });
+  }
+
+  // Call the function for both purchase and sale prices
+  fetchProductPrice(price_type);
+  fetchProductPrice(price_type);
 });
 $("#product_code").on("change", function () {
   //var code=  $('#get_product_code').val();
