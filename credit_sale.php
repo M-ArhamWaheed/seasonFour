@@ -34,7 +34,8 @@
              <div class="row form-group">
                <input type="hidden" name="payment_type" id="payment_type" value="credit_sale">
                <input type="hidden" name="form_type" id="form_type" value="credit_sale">
-               <input type="hidden" name="quotation_form" id="quotation_form" value="">
+            <input type="hidden" name="price_type" id="price_type" value="sale">
+            <input type="hidden" name="quotation_form" id="quotation_form" value="">
 
               
                <div class="col-md-4 d-flex ">

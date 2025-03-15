@@ -491,7 +491,6 @@ if (isset($_REQUEST['get_products_list'])) {
 				$getBrand = fetchRecord($dbc, "brands", "brand_id", $r['brand_id']);
 				$getCat = fetchRecord($dbc, "categories", "categories_id", $r['category_id']);
 				echo '<option value="' . $r['product_id'] . '">' . $r["product_name"] . ' | ' . @$getBrand["brand_name"] . ' (' . @$getCat["categories_name"] . ')</option>';
-
 			}
 		} else {
 			echo '<option value="">Not Found</option>';
@@ -511,7 +510,11 @@ if (!empty($_REQUEST['getPrice'])) {
 	} else {
 		$record = fetchRecord($dbc, "product", "product_code", $_REQUEST['getPrice']);
 	}
-	$price = @$record['current_rate'];
+	if ($_REQUEST['price_type'] == "purchase") {
+		$price = @$record['purchase_rate'];
+	} else {
+		$price = @$record['current_rate'];
+	}
 
 
 

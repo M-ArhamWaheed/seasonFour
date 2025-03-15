@@ -31,6 +31,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
             <input type="hidden" name="product_purchase_id" value="<?= @empty($_REQUEST['edit_purchase_id']) ? "" : base64_decode($_REQUEST['edit_purchase_id']) ?>">
             <input type="hidden" name="payment_type" id="payment_type" value="credit_purchase">
             <input type="hidden" name="lpo_form" id="lpo_form" value="">
+            <input type="hidden" name="price_type" id="price_type" value="purchase">
             <div class="row form-group">
               <div class="col-md-1">
                 <label> ID#</label>
