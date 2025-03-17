@@ -8,6 +8,40 @@ if (@$getCustomer) {
 }
 
 ?>
+<style>
+	.tag-container {
+		display: flex;
+		flex-wrap: wrap;
+		border: 1px solid #ccc;
+		padding: 5px;
+		border-radius: 5px;
+		min-height: 40px;
+	}
+
+	.tag {
+		background: #007bff;
+		color: #fff;
+		padding: 5px 10px;
+		margin: 3px;
+		border-radius: 3px;
+		display: flex;
+		align-items: center;
+	}
+
+	.tag .remove {
+		margin-left: 8px;
+		cursor: pointer;
+		font-weight: bold;
+	}
+
+	input {
+		border: none;
+		outline: none;
+		padding: 5px;
+		width: auto;
+		flex: 1;
+	}
+</style>
 
 <body class="horizontal light  ">
 	<div class="wrapper">
@@ -64,16 +98,16 @@ if (@$getCustomer) {
 										</div>
 										<?php if ($_REQUEST['type'] == "supplier"): ?>
 
-											<div class="col-sm-6 mt-3">
-
-												<label for="email">Representative Name :</label>
-												<input type="text" class="form-control" id="representative_name" name="representative_name" placeholder="Name Here..." value="<?= @$Getdata['representative_name'] ?>" required>
+											<div class="col-sm-12 mt-3">
+												<label for="representatives">Representative :</label>
+												<div class="tag-container" style="border: 1px solid #ccc; padding: 5px; min-height: 40px; display: flex; flex-wrap: wrap;"></div>
+												<input type="text" class="form-control mt-3" id="representatives" name="representatives" placeholder="Write Here...">
+												<input type="hidden" id="representative_values" name="representative_values">
 											</div>
 
-											<div class="col-sm-6 mt-3">
-												<label for="email">Representative Phone:</label>
-												<input type="number" class="form-control" id="representative_phone" name="representative_phone" placeholder="Phone" value="<?= @$Getdata['representative_phone'] ?>" required>
-											</div>
+											<!-- Hidden field to store JSON data -->
+											<input type="hidden" id="existing_tags" value='<?= @$Getdata["representatives"] ?>'>
+
 
 										<?php endif ?>
 									</div>
@@ -247,4 +281,59 @@ if (@$getCustomer) {
 	}
 </script>
 
+
+
 <?php include_once 'includes/foot.php'; ?>
+
+<script>
+	$(document).ready(function() {
+		let existingTags = $("#existing_tags").val(); // Get stored tags from hidden input
+		let tagContainer = $(".tag-container");
+
+		if (existingTags) {
+			try {
+				let tagsArray = JSON.parse(existingTags); // Parse JSON string to array
+
+				tagsArray.forEach(function(tag) {
+					addTag(tag); // Function to create tag UI
+				});
+
+				updateHiddenInput(); // Update hidden input field
+			} catch (e) {
+				console.error("Error parsing existing tags:", e);
+			}
+		}
+
+		$("#representatives").keypress(function(event) {
+			if (event.which === 13) { // Enter key pressed
+				event.preventDefault();
+				let tagText = $(this).val().trim();
+
+				if (tagText !== "") {
+					addTag(tagText);
+					updateHiddenInput();
+					$(this).val(""); // Clear input field
+				}
+			}
+		});
+
+		function addTag(tagText) {
+			let tag = $("<div class='tag'></div>").text(tagText);
+			let removeBtn = $("<span class='remove'>&times;</span>").click(function() {
+				$(this).parent().remove();
+				updateHiddenInput();
+			});
+
+			tag.append(removeBtn);
+			tagContainer.append(tag);
+		}
+
+		function updateHiddenInput() {
+			let tags = [];
+			$(".tag").each(function() {
+				tags.push($(this).text().replace("×", "").trim()); // Remove close button text
+			});
+			$("#representative_values").val(JSON.stringify(tags)); // Store updated tags as JSON
+		}
+	});
+</script>
