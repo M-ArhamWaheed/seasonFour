@@ -370,7 +370,7 @@ if (isset($_REQUEST['id'])) {
                       <div class="col-sm-2 text-right">Account</div>
                       <div class="col-sm-4">
                         <div class="input-group mb-3">
-                          <select class="form-control" required onchange="getBalance(this.value,'account_sing')" name="voucher_from_account searchableSelect" aria-label="Username" aria-describedby="basic-addon1">
+                          <select class="form-control searchableSelect" required onchange="getBalance(this.value,'account_sing')" name="voucher_from_account" aria-label="Username" aria-describedby="basic-addon1">
                             <option value="">Select Account</option>
                            
 
