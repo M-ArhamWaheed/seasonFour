@@ -167,20 +167,24 @@ if (@$getCustomer) {
 												<th class="text-dark">Date</th>
 												<th class="text-dark">Name</th>
 												<th class="text-dark">Phone</th>
-												<th class="text-dark">Address</th>
-												<?php if (@$_REQUEST['type'] == 'supplier') { ?>
-													<th class="text-dark">Representatives </th>
-												<?php } ?>
-												<th class="text-dark">Status</th>
 											<?php } ?>
 											<?php if (@$_REQUEST['type'] == 'expense') { ?>
 												<th class="text-dark">Date</th>
 												<th class="text-dark">Name</th>
 												<th class="text-dark">Status</th>
 											<?php } ?>
-											<?php if ($_REQUEST['type'] == 'customer'): ?>
-												<th class="text-dark"> Credit LIMIT</th>
-											<?php endif; ?>
+											<?php if (@$_REQUEST['type'] !== 'expense') { ?>
+												<?php if (@$_REQUEST['type'] == 'supplier') { ?>
+													<th class="text-dark">Representatives </th>
+												<?php } ?>
+												<?php if (@$_REQUEST['type'] !== 'supplier') { ?>
+													<th class="text-dark">Address</th>
+													<?php if ($_REQUEST['type'] == 'customer'): ?>
+														<th class="text-dark"> Credit LIMIT</th>
+													<?php endif; ?>
+													<th class="text-dark">Status</th>
+												<?php } ?>
+											<?php } ?>
 											<th class="text-dark">Action</th>
 
 
@@ -200,7 +204,6 @@ if (@$getCustomer) {
 													<td><?= date('Y-m-d', strtotime($r['customer_add_date'])); ?></td>
 													<td class="text-capitalize"><?= $r['customer_name'] ?></td>
 													<td><?= $r['customer_phone'] ?></td>
-													<td class="text-capitalize"><?= $r['customer_address'] ?></td>
 													<?php if (@$_REQUEST['type'] == 'supplier') { ?>
 														<td class="text-capitalize">
 															<?php
@@ -214,7 +217,13 @@ if (@$getCustomer) {
 														</td>
 
 													<?php } ?>
-													<td class="text-capitalize"><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
+													<?php if (@$_REQUEST['type'] !== 'supplier' && @$_REQUEST['type']   !== 'expense') { ?>
+														<td class="text-capitalize"><?= $r['customer_address'] ?></td>
+														<?php if ($_REQUEST['type'] == 'customer'): ?>
+															<td><?= $r['customer_limit'] ?></td>
+														<?php endif; ?>
+														<td class="text-capitalize"><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
+													<?php } ?>
 
 												<?php } ?>
 												<?php if (@$_REQUEST['type'] == 'expense') { ?>
@@ -223,9 +232,7 @@ if (@$getCustomer) {
 													<td><?= $r['customer_status'] ?></td>
 												<?php } ?>
 
-												<?php if ($_REQUEST['type'] == 'customer'): ?>
-													<td><?= $r['customer_limit'] ?></td>
-												<?php endif; ?>
+
 												<td class="d-flex">
 													<!-- <button class="btn btn-admin btn-sm float-right" onclick="SetLimit(<?= $r['customer_id'] ?>,'<?= $r['customer_name'] ?>')" id="limit">Limit</button> -->
 													<?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin"): ?>
