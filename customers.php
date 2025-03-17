@@ -168,6 +168,9 @@ if (@$getCustomer) {
 												<th class="text-dark">Name</th>
 												<th class="text-dark">Phone</th>
 												<th class="text-dark">Address</th>
+												<?php if (@$_REQUEST['type'] == 'supplier') { ?>
+													<th class="text-dark">Representatives </th>
+												<?php } ?>
 												<th class="text-dark">Status</th>
 											<?php } ?>
 											<?php if (@$_REQUEST['type'] == 'expense') { ?>
@@ -198,6 +201,19 @@ if (@$getCustomer) {
 													<td class="text-capitalize"><?= $r['customer_name'] ?></td>
 													<td><?= $r['customer_phone'] ?></td>
 													<td class="text-capitalize"><?= $r['customer_address'] ?></td>
+													<?php if (@$_REQUEST['type'] == 'supplier') { ?>
+														<td class="text-capitalize">
+															<?php
+															$representatives = json_decode($r['representatives'], true);
+															if (is_array($representatives)) {
+																echo implode(', ', $representatives); // Display as a comma-separated list
+															} else {
+																echo $r['representatives']; // If not an array, display as-is
+															}
+															?>
+														</td>
+
+													<?php } ?>
 													<td class="text-capitalize"><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
 
 												<?php } ?>
