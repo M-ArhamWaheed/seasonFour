@@ -11,6 +11,8 @@ if (isset($_REQUEST['add_manually_user'])) {
 		'customer_status' => @$_REQUEST['customer_status'],
 		'customer_type' => @$_REQUEST['add_manually_user'],
 		'customer_limit' => @$_REQUEST['check_amount'],
+		'representative_name' => @$_REQUEST['representative_name'],
+		'representative_phone' => @$_REQUEST['representative_phone'],
 	];
 	if ($_REQUEST['customer_id'] == "") {
 

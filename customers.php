@@ -62,11 +62,25 @@ if (@$getCustomer) {
 											</select>
 
 										</div>
+										<?php if ($_REQUEST['type'] == "supplier"): ?>
+
+											<div class="col-sm-6 mt-3">
+
+												<label for="email">Representative Name :</label>
+												<input type="text" class="form-control" id="representative_name" name="representative_name" placeholder="Name Here..." value="<?= @$Getdata['representative_name'] ?>" required>
+											</div>
+
+											<div class="col-sm-6 mt-3">
+												<label for="email">Representative Phone:</label>
+												<input type="number" class="form-control" id="representative_phone" name="representative_phone" placeholder="Phone" value="<?= @$Getdata['representative_phone'] ?>" required>
+											</div>
+
+										<?php endif ?>
 									</div>
 									<?php if ($_REQUEST['type'] == 'customer') { ?>
 										<div class="col-sm-12 my-3 mx-0 px-0">
 											<label for="email">Limit Amount:</label>
-											<input type="number" class="form-control" id="check_amount" name="check_amount" placeholder="Amount Here" value="<?= @$Getdata['customer_limit'] ?>" >
+											<input type="number" class="form-control" id="check_amount" name="check_amount" placeholder="Amount Here" value="<?= @$Getdata['customer_limit'] ?>">
 										</div>
 									<?php } ?>
 
@@ -96,96 +110,96 @@ if (@$getCustomer) {
 
 								</form>
 							</div>
-							</div>
-
-
 						</div>
-						<div class="col-sm-12">
 
-							<div class="card card-info mt-3">
-								<div class="card-header" align="center">
-									<h5><span class="glyphicon glyphicon-user"></span> <?= ucfirst($_REQUEST['type']) ?> Management system</h5>
-								</div>
-								<div class="card-body">
 
-									<table id="tableData" class=" table dataTable ">
+					</div>
+					<div class="col-sm-12">
 
-										<thead>
-											<tr class="">
+						<div class="card card-info mt-3">
+							<div class="card-header" align="center">
+								<h5><span class="glyphicon glyphicon-user"></span> <?= ucfirst($_REQUEST['type']) ?> Management system</h5>
+							</div>
+							<div class="card-body">
+
+								<table id="tableData" class=" table dataTable ">
+
+									<thead>
+										<tr class="">
+											<?php if (@$_REQUEST['type'] == 'expense') { ?>
+												<th class="text-dark"> ID</th>
+											<?php } ?>
+											<?php if (@$_REQUEST['type'] !== 'expense') { ?>
+												<th class="text-dark">Date</th>
+												<th class="text-dark">Name</th>
+												<th class="text-dark">Phone</th>
+												<th class="text-dark">Address</th>
+												<th class="text-dark">Status</th>
+											<?php } ?>
+											<?php if (@$_REQUEST['type'] == 'expense') { ?>
+												<th class="text-dark">Date</th>
+												<th class="text-dark">Name</th>
+												<th class="text-dark">Status</th>
+											<?php } ?>
+											<?php if ($_REQUEST['type'] == 'customer'): ?>
+												<th class="text-dark"> Credit LIMIT</th>
+											<?php endif; ?>
+											<th class="text-dark">Action</th>
+
+
+
+										</tr>
+									</thead>
+									<tbody>
+										<?php $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='" . $_REQUEST['type'] . "'");
+										while ($r = mysqli_fetch_assoc($q)):
+											$customer_id = $r['customer_id'];
+										?>
+											<tr>
 												<?php if (@$_REQUEST['type'] == 'expense') { ?>
-													<th class="text-dark"> ID</th>
+													<td><?= $r['customer_id'] ?></td>
 												<?php } ?>
 												<?php if (@$_REQUEST['type'] !== 'expense') { ?>
-													<th class="text-dark">Date</th>
-													<th class="text-dark">Name</th>
-													<th class="text-dark">Phone</th>
-													<th class="text-dark">Address</th>
-													<th class="text-dark">Status</th>
+													<td><?= date('Y-m-d', strtotime($r['customer_add_date'])); ?></td>
+													<td class="text-capitalize"><?= $r['customer_name'] ?></td>
+													<td><?= $r['customer_phone'] ?></td>
+													<td class="text-capitalize"><?= $r['customer_address'] ?></td>
+													<td class="text-capitalize"><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
+
 												<?php } ?>
 												<?php if (@$_REQUEST['type'] == 'expense') { ?>
-													<th class="text-dark">Date</th>
-													<th class="text-dark">Name</th>
-													<th class="text-dark">Status</th>
+													<td><?= $r['customer_add_date'] ?></td>
+													<td class="text-capitalize"><?= $r['customer_name'] ?></td>
+													<td><?= $r['customer_status'] ?></td>
 												<?php } ?>
-												<?php if ($_REQUEST['type'] == 'customer'): ?>
-													<th class="text-dark"> Credit LIMIT</th>
-												<?php endif; ?>
-												<th class="text-dark">Action</th>
 
+												<?php if ($_REQUEST['type'] == 'customer'): ?>
+													<td><?= $r['customer_limit'] ?></td>
+												<?php endif; ?>
+												<td class="d-flex">
+													<!-- <button class="btn btn-admin btn-sm float-right" onclick="SetLimit(<?= $r['customer_id'] ?>,'<?= $r['customer_name'] ?>')" id="limit">Limit</button> -->
+													<?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin"): ?>
+														<form action="customers.php?type=<?= $_REQUEST['type'] ?>" method="POST">
+															<input type="hidden" name="id" value="<?= $r['customer_id'] ?>">
+															<button type="submit" class="btn btn-admin btn-sm">Edit</button>
+														</form>
+														<a href="#" onclick="deleteAlert('<?= $r['customer_id'] ?>','customers','customer_id','tableData')" class="btn btn-danger btn-sm ml-1">Delete</a>
+
+													<?php endif ?>
+
+												</td>
 
 
 											</tr>
-										</thead>
-										<tbody>
-											<?php $q = mysqli_query($dbc, "SELECT * FROM customers WHERE customer_status =1 AND customer_type='" . $_REQUEST['type'] . "'");
-											while ($r = mysqli_fetch_assoc($q)):
-												$customer_id = $r['customer_id'];
-											?>
-												<tr>
-													<?php if (@$_REQUEST['type'] == 'expense') { ?>
-														<td><?= $r['customer_id'] ?></td>
-													<?php } ?>
-													<?php if (@$_REQUEST['type'] !== 'expense') { ?>
-														<td><?=date('Y-m-d', strtotime($r['customer_add_date'])); ?></td>
-														<td class="text-capitalize"><?= $r['customer_name'] ?></td>
-														<td><?= $r['customer_phone'] ?></td>
-														<td class="text-capitalize"><?= $r['customer_address'] ?></td>
-														<td class="text-capitalize"><?= $r['customer_status'] == 1 ? 'Active' : 'Inactive' ?></td>
-
-													<?php } ?>
-													<?php if (@$_REQUEST['type'] == 'expense') { ?>
-														<td><?= $r['customer_add_date'] ?></td>
-														<td class="text-capitalize"><?= $r['customer_name'] ?></td>
-														<td><?= $r['customer_status'] ?></td>
-													<?php } ?>
-
-													<?php if ($_REQUEST['type'] == 'customer'): ?>
-														<td><?= $r['customer_limit'] ?></td>
-													<?php endif; ?>
-													<td class="d-flex">
-														<!-- <button class="btn btn-admin btn-sm float-right" onclick="SetLimit(<?= $r['customer_id'] ?>,'<?= $r['customer_name'] ?>')" id="limit">Limit</button> -->
-														<?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin"): ?>
-															<form action="customers.php?type=<?= $_REQUEST['type'] ?>" method="POST">
-																<input type="hidden" name="id" value="<?= $r['customer_id'] ?>">
-																<button type="submit" class="btn btn-admin btn-sm">Edit</button>
-															</form>
-															<a href="#" onclick="deleteAlert('<?=$r['customer_id']?>','customers','customer_id','tableData')" class="btn btn-danger btn-sm ml-1">Delete</a>
-
-														<?php endif ?>
-
-													</td>
-
-
-												</tr>
-											<?php endwhile; ?>
-										</tbody>
-									</table>
-								</div>
+										<?php endwhile; ?>
+									</tbody>
+								</table>
 							</div>
-
 						</div>
+
 					</div>
-				</div> <!-- .container-fluid -->
+				</div>
+			</div> <!-- .container-fluid -->
 
 		</main> <!-- main -->
 	</div> <!-- .wrapper -->
