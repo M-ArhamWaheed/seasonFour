@@ -29,6 +29,7 @@
                   <th class="text-dark">Amount</th>
                   <th class="text-dark">Comment</th>
                   <th class="text-dark">Sale Type</th>
+                  <th class="text-dark">File</th>
                   <th class="text-dark">Action</th>
                 </tr>
               </thead>
@@ -49,7 +50,13 @@
                     <td class="text-capitalize"><?= $r['order_narration'] ?></td>
                     <td class="text-capitalize"><?= $r['payment_type'] ?></td>
 
-
+                    <td>
+                      <?php if (!empty($r['order_file'])): ?>
+                        <a href="img/uploads/<?= htmlspecialchars($r['order_file']) ?>" target="_blank">
+                          <button class="btn btn-admin btn-sm m-1">View File</button>
+                        </a>
+                      <?php endif; ?>
+                    </td>
 
                     <td class="d-flex">
                       <?php if (@$get_company['sale_interface'] == "barcode") {
@@ -63,7 +70,7 @@
                         $credit_sale_url = "credit_sale.php";
                       }
                       ?>
-                      <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "cash_in_hand"): ?>
+                      <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "cash"): ?>
                         <form action="credit_sale.php?credit_type=15days" method="POST">
                           <input type="hidden" name="edit_order_id" value="<?= base64_encode($r['order_id']) ?>">
                           <button type="submit" class="btn btn-admin btn-sm m-1">Edit</button>
@@ -71,7 +78,7 @@
 
 
                       <?php endif; ?>
-                      <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "credit_sale"): ?>
+                      <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "credit"): ?>
                         <form action="credit_sale.php?credit_type=15days" method="POST">
 
                           <input type="hidden" name="edit_order_id" value="<?= base64_encode($r['order_id']) ?>">

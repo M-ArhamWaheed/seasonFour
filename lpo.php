@@ -76,10 +76,19 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                 <br>
                 <a href="customers.php?type=supplier" class="btn btn-admin2 btn-sm mt-2">Add</a>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-1">
                 <label>Comment</label>
                 <input type="text" autocomplete="off" value="<?= @$fetchPurchase['lpo_narration'] ?>" class="form-control" name="purchase_narration">
-
+              </div>
+              <div class="col-sm-2">
+                <label>Attach File
+                  <?php if (!empty($fetchPurchase['lpo_file'])): ?>
+                    <a href="img/uploads/<?= htmlspecialchars($fetchPurchase['lpo_file']) ?>" target="_blank">
+                      <p type="button" class="d-inline p-0 m-0">View File</p>
+                    </a>
+                  <?php endif; ?>
+                </label>
+                <input type="file" autocomplete="off" value="<?= @$fetchPurchase['lpo_file'] ?>" class="form-control" name="lpo_file">
               </div>
             </div> <!-- end of form-group -->
             <div class="form-group row">

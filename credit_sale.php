@@ -34,12 +34,12 @@
              <div class="row form-group">
                <input type="hidden" name="payment_type" id="payment_type" value="credit_sale">
                <input type="hidden" name="form_type" id="form_type" value="credit_sale">
-            <input type="hidden" name="price_type" id="price_type" value="sale">
-            <input type="hidden" name="quotation_form" id="quotation_form" value="">
+               <input type="hidden" name="price_type" id="price_type" value="sale">
+               <input type="hidden" name="quotation_form" id="quotation_form" value="">
 
-              
+
                <div class="col-md-4 d-flex ">
-                 <div  class="w-100 pe-1">
+                 <div class="w-100 pe-1">
                    <label>ID#</label>
                    <?php $result = mysqli_query($dbc, "
     SHOW TABLE STATUS LIKE 'orders'
@@ -116,11 +116,12 @@
                  <input type="hidden" name="R_Limit" id="R_LimitInput" />
 
                </div>
-               <div class="col-sm-2">
+               <div class="col-sm-1">
                  <label>Comment</label>
                  <input type="text" autocomplete="off" name="order_narration" id="order_narration" value="<?= @$fetchOrder['order_narration'] ?>" class="form-control">
 
                </div>
+
                <!-- <div class="col-sm-2">
                  <label>Vehicle NO </label>
                  <input type="text" id="vehicle_no" value="<?= @$fetchOrder['vehicle_no'] ?>" class="form-control" autocomplete="off" name="vehicle_no" list="vehicle_no_list">
@@ -133,7 +134,7 @@
                    <?php   } ?>
                  </datalist>
                </div> -->
-               <div class="col-sm-2 return_days-div">
+               <div class="col-sm-1 return_days-div">
                  <label>Return Days</label>
                  <input type="text" id="return_days" value="<?= @$fetchOrder['return_days'] ?>" class="form-control" autocomplete="off" name="return_days" list="return_days_list">
                  <datalist id="return_days_list">
@@ -144,6 +145,16 @@
                      <option value="<?= $r['return_days'] ?>"><?= $r['return_days'] ?></option>
                    <?php   } ?>
                  </datalist>
+               </div>
+               <div class="col-sm-2">
+                 <label>Attach File
+                   <?php if (!empty($fetchOrder['order_file'])): ?>
+                     <a href="img/uploads/<?= htmlspecialchars($fetchOrder['order_file']) ?>" target="_blank">
+                       <p type="button" class="d-inline p-0 m-0">View File</p>
+                     </a>
+                   <?php endif; ?>
+                 </label>
+                 <input type="file" autocomplete="off" value="<?= @$fetchOrder['order_file'] ?>" class="form-control" name="order_file">
                </div>
              </div> <!-- end of form-group -->
              <div class="form-group row mb-5">
@@ -157,16 +168,16 @@
                  <select class="form-control searchableSelect" id="get_product_name" name="product_id">
                    <option value="">Select Product</option>
                    <?php
-                  $result = mysqli_query($dbc, "SELECT * FROM product WHERE status=1 ");
-                  while ($row = mysqli_fetch_array($result)) {
-                    $getBrand = fetchRecord($dbc, "brands", "brand_id", $row['brand_id']);
-                    $getCat = fetchRecord($dbc, "categories", "categories_id", $row['category_id']);
-                  ?>
+                    $result = mysqli_query($dbc, "SELECT * FROM product WHERE status=1 ");
+                    while ($row = mysqli_fetch_array($result)) {
+                      $getBrand = fetchRecord($dbc, "brands", "brand_id", $row['brand_id']);
+                      $getCat = fetchRecord($dbc, "categories", "categories_id", $row['category_id']);
+                    ?>
 
-                    <option data-price="<?= $row["current_rate"] ?>" <?= empty($r['product_id']) ? "" : "selected" ?> value="<?= $row["product_id"] ?>">
-                      <?= $row["product_name"] ?> | <?= @$getBrand["brand_name"] ?>(<?= @$getCat["categories_name"] ?>) </option>
+                     <option data-price="<?= $row["current_rate"] ?>" <?= empty($r['product_id']) ? "" : "selected" ?> value="<?= $row["product_id"] ?>">
+                       <?= $row["product_name"] ?> | <?= @$getBrand["brand_name"] ?>(<?= @$getCat["categories_name"] ?>) </option>
 
-                  <?php   } ?>
+                   <?php   } ?>
                  </select>
                  <span class="text-center w-100" id="instockQty"></span>
                </div>
@@ -261,7 +272,7 @@
                          <div class="">
 
 
-                           <input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm " value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchOrder['discount'] ?>" min="0"  name="ordered_discount">
+                           <input onkeyup="getOrderTotal()" type="number" id="ordered_discount" class="form-control form-control-sm " value="<?= @empty($_REQUEST['edit_order_id']) ? "0" : $fetchOrder['discount'] ?>" min="0" name="ordered_discount">
                            <input onkeyup="getOrderTotal()" type="number" id="freight" class="form-control form-control-sm d-none" placeholder="Freight" value="0" min="0" name="freight">
 
                          </div>

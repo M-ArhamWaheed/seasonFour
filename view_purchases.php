@@ -29,6 +29,7 @@
                   <th class="text-dark">Comment</th>
                   <th class="text-dark">Amount</th>
                   <th class="text-dark">Purchase Type</th>
+                  <th class="text-dark">File</th>
                   <th class="text-dark">Action</th>
                 </tr>
               </thead>
@@ -45,7 +46,15 @@
                     <td class="text-capitalize"><?= $r['purchase_narration'] ?></td>
                     <td><?= $r['grand_total'] ?></td>
                     <td class="text-capitalize"><?= $r['payment_type'] ?></td>
+                    <td>
+                      <img src="img/uploads/" alt="">
+                      <?php if (!empty($r['purchase_file'])): ?>
+                        <a href="img/uploads/<?= htmlspecialchars($r['purchase_file']) ?>" target="_blank">
+                          <button class="btn btn-admin btn-sm m-1">View File</button>
+                        </a>
+                      <?php endif; ?>
 
+                    </td>
 
                     <td class="d-flex">
                       <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "cash_purchase"): ?>

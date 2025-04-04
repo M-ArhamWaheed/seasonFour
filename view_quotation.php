@@ -28,6 +28,7 @@
                   <th class="text-dark">Phone</th>
                   <th class="text-dark">Amount</th>
                   <th class="text-dark">Comment</th>
+                  <th class="text-dark">File</th>
                   <th class="text-dark">Action</th>
                 </tr>
               </thead>
@@ -43,6 +44,14 @@
                     <td><?= $r['client_contact'] ?></td>
                     <td><?= $r['total_amount'] ?></td>
                     <td class="text-capitalize"><?= $r['quotation_narration'] ?></td>
+                    <td>
+                      <?php if (!empty($r['quotation_file'])): ?>
+                        <a href="img/uploads/<?= htmlspecialchars($r['quotation_file']) ?>" target="_blank">
+                          <button class="btn btn-admin btn-sm m-1">View File</button>
+                        </a>
+                      <?php endif; ?>
+
+                    </td>
                     <td class="d-flex">
                       <?php if (@$userPrivileges['nav_edit'] == 1 || $fetchedUserRole == "admin" and $r['payment_type'] == "quotation"): ?>
                         <form action="quotation.php" method="POST">

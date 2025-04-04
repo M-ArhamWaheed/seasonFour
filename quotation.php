@@ -33,9 +33,9 @@ if (!empty($_REQUEST['edit_order_id'])) {
             <input type="hidden" name="product_order_id" value="<?= !isset($_REQUEST['edit_order_id']) ? "" : base64_decode($_REQUEST['edit_order_id']) ?>">
             <input type="hidden" name="quotation_form" id="quotation_form" value="quotation">
             <div class="row form-group">
-              <input type="hidden" name="payment_type" id="payment_type" value="credit_sale">
+              <input type="hidden" name="payment_type" id="payment_type" value="quotation">
               <input type="hidden" name="quotation_form" id="quotation_form" value="quotation_form">
-            <input type="hidden" name="price_type" id="price_type" value="sale">
+              <input type="hidden" name="price_type" id="price_type" value="sale">
               <div class="col-md-1">
                 <label> ID#</label>
                 <?php $result = mysqli_query($dbc, "
@@ -77,10 +77,20 @@ if (!empty($_REQUEST['edit_order_id'])) {
                 <input type="hidden" name="R_Limit" id="R_LimitInput" />
 
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <label>Comment</label>
                 <input type="text" autocomplete="off" name="order_narration" id="order_narration" value="<?= @$fetchOrder['quotation_narration'] ?>" class="form-control">
 
+              </div>
+              <div class="col-sm-2">
+                <label>Attach File
+                  <?php if (!empty($fetchOrder['quotation_file'])): ?>
+                    <a href="img/uploads/<?= htmlspecialchars($fetchOrder['quotation_file']) ?>" target="_blank">
+                      <p type="button" class="d-inline p-0 m-0">View File</p>
+                    </a>
+                  <?php endif; ?>
+                </label>
+                <input type="file" autocomplete="off" value="<?= @$fetchOrder['quotation_file'] ?>" class="form-control" name="quotation_file">
               </div>
               <!-- <div class="col-sm-2">
                  <label>Vehicle NO </label>

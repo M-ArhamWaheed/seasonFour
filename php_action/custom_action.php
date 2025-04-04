@@ -548,9 +548,8 @@ if (isset($_REQUEST['sale_order_client_name'])) {
 			'client_contact' => $_REQUEST['client_contact'],
 			'paid' => @$_REQUEST['paid_ammount'],
 			'payment_account' => @$_REQUEST['payment_account'],
-			'payment_type' => 'cash_in_hand',
+			'payment_type' => 'cash',
 			'vehicle_no' => @$_REQUEST['vehicle_no'],
-
 			'order_narration' => @$_REQUEST['order_narration'],
 			'freight' => @$_REQUEST['freight'],
 		];
@@ -559,6 +558,19 @@ if (isset($_REQUEST['sale_order_client_name'])) {
 
 			if (insert_data($dbc, 'orders', $data)) {
 				$last_id = mysqli_insert_id($dbc);
+				if (!empty($_FILES['order_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['order_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['order_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'order_file' => $fileName,
+						];
+
+						update_data($dbc, "orders", $data, "order_id", $last_id);
+					}
+				}
 				$paidAmount = @(float)$_REQUEST['paid_ammount'];
 				if ($paidAmount > 0) {
 					$debit = [
@@ -638,6 +650,19 @@ if (isset($_REQUEST['sale_order_client_name'])) {
 		} else {
 			if (update_data($dbc, 'orders', $data, 'order_id', $_REQUEST['product_order_id'])) {
 				$last_id = $_REQUEST['product_order_id'];
+				if (!empty($_FILES['order_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['order_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['order_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'order_file' => $fileName,
+						];
+
+						update_data($dbc, "orders", $data, "order_id", $last_id);
+					}
+				}
 				if ($get_company['stock_manage'] == 1) {
 					$proQ = get($dbc, "order_item WHERE order_id='" . $last_id . "' ");
 
@@ -741,7 +766,7 @@ if (isset($_REQUEST['credit_order_client_name']) && empty($_REQUEST['quotation_f
 			'order_narration' => @$_REQUEST['order_narration'],
 			'payment_account' => @$_REQUEST['payment_account'],
 			'customer_account' => @$_REQUEST['customer_account'],
-			'payment_type' => 'credit_sale',
+			'payment_type' => 'credit',
 			'credit_sale_type' => @$_REQUEST['credit_sale_type'],
 			'vehicle_no' => @$_REQUEST['vehicle_no'],
 			'return_days' => @$_REQUEST['return_days'],
@@ -752,6 +777,20 @@ if (isset($_REQUEST['credit_order_client_name']) && empty($_REQUEST['quotation_f
 
 			if (insert_data($dbc, 'orders', $data)) {
 				$last_id = mysqli_insert_id($dbc);
+				if (!empty($_FILES['order_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['order_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['order_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'order_file' => $fileName,
+						];
+
+						update_data($dbc, "orders", $data, "order_id", $last_id);
+					}
+				}
+
 				$x = 0;
 				foreach ($_REQUEST['product_ids'] as $key => $value) {
 					$total = $qty = 0;
@@ -843,6 +882,19 @@ if (isset($_REQUEST['credit_order_client_name']) && empty($_REQUEST['quotation_f
 		} else {
 			if (update_data($dbc, 'orders', $data, 'order_id', $_REQUEST['product_order_id'])) {
 				$last_id = $_REQUEST['product_order_id'];
+				if (!empty($_FILES['order_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['order_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['order_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'order_file' => $fileName,
+						];
+
+						update_data($dbc, "orders", $data, "order_id", $last_id);
+					}
+				}
 				if ($get_company['stock_manage'] == 1) {
 					$proQ = get($dbc, "order_item WHERE order_id='" . $last_id . "' ");
 
@@ -1003,6 +1055,20 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 			if (insert_data($dbc, 'purchase', $data)) {
 				$last_id = mysqli_insert_id($dbc);
 
+				if (!empty($_FILES['purchase_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['purchase_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['purchase_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'purchase_file' => $fileName,
+						];
+
+						update_data($dbc, "purchase", $data, "purchase_id", $last_id);
+					}
+				}
+
 				$x = 0;
 				foreach ($_REQUEST['product_ids'] as $key => $value) {
 					$total = $qty = 0;
@@ -1101,7 +1167,19 @@ if (isset($_REQUEST['cash_purchase_supplier']) && empty($_REQUEST['lpo_form'])) 
 			if (update_data($dbc, 'purchase', $data, 'purchase_id', $_REQUEST['product_purchase_id'])) {
 				$last_id = $_REQUEST['product_purchase_id'];
 
+				if (!empty($_FILES['purchase_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['purchase_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
 
+					if (move_uploaded_file($_FILES['purchase_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'purchase_file' => $fileName,
+						];
+
+						update_data($dbc, "purchase", $data, "purchase_id", $last_id);
+					}
+				}
 				if ($get_company['stock_manage'] == 1) {
 					$proQ = get($dbc, "purchase_item WHERE purchase_id='" . $last_id . "' ");
 
@@ -1484,7 +1562,23 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 		if ($_REQUEST['product_purchase_id'] == "") {
 
 			if (insert_data($dbc, 'lpo', $data)) {
+
 				$last_id = mysqli_insert_id($dbc);
+
+				if (!empty($_FILES['lpo_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['lpo_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['lpo_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'lpo_file' => $fileName,
+						];
+
+						update_data($dbc, "lpo", $data, "lpo_id", $last_id);
+					}
+				}
+
 
 				$x = 0;
 				foreach ($_REQUEST['product_ids'] as $key => $value) {
@@ -1506,21 +1600,6 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 					];
 
 					insert_data($dbc, 'lpo_item', $order_items);
-
-					// if ($get_company['stock_manage'] == 1) {
-					// 	$product_id = $_REQUEST['product_ids'][$x];
-					// 	$quantity_instock = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT quantity_instock FROM  product WHERE product_id='" . $product_id . "' "));
-					// 	$qty = (float)$quantity_instock['quantity_instock'] + $product_quantites;
-					// 	$quantity_update = mysqli_query($dbc, "UPDATE product SET  quantity_instock='$qty' WHERE product_id='" . $product_id . "' ");
-					// }
-					// if (isset($_REQUEST['product_salerates'][$x])) {
-					// 	$product_id = $_REQUEST['product_ids'][$x];
-					// 	$quantity_instock = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT current_rate FROM  product WHERE product_id='" . $product_id . "' "));
-					// 	$current_rate = $_REQUEST['product_salerates'][$x];
-					// 	$quantity_update = mysqli_query($dbc, "UPDATE product SET  current_rate='$current_rate' WHERE product_id='" . $product_id . "' ");
-					// }
-
-
 
 					$x++;
 				} //end of foreach
@@ -1552,16 +1631,22 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 			if (update_data($dbc, 'lpo', $data, 'lpo_id', $_REQUEST['product_purchase_id'])) {
 				$last_id = $_REQUEST['product_purchase_id'];
 
+				if (!empty($_FILES['lpo_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['lpo_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['lpo_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'lpo_file' => $fileName,
+						];
+
+						update_data($dbc, "lpo", $data, "lpo_id", $last_id);
+					}
+				}
 
 				if ($get_company['stock_manage'] == 1) {
 					$proQ = get($dbc, "lpo_item WHERE lpo_id='" . $last_id . "' ");
-
-					// while ($proR = mysqli_fetch_assoc($proQ)) {
-					// 	$newqty = 0;
-					// 	$quantity_instock = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT quantity_instock FROM  product WHERE product_id='" . $proR['product_id'] . "' "));
-					// 	$newqty = (float)$quantity_instock['quantity_instock'] - (float)$proR['quantity'];
-					// 	$quantity_update = mysqli_query($dbc, "UPDATE product SET  quantity_instock='$newqty' WHERE product_id='" . $proR['product_id'] . "' ");
-					// }
 				}
 				deleteFromTable($dbc, "lpo_item", 'lpo_id', $_REQUEST['product_purchase_id']);
 				$x = 0;
@@ -1596,8 +1681,9 @@ if (isset($_REQUEST['lpo_form']) && !empty($_REQUEST['lpo_form'])) {
 
 					$x++;
 				} //end of foreach
-				$total_grand =  $total_ammount - $_REQUEST['ordered_discount'];
-				$due_amount = (float)$total_grand - @(float)$_REQUEST['paid_ammount'];
+				$ordered_discount = intval($_REQUEST['ordered_discount'] ?? 0);
+				$total_grand = $total_ammount - $ordered_discount;
+				$due_amount = $total_grand - @$_REQUEST['paid_ammount'];
 
 				$newOrder = [
 					'total_amount' => $total_ammount,
@@ -1643,7 +1729,7 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 			'quotation_narration' => @$_REQUEST['order_narration'],
 			'payment_account' => @$_REQUEST['payment_account'],
 			'customer_account' => @$_REQUEST['customer_account'],
-			'payment_type' => 'Quotation',
+			'payment_type' => 'quotation',
 			'credit_sale_type' => @$_REQUEST['credit_sale_type'],
 			'freight' => @$_REQUEST['freight'],
 		];
@@ -1652,6 +1738,21 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 
 			if (insert_data($dbc, 'quotations', $data)) {
 				$last_id = mysqli_insert_id($dbc);
+
+				if (!empty($_FILES['quotation_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['quotation_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['quotation_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'quotation_file' => $fileName,
+						];
+
+						update_data($dbc, "quotations", $data, "quotation_id", $last_id);
+					}
+				}
+
 				$x = 0;
 				foreach ($_REQUEST['product_ids'] as $key => $value) {
 					$total = $qty = 0;
@@ -1710,6 +1811,21 @@ if (isset($_REQUEST['quotation_form']) && !empty($_REQUEST['quotation_form'])) {
 		} else {
 			if (update_data($dbc, 'quotations', $data, 'quotation_id', $_REQUEST['product_order_id'])) {
 				$last_id = $_REQUEST['product_order_id'];
+
+				if (!empty($_FILES['quotation_file']['tmp_name'])) {
+					$uploadDir = '../img/uploads/';
+					$fileName = time() . '_' . basename($_FILES['quotation_file']['name']);
+					$uploadPath = $uploadDir . $fileName;
+
+					if (move_uploaded_file($_FILES['quotation_file']['tmp_name'], $uploadPath)) {
+						$data = [
+							'quotation_file' => $fileName,
+						];
+
+						update_data($dbc, "quotations", $data, "quotation_id", $last_id);
+					}
+				}
+
 				if ($get_company['stock_manage'] == 1) {
 					$proQ = get($dbc, "quotation_item WHERE quotation_id='" . $last_id . "' ");
 

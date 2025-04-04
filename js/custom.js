@@ -100,28 +100,27 @@ $(document).ready(function () {
   }); //main
   $("#sale_order_fm").on("submit", function (e) {
     e.preventDefault();
-    var form = $("#sale_order_fm");
+    var form = $("#sale_order_fm")[0]; // Get raw DOM form element
+    var formData = new FormData(form);
+
     $.ajax({
       type: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
+      url: $(form).attr("action"),
+      data: formData,
       dataType: "json",
+      processData: false, // Don't process the data
+      contentType: false, // Let the browser set the content type
       beforeSend: function () {
         $("#sale_order_print").prop("disabled", true);
         $("#sale_order_btn").prop("disabled", true);
       },
       success: function (response) {
         if (response.sts == "success") {
-          $("#sale_order_fm").each(function () {
-            this.reset();
-          });
+          $("#sale_order_fm")[0].reset();
           $("#purchase_product_tb").html("");
           $("#product_grand_total_amount").html("");
           $("#product_total_amount").html("");
 
-          // 	window.location.assign('print_order.php?order_id='+response.order_id);
-
-          //$("#tableData").load(location.href+" #tableData");
           Swal.fire({
             title: response.msg,
             showDenyButton: true,
@@ -129,10 +128,8 @@ $(document).ready(function () {
             confirmButtonText: `Print`,
             denyButtonText: `Add New`,
           }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
               location.reload();
-
               window.open(
                 "print_sale.php?id=" +
                   response.order_id +
@@ -149,10 +146,14 @@ $(document).ready(function () {
           sweeetalert(response.msg, response.sts, 1500);
         }
         $("#sale_order_btn").prop("disabled", false);
-        //
       },
-    }); //ajax call
-  }); //main
+      error: function (xhr) {
+        console.log("AJAX error:", xhr.responseText);
+        $("#sale_order_btn").prop("disabled", false);
+      },
+    });
+  });
+
   $("#credit_order_client_name").on("change", function () {
     var value = $("#credit_order_client_name :selected").data("id");
     var contact = $("#credit_order_client_name :selected").data("contact");

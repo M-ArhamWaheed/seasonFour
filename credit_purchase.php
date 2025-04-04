@@ -55,7 +55,7 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                 </select>
 
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
                 <label>Select Supplier</label>
                 <div class="input-group">
                   <select class="form-control searchableSelect" name="cash_purchase_supplier" id="credit_order_client_name" required onchange="getBalance(this.value,'customer_account_exp')" aria-label="Username" aria-describedby="basic-addon1">
@@ -79,10 +79,20 @@ if (!empty($_REQUEST['edit_purchase_id'])) {
                 <br>
                 <a href="customers.php?type=supplier" class="btn btn-admin2 btn-sm mt-2">Add</a>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-1">
                 <label>Comment</label>
                 <input type="text" autocomplete="off" value="<?= @$fetchPurchase['purchase_narration'] ?>" class="form-control" name="purchase_narration">
 
+              </div>
+              <div class="col-sm-2">
+                <label>Attach File
+                  <?php if (!empty($fetchPurchase['purchase_file'])): ?>
+                    <a href="img/uploads/<?= htmlspecialchars($fetchPurchase['purchase_file']) ?>" target="_blank">
+                      <p type="button" class="d-inline p-0 m-0">View File</p>
+                    </a>
+                  <?php endif; ?>
+                </label>
+                <input type="file" autocomplete="off" value="<?= @$fetchPurchase['purchase_file'] ?>" class="form-control" name="purchase_file">
               </div>
             </div> <!-- end of form-group -->
             <div class="form-group row mb-5">
