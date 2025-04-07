@@ -201,7 +201,7 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $q = mysqli_query($dbc, "SELECT * FROM product WHERE status=1 ");
+                  <?php $q = mysqli_query($dbc, "SELECT * FROM product ");
                   $c = 0;
                   while ($r = mysqli_fetch_assoc($q)) {
                     @$brandFetched = fetchRecord($dbc, "brands", "brand_id", $r['brand_id']);
