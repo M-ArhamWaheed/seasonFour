@@ -167,8 +167,16 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
           <?php else: ?>
             <div class="card-body">
 
+              <div class="d-flex justify-content-end mb-3">
+                <form action="php_action/download_products.php?action=upload_products" method="POST" enctype="multipart/form-data">
+                  <input type="file" name="excel_file" accept=".xlsx, .xls" required>
+                  <button type="submit" class="btn btn-success mr-3">Upload Products</button>
+                </form>
+                <a href="php_action/download_products.php?action=download_products" class="btn btn-primary">Download Products</a>
+              </div>
 
               <table class="table dataTable col-12" style="width: 100%" id="product_tb">
+
                 <thead>
                   <tr>
                     <!-- <th class="text-dark">#</th> -->
@@ -508,9 +516,9 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                 <label for=""> Status</label>
                 <select class="form-control" id="categories_status" name="categories_status">
 
-                <option <?= !isset($categories['categories_status']) || $categories['categories_status'] == 1 ? "selected" : "" ?> value="1">Active</option>
-                <option <?= isset($categories['categories_status']) && $categories['categories_status'] == 0 ? "selected" : "" ?> value="0">Inactive</option>
- </select>
+                  <option <?= !isset($categories['categories_status']) || $categories['categories_status'] == 1 ? "selected" : "" ?> value="1">Active</option>
+                  <option <?= isset($categories['categories_status']) && $categories['categories_status'] == 0 ? "selected" : "" ?> value="0">Inactive</option>
+                </select>
               </div>
             </div>
 
@@ -774,9 +782,9 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                 <label for="">Brand Status</label>
                 <select class="form-control" id="brand_status" name="brand_status">
 
-                <option <?= isset($brands['brand_status']) && $brands['brand_status'] == 1 ? "selected" : "" ?> value="1">Active</option>
-                <option <?= isset($brands['brand_status']) && $brands['brand_status'] == 0 ? "selected" : "" ?> value="0">Inactive</option>
-  
+                  <option <?= isset($brands['brand_status']) && $brands['brand_status'] == 1 ? "selected" : "" ?> value="1">Active</option>
+                  <option <?= isset($brands['brand_status']) && $brands['brand_status'] == 0 ? "selected" : "" ?> value="0">Inactive</option>
+
                 </select>
               </div>
             </div>
