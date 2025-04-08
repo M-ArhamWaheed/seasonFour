@@ -172,7 +172,8 @@ $btn_name = isset($_REQUEST['edit_product_id']) ? "Update" : "Add";
                   <input type="file" name="excel_file" accept=".xlsx, .xls" required>
                   <button type="submit" class="btn btn-success mr-3">Upload Products</button>
                 </form>
-                <a href="php_action/download_products.php?action=download_products" class="btn btn-primary">Download Products</a>
+                <a href="php_action/download_products.php?action=download_products" class="btn btn-primary mr-3">Download Products</a>
+                <a href="php_action/download_products.php?action=download_example" class="btn btn-danger">Download Example</a>
               </div>
 
               <table class="table dataTable col-12" style="width: 100%" id="product_tb">
