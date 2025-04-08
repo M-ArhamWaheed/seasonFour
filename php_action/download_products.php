@@ -205,9 +205,7 @@ if ($_REQUEST['action'] == 'download_example') {
 }
 
 
-
-
-if ($_REQUEST['action'] == 'upload_products') { 
+if ($_REQUEST['action'] == 'upload_products') {
     if (isset($_FILES['excel_file']) && $_FILES['excel_file']['error'] == 0) {
         $file = $_FILES['excel_file']['tmp_name'];
 
@@ -227,14 +225,13 @@ if ($_REQUEST['action'] == 'upload_products') {
             $row = $data[$i];
 
             // Assign row data with NULL or '' as default for empty fields
-            // Special handling for product_id: if empty, use last ID + 1
+            // Auto-generate product_id if not provided
             if (!empty($row[0])) {
                 $product_id = (int)$row[0];
             } else {
-                // Get the last product_id from the database and increment it
                 $result = $conn->query("SELECT MAX(product_id) as max_id FROM product");
-                if ($result && $row = $result->fetch_assoc()) {
-                    $product_id = $row['max_id'] !== null ? (int)$row['max_id'] + 1 : 1;
+                if ($result && $row_max = $result->fetch_assoc()) {
+                    $product_id = $row_max['max_id'] !== null ? (int)$row_max['max_id'] + 1 : 1;
                 } else {
                     $product_id = 1; // Default to 1 if table is empty or query fails
                 }
@@ -243,7 +240,7 @@ if ($_REQUEST['action'] == 'upload_products') {
             $product_name = !empty($row[1]) ? (string)$row[1] : null;
             $product_code = !empty($row[2]) ? (string)$row[2] : null;
             $product_image = !empty($row[3]) ? (string)$row[3] : '';
-            $brand_id = !empty($row[4]) ? (int)$row[4] : null;
+            $brand_id = !empty($row[4]) ? (int)$row[4] : null; // Can be NULL if no brand
             $category_id = !empty($row[5]) ? (int)$row[5] : null;
             $quantity_instock = !empty($row[6]) ? (int)$row[6] : null;
             $purchased = !empty($row[7]) ? (int)$row[7] : '';
@@ -307,7 +304,7 @@ if ($_REQUEST['action'] == 'upload_products') {
                 $stmt->close();
             }
 
-            // Handle Brand
+            // Handle Brand (no continue, allow NULL brand_id)
             if (!empty($brand_name)) {
                 $stmt = $conn->prepare("SELECT brand_id FROM brands WHERE brand_name = ?");
                 if (!$stmt) die("Prepare failed: " . $conn->error);
@@ -326,34 +323,31 @@ if ($_REQUEST['action'] == 'upload_products') {
                     }
                 } else {
                     if ($category_id === null) {
-                        echo "Skipping row $i: No valid category_id for brand.<br>";
-                        continue;
-                    }
-                    $stmt = $conn->prepare("
-                        INSERT INTO brands (
-                            category_id, 
-                            brand_name, 
-                            brand_country, 
-                            brand_active, 
-                            brand_status
-                        ) VALUES (?, ?, ?, 1, 'active')
-                    ");
-                    if (!$stmt) die("Prepare failed: " . $conn->error);
-                    $stmt->bind_param("iss", $category_id, $brand_name, $brand_country);
-                    if (!$stmt->execute()) {
-                        echo "Error inserting brand on row $i: " . $conn->error . "<br>";
+                        echo "Warning row $i: No valid category_id for brand, skipping brand insertion.<br>";
                     } else {
-                        $brand_id = $conn->insert_id;
+                        $stmt = $conn->prepare("
+                            INSERT INTO brands (
+                                category_id, 
+                                brand_name, 
+                                brand_country, 
+                                brand_active, 
+                                brand_status
+                            ) VALUES (?, ?, ?, 1, 'active')
+                        ");
+                        if (!$stmt) die("Prepare failed: " . $conn->error);
+                        $stmt->bind_param("iss", $category_id, $brand_name, $brand_country);
+                        if (!$stmt->execute()) {
+                            echo "Error inserting brand on row $i: " . $conn->error . "<br>";
+                        } else {
+                            $brand_id = $conn->insert_id;
+                        }
                     }
                 }
                 $stmt->close();
-            } else {
-                echo "Skipping row $i: No brand name provided.<br>";
-                continue;
-            }
+            } // No else or continue here, proceed to product handling
 
-            // Handle Product
-            if ($product_id !== null && $brand_id !== null && $category_id !== null) {
+            // Handle Product (require only product_id and category_id)
+            if ($product_id !== null && $category_id !== null) {
                 $stmt = $conn->prepare("SELECT product_id FROM product WHERE product_id = ?");
                 if (!$stmt) die("Prepare failed: " . $conn->error);
                 $stmt->bind_param("i", $product_id);
@@ -475,7 +469,7 @@ if ($_REQUEST['action'] == 'upload_products') {
                     $inv = $inventory;
 
                     $stmt->bind_param(
-                        "isssiiddidssdssidssssii", // Corrected type string
+                        "isssiiddidssdssidssssii",
                         $p_id,
                         $p_name,
                         $p_code,
@@ -506,7 +500,7 @@ if ($_REQUEST['action'] == 'upload_products') {
                 }
                 $stmt->close();
             } else {
-                echo "Skipping row $i: Missing required IDs (product_id: $product_id, brand_id: $brand_id, category_id: $category_id).<br>";
+                echo "Skipping row $i: Missing required IDs (product_id: $product_id, category_id: $category_id).<br>";
                 continue;
             }
         }
@@ -519,4 +513,3 @@ if ($_REQUEST['action'] == 'upload_products') {
         exit;
     }
 }
-
