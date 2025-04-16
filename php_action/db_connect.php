@@ -5,9 +5,9 @@ $localhost = "localhost";
 // $password = "freeiuse_accounting2";
 // $dbname = "freeiuse_accounting2";
 // $localhost = "localhost";
-$username = "twcppabi_erp";
-$password = "twcppabi_erp";
-$dbname = "twcppabi_erp";
+$username = "root";
+$password = "";
+$dbname = "twcppabi_seasonfour";
 
 $connect = new mysqli($localhost, $username, $password, $dbname);
 $dbc =  mysqli_connect($localhost, $username, $password, $dbname);
