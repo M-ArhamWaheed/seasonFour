@@ -242,11 +242,8 @@ if ($_REQUEST['action'] == 'upload_products') {
             $product_image = !empty($row[3]) ? (string)$row[3] : '';
             $brand_id = !empty($row[4]) ? (int)$row[4] : 0; // Can be NULL if no brand
             $category_id = !empty($row[5]) ? (int)$row[5] : null;
-<<<<<<< HEAD
             $quantity_instock = !empty($row[6]) ? (int)$row[6] : 0;
-=======
             $quantity_instock = isset($row[6]) && is_numeric($row[6]) ? (int)$row[6] : 0;
->>>>>>> 776ddb2ca27246fdd48a7d07614727630de9c497
             $purchased = !empty($row[7]) ? (int)$row[7] : '';
             $current_rate = !empty($row[8]) ? (float)$row[8] : 0;
             $f_days = !empty($row[9]) ? (int)$row[9] : null;
