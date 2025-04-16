@@ -1,4 +1,5 @@
-[19-Dec-2024 12:21:36 Asia/Karachi] PHP Warning:  Trying to access array offset on value of type null in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 1234
-[15-Feb-2025 15:00:38 Asia/Karachi] PHP Warning:  Trying to access array offset on value of type null in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 1234
-[17-Feb-2025 11:49:39 Asia/Karachi] PHP Warning:  Undefined array key "product_image" in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 409
-[17-Feb-2025 11:49:39 Asia/Karachi] PHP Warning:  Trying to access array offset on value of type null in /home/twcppabi/seasonfour/software/php_action/custom_action.php on line 409
+[15-Apr-2025 10:20:17 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Column 'current_rate' cannot be null in /home/twcppabi/erp.seasonfour.co/php_action/download_products.php:497
+Stack trace:
+#0 /home/twcppabi/erp.seasonfour.co/php_action/download_products.php(497): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/twcppabi/erp.seasonfour.co/php_action/download_products.php on line 497

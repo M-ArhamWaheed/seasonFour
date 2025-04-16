@@ -79,7 +79,7 @@
                </div>
                <div class="col-sm-2 cash-sale-div2">
                  <label>Customer Name</label>
-                 <input type="text" id="sale_order_client_name" value="<?= @$fetchOrder['client_name'] ?>" class="form-control" autocomplete="off" name="sale_order_client_name" list="client_name">
+                 <input type="text" id="sale_order_client_name" value="<?= @$fetchOrder['client_name'] ?? 'Cash' ?>" class="form-control" autocomplete="off" name="sale_order_client_name" list="client_name">
                  <datalist id="client_name">
                    <?php
                     $q = mysqli_query($dbc, "SELECT DISTINCT client_name FROM orders");
@@ -175,7 +175,7 @@
                     ?>
 
                      <option data-price="<?= $row["current_rate"] ?>" <?= empty($r['product_id']) ? "" : "selected" ?> value="<?= $row["product_id"] ?>">
-                       <?= $row["product_name"] ?> | <?= @$getBrand["brand_name"] ?>(<?= @$getCat["categories_name"] ?>) </option>
+                       <?= $row["product_name"] ?> </option>
 
                    <?php   } ?>
                  </select>

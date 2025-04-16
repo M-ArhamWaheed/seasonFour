@@ -4,10 +4,10 @@ $localhost = "localhost";
 // $username = "freeiuse_accounting2";
 // $password = "freeiuse_accounting2";
 // $dbname = "freeiuse_accounting2";
-$localhost = "localhost";
-$username = "root";
-$password = "";
-$dbname = "twcppabi_seasonfour";
+// $localhost = "localhost";
+$username = "twcppabi_erp";
+$password = "twcppabi_erp";
+$dbname = "twcppabi_erp";
 
 $connect = new mysqli($localhost, $username, $password, $dbname);
 $dbc =  mysqli_connect($localhost, $username, $password, $dbname);

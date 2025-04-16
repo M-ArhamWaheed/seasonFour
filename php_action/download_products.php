@@ -5,7 +5,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$conn = new mysqli("localhost", "root", "", "twcppabi_seasonfour");
+$conn = new mysqli("localhost", "twcppabi_erp", "twcppabi_erp", "twcppabi_erp");
 
 if ($_REQUEST['action'] == 'download_products') {
     // Database Connection
@@ -240,11 +240,11 @@ if ($_REQUEST['action'] == 'upload_products') {
             $product_name = !empty($row[1]) ? (string)$row[1] : null;
             $product_code = !empty($row[2]) ? (string)$row[2] : null;
             $product_image = !empty($row[3]) ? (string)$row[3] : '';
-            $brand_id = !empty($row[4]) ? (int)$row[4] : null; // Can be NULL if no brand
+            $brand_id = !empty($row[4]) ? (int)$row[4] : 0; // Can be NULL if no brand
             $category_id = !empty($row[5]) ? (int)$row[5] : null;
-            $quantity_instock = !empty($row[6]) ? (int)$row[6] : null;
+            $quantity_instock = !empty($row[6]) ? (int)$row[6] : 0;
             $purchased = !empty($row[7]) ? (int)$row[7] : '';
-            $current_rate = !empty($row[8]) ? (float)$row[8] : null;
+            $current_rate = !empty($row[8]) ? (float)$row[8] : 0;
             $f_days = !empty($row[9]) ? (int)$row[9] : null;
             $t_days = !empty($row[10]) ? (int)$row[10] : null;
             $purchase_rate = !empty($row[11]) ? (float)$row[11] : '';
